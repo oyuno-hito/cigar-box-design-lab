@@ -23,7 +23,9 @@ body {
   background: var(--bg); border-bottom: 1px solid var(--line);
 }
 .top { max-width: 1200px; margin: 0 auto; padding: 20px 16px 0; }
-.top h1 { margin: 0 0 4px; font-size: 20px; letter-spacing: .02em; }
+.top h1 { margin: 0 0 4px; font-size: 20px; letter-spacing: .02em; display: flex; align-items: center; gap: 10px; }
+/* 箱の表（濃紺）と裏（白）。装飾なので読み上げない */
+.top .logo { flex: none; height: 30px; width: auto; }
 .top p { margin: 0; color: var(--mute); font-size: 13px; }
 
 /* テーマが増えても、横にスクロールして選べる */
