@@ -14,7 +14,7 @@ alwaysApply: true
 - `generated/` は生成画像の正本。`0_like`（下に `0_reference` / `1_seed`）/ `1_dislike` / `2_maybe` / `99_inbox` に分ける。画像を複製しない。
 - 発散の `like` は「手直し・派生の方向が見えて残したい」の意味。回転する道具としての上下の向きや印刷適性は、発散のラベルでは評価しない。分類の詳細は `generated/README.md`。
 - `maybe` は分類器の学習に使わない。
-- `scorers/vNNN/` は作成後に書き換えない。更新するときは新しいバージョンを作り、`scorers/CURRENT` を更新する。
+- `scorers/` の JSON（`scorer.json` / `manifest.json` / `metrics.json`）は `tools/train_scorer.py` で再生成して上書きする。版管理は Git の履歴に任せ、バージョン用ディレクトリは作らない。
 - `generator/models/` のモデル本体はコミットしない。使ったモデルは `generator/models/MODELS.md` に記録する。
 - GitHub Pages に出すのは `artifacts/` のみ。それ以外を公開用ディレクトリにコピーしない。
 

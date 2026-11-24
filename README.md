@@ -18,7 +18,7 @@
 | `docs/` | ワークフロー、設計判断 | する |
 | `generator/` | 画像生成環境（Docker で動かす ComfyUI、ワークフロー、モデル備忘録） | モデル本体は除く |
 | `generated/` | 生成画像の正本。`0_like`（`reference` / `seed`）/ `1_dislike` / `2_maybe` / `99_inbox` に分類 | する |
-| `scorers/` | 分類器（スコアラー）。バージョンごとにマニフェスト付きで保存 | する |
+| `scorers/` | 分類器（スコアラー）。係数・マニフェスト・評価結果の JSON。版は Git の履歴で管理 | する |
 | `artifacts/` | 最終採用した成果物のコレクション | する |
 | `site/` | GitHub Pages 用の HTML / JS。公開するのは `artifacts/` のみ | する |
 
@@ -26,7 +26,7 @@
 
 1. 発散的に画像を生成する（LLM の画像生成でシートを作って切り出す方式、またはローカルの ComfyUI）。手順は `.cursor/skills/generate-test-images/`。
 2. `generated/99_inbox/` に入れ、人間が `like` / `dislike` / `maybe` に振り分ける。判断の基準は「この画像から手直しの方向を見出せるか」（[generated/README.md](generated/README.md)）。
-3. 分類器を作る。作った時点で参照した画像は `scorers/vNNN/manifest.json` に固定する。
+3. 分類器を作る。作った時点で参照した画像は `scorers/manifest.json` に固定する。
 4. 分類器で足切り・並べ替えし、残りを VLM で再評価する。
 5. 採用したものを `artifacts/` に置き、GitHub Pages で公開する。
 

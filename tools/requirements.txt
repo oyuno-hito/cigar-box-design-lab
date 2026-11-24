@@ -1,0 +1,8 @@
+# tools/ 以下のスクリプト用（Python 3.12 を想定。PyTorch の wheel がある版を使う）
+#   uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -r tools/requirements.txt
+pillow
+numpy
+# 分類器（tools/train_scorer.py）
+torch
+transformers
+scikit-learn

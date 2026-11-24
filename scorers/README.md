@@ -4,15 +4,13 @@
 
 ```text
 scorers/
-  CURRENT        現在使うバージョン名（例: v002）
-  v001/
-    scorer.json  係数としきい値（pickle は使わない）
-    manifest.json
-    metrics.json
+  scorer.json    係数としきい値（pickle は使わない）
+  manifest.json  学習に使った画像・ラベル・埋め込みモデル・コミット
+  metrics.json   評価結果
 ```
 
 ## ルール
 
-- `vNNN/` は作成後に書き換えない。更新するときは新しいバージョンを作る。
-- `manifest.json` には、参照した画像の ID・ハッシュ・その時点のラベル、埋め込みモデル、学習時点のコミットを書く。
-- `CURRENT` は symlink ではなくテキストファイルにする（Windows で扱いやすくするため）。
+- バージョンのディレクトリは作らない。再学習したら `tools/train_scorer.py` が上記 3 つを上書きし、その差分をコミットする。以前の版や精度の推移は Git の履歴で見る。
+- `manifest.json` には、参照した画像の ID・ハッシュ・その時点のラベル、埋め込みモデル、学習時点のコミットを書く。後から画像を移動しても、当時の状態が分かる。
+- モデルや設定を変えて比べたいときは、ブランチを切るか、`metrics.json` の差分を見る。

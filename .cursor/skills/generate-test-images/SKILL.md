@@ -99,7 +99,7 @@ cp "<生成された jpg のパス>" generated/999_sheet/cigar-box-sheet-NN.jpg
   --meta generated/999_sheet/cigar-box-sheet-NN.meta.json
 ```
 
-- `.venv` がなければ作る: `python3 -m venv .venv && .venv/bin/pip install pillow numpy`
+- `.venv` がなければ作る: `uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -r tools/requirements.txt`
 - 先に `--dry-run` を付けると、溝の検出結果だけ確認できる。
 - 「溝の自動検出 = 失敗」と出たら等分で切られている。結果の画像にずれがないか確認し、ずれていれば `--white` や `--gutter-ratio` を調整するか、シートを作り直す。
 
