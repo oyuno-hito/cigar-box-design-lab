@@ -38,4 +38,5 @@ GitHub Pages に出すのは `artifacts/` だけです。`generated/`、`scorers
 
 ## 状況
 
-雛形のみです。生成環境、分類器、公開サイトの中身はこれから入れます。
+- 画像生成環境: Docker の ComfyUI 設定を追加済み（[generator/README.md](generator/README.md)）。GPU のある PC での起動確認はまだです。
+- 分類器、公開サイト: これから入れます。

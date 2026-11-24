@@ -1,0 +1,13 @@
+# コンテナ内の /models（= generator/models/）以下を、ComfyUI のモデル置き場として追加する。
+# 左が ComfyUI の種類名、右が /models からの相対パス。
+cigar_box_lab:
+  base_path: /models
+  checkpoints: checkpoints
+  diffusion_models: diffusion_models
+  text_encoders: text_encoders
+  vae: vae
+  loras: loras
+  controlnet: controlnet
+  upscale_models: upscale_models
+  embeddings: embeddings
+  clip_vision: clip_vision

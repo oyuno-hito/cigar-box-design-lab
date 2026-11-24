@@ -1,0 +1,22 @@
+services:
+  comfyui:
+    build: .
+    image: cigar-box-comfyui:local
+    ports:
+      - "127.0.0.1:8188:8188"
+    volumes:
+      # モデル本体（Git 管理外）。extra_model_paths.yaml が /models を参照する
+      - ./models:/models
+      - ./extra_model_paths.yaml:/opt/extra_model_paths.yaml:ro
+      # ComfyUI の画面で保存したワークフロー（Git 管理）
+      - ./workflows:/opt/ComfyUI/user/default/workflows
+      # 生成結果と入力画像（Git 管理外。採用するものは generated/ へ移す）
+      - ./output:/opt/ComfyUI/output
+      - ./input:/opt/ComfyUI/input
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
