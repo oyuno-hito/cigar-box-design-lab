@@ -2,13 +2,15 @@
 """実験 run のレポート（静的 HTML 1 枚）を runs/<run-id>/report.html に作る。標準ライブラリのみ。
 
     python3 tools/make_report.py runs/<run-id>
+    python3 tools/make_report.py runs/<run-id> --serve    # 作ってから、runs/ 一覧サーバー（serve_runs.py）で開く
 
 入力: spec.json / scores.json / images/*.json / scorers/metrics.json
 レポートの内容:
   - 条件ごとの比較表（機械の通過率、p の平均・中央値）
   - 条件ごとの画像グリッド（p の高い順。足切り線で通過 / 不通過を分ける）
-  - 人間レビュー: 機械の判定に同意しない画像をクリックして印を付け、review.json として書き出す
-    （サーバー不要。印はブラウザの localStorage にも残る）
+  - 人間レビュー: 機械の判定に同意しない画像をクリックして印を付ける
+    tools/serve_runs.py（--serve も同じ）で開くと、保存ボタンが report.html と同じディレクトリの review.json に書く。
+    印はブラウザの localStorage にも残る。
 """
 
 from __future__ import annotations
@@ -37,6 +39,12 @@ HTML = r"""<!doctype html>
   td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
   .warn { border-color:#6e5a1a; background:#241e0c; }
   .bar { position:sticky; top:0; z-index:5; background:rgba(13,17,23,.96); border-bottom:1px solid var(--line); padding:8px 20px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  .tabs { display:flex; gap:4px; margin-top:16px; border-bottom:1px solid var(--line); overflow-x:auto; }
+  .tab { background:transparent; color:var(--mute); border:1px solid transparent; border-bottom:none; border-radius:6px 6px 0 0; padding:6px 14px; cursor:pointer; white-space:nowrap; font:inherit; }
+  .tab:hover { background:#21262d; }
+  .tab.active { background:var(--bg); color:#e6edf3; border-color:var(--line); margin-bottom:-1px; border-bottom:1px solid var(--bg); }
+  .tab .st { font-weight:700; margin-left:6px; } .tab .st.ok { color:var(--pass); } .tab .st.todo { color:var(--flag); }
+  .tab .cnt { margin-left:6px; font-size:12px; color:var(--mute); }
   button, label.btn { background:#21262d; color:#e6edf3; border:1px solid var(--line); border-radius:6px; padding:4px 10px; cursor:pointer; font:inherit; }
   button:hover, label.btn:hover { background:#30363d; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px; }
@@ -55,10 +63,12 @@ HTML = r"""<!doctype html>
 </head>
 <body>
 <div class="bar">
+  <a id="backlink" href="/" hidden>← runs 一覧</a>
   <strong>人間レビュー</strong>
   <span id="flagcount" class="mute"></span>
   <span id="unreviewed" style="color:var(--flag)"></span>
-  <button id="download">review.json を書き出す</button>
+  <button id="download">review.json に保存</button>
+  <span id="savestatus" class="mute"></span>
   <label class="btn">読み込む<input type="file" id="load" accept=".json" hidden></label>
   <button id="clear">印をすべて外す</button>
 </div>
@@ -72,6 +82,7 @@ HTML = r"""<!doctype html>
 
   <h2>条件ごとの比較</h2>
   <div class="panel"><table id="summary"></table></div>
+  <div class="tabs" id="tabs"></div>
 
   <div class="panel small">
     <div class="legend">
@@ -79,7 +90,7 @@ HTML = r"""<!doctype html>
       <span><i class="dot" style="background:var(--rej)"></i>機械: 不通過</span>
       <span><i class="dot" style="background:var(--flag)"></i>人間: 機械の判定に同意しない（クリックで印を付け外し）</span>
     </div>
-    <div class="mute">レビューのしかた: 全体を眺め、<b>機械の判定に同意できない画像だけ</b>クリックする。通過なのに NG なものと、不通過なのに OK なものの両方に印を付ける。印のない画像は「同意」として数える。<b>条件（モデルや型）ごとに分かれているので、画面の最後まで見て、条件ごとの「最後まで見た」にチェックする。</b>すべて見たら review.json を書き出し、<code>runs/&lt;run-id&gt;/</code> に置く。</div>
+    <div class="mute">レビューのしかた: 全体を眺め、<b>機械の判定に同意できない画像だけ</b>クリックする。通過なのに NG なものと、不通過なのに OK なものの両方に印を付ける。印のない画像は「同意」として数える。<b>条件（モデルや型）は、比較表の下のタブで切り替える。各タブを最後まで見て、条件ごとの「最後まで見た」にチェックする（タブの ✔ / 未 が目印）。</b>見終わったら「review.json に保存」を押す。<code>python3 tools/serve_runs.py</code> で開いたページなら、この HTML と同じディレクトリに書き込まれる。</div>
   </div>
 
   <div id="conditions"></div>
@@ -92,6 +103,13 @@ const flags = new Set(state.flags || []);
 // 旧形式（reviewed: true だけ）は、条件が 1 つの run のときだけ「その条件を見た」とみなす。複数条件の run では未確認に戻す
 const reviewedConds = new Set(state.reviewed_conditions || (state.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : []));
 const $ = (s) => document.querySelector(s);
+// 表示中の条件タブ。URL のハッシュ（#cond=名前）に残す。なければ、最初の未確認の条件
+let active = (() => {
+  const h = decodeURIComponent((location.hash.match(/^#cond=(.*)$/) || [])[1] || "");
+  if (DATA.conditions.some(c => c.name === h)) return h;
+  const firstTodo = DATA.conditions.find(c => !reviewedConds.has(c.name));
+  return (firstTodo || DATA.conditions[0]).name;
+})();
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pct = (a, b) => b ? (100 * a / b).toFixed(0) + "%" : "-";
 const median = (xs) => { const s = [...xs].sort((a,b)=>a-b), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2; };
@@ -104,6 +122,24 @@ $("#warnings").innerHTML = DATA.warnings.map(w => "・" + esc(w)).join("<br>");
 function save() {
   state = { reviewed_conditions: [...reviewedConds], flags: [...flags] };
   localStorage.setItem(KEY, JSON.stringify(state));
+}
+
+function renderTabs() {
+  const box = $("#tabs");
+  box.innerHTML = "";
+  for (const c of DATA.conditions) {
+    const done = reviewedConds.has(c.name);
+    const nflag = c.items.filter(i => flags.has(i.id)).length;
+    const b = document.createElement("button");
+    b.className = "tab" + (c.name === active ? " active" : "");
+    b.innerHTML = `${esc(c.name)}<span class="st ${done ? "ok" : "todo"}">${done ? "✔" : "未"}</span><span class="cnt">${c.items.length} 枚 / 印 ${nflag}</span>`;
+    b.addEventListener("click", () => {
+      active = c.name;
+      history.replaceState(null, "", "#cond=" + encodeURIComponent(active));
+      render(); renderTabs();
+    });
+    box.appendChild(b);
+  }
 }
 
 function summarize() {
@@ -123,13 +159,16 @@ function summarize() {
   $("#summary").innerHTML = html;
   $("#flagcount").textContent = `印: ${flags.size} 件`;
   const left = DATA.conditions.filter(c => !reviewedConds.has(c.name)).map(c => c.name);
-  $("#unreviewed").textContent = left.length ? `未確認の条件: ${left.join("、")}` : "すべての条件を確認済み";
+  const total = DATA.conditions.length;
+  $("#unreviewed").textContent = left.length ? `確認済み ${total - left.length} / ${total} 条件（未: ${left.join("、")}）` : `全 ${total} 条件を確認済み`;
+  $("#unreviewed").style.color = left.length ? "var(--flag)" : "var(--pass)";
+  renderTabs();
 }
 
 function render() {
   const root = $("#conditions");
   root.innerHTML = "";
-  for (const c of DATA.conditions) {
+  for (const c of DATA.conditions.filter(x => x.name === active)) {
     const sec = document.createElement("section");
     const sorted = [...c.items].sort((a, b) => b.p - a.p);
     const p = c.params;
@@ -168,13 +207,27 @@ function render() {
   }
 }
 
-$("#download").addEventListener("click", () => {
-  const body = { run_id: DATA.run_id, reviewed: DATA.conditions.every(c => reviewedConds.has(c.name)), reviewed_conditions: [...reviewedConds].sort(), reviewed_at: new Date().toISOString(),
-                 meaning: "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす", flags: [...flags].sort() };
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(body, null, 2) + "\n"], { type: "application/json" }));
-  a.download = "review.json";
-  a.click();
+function reviewBody() {
+  return { run_id: DATA.run_id, reviewed: DATA.conditions.every(c => reviewedConds.has(c.name)), reviewed_conditions: [...reviewedConds].sort(), reviewed_at: new Date().toISOString(),
+           meaning: "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす", flags: [...flags].sort() };
+}
+if (location.protocol === "file:") {
+  $("#savestatus").textContent = "同じディレクトリへ保存するには、python3 tools/serve_runs.py で開いてください。";
+} else {
+  $("#backlink").hidden = false;
+}
+$("#download").addEventListener("click", async () => {
+  const status = $("#savestatus");
+  const text = JSON.stringify(reviewBody(), null, 2) + "\n";
+  try {
+    const res = await fetch("review.json", { method: "PUT", headers: { "Content-Type": "application/json" }, body: text });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    status.style.color = "var(--pass)";
+    status.textContent = "保存しました: review.json（このページと同じ場所）";
+  } catch (err) {
+    status.style.color = "var(--flag)";
+    status.textContent = "保存できません。python3 tools/serve_runs.py で開いてください。";
+  }
 });
 $("#load").addEventListener("change", async (e) => {
   const f = e.target.files[0]; if (!f) return;
@@ -202,6 +255,8 @@ if (DATA.review) { /* review.json が run 直下にある場合は初期値と�
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("run_dir", type=Path)
+    ap.add_argument("--serve", action="store_true", help="作ったあと、tools/serve_runs.py の一覧サーバーでこのレポートを開く")
+    ap.add_argument("--port", type=int, default=0, help="--serve のポート。0 なら 8765 以降の空きを使う")
     args = ap.parse_args()
 
     run_dir = args.run_dir.resolve()
@@ -266,6 +321,13 @@ def main() -> int:
     out = run_dir / "report.html"
     out.write_text(html, encoding="utf-8")
     print(f"→ {out}")
+    if args.serve:
+        from serve_runs import RUNS_DIR, serve
+
+        if run_dir.parent != RUNS_DIR.resolve():
+            print("--serve は runs/ 直下の run だけ使えます", file=sys.stderr)
+            return 1
+        return serve(f"/{run_dir.name}/report.html", args.port)
     return 0
 
 
