@@ -1,11 +1,16 @@
 {
+  "box": {
+    "sideColorLR": "#000000",
+    "sideColorTB": "#ffffff",
+    "frame": true,
+    "frameColor": "#ffffff"
+  },
   "themes": [
     {
       "id": "koi",
       "kind": "song",
       "title": "星野源『恋』",
       "images": [
-
         {
           "id": "02",
           "title": "足跡のような点の列"
@@ -20,7 +25,11 @@
         },
         {
           "id": "09",
-          "title": "やさしい縞"
+          "title": "やさしい縞",
+          "box": {
+            "sideColorLR": "#7b7e84",
+            "frame": false
+          }
         },
         {
           "id": "10",
@@ -47,7 +56,12 @@
       "images": [
         {
           "id": "02",
-          "title": "散る葉"
+          "title": "散る葉",
+          "box": {
+            "sideColorLR": "#6f1722",
+            "sideColorTB": "#000000",
+            "frameColor": "#000000"
+          }
         },
         {
           "id": "05",
@@ -59,15 +73,28 @@
         },
         {
           "id": "10",
-          "title": "縞の移ろい"
+          "title": "縞の移ろい",
+          "box": {
+            "frame": false
+          }
         },
         {
           "id": "13",
-          "title": "穂のような線"
+          "title": "穂のような線",
+          "box": {
+            "sideColorLR": "#1f5b3b",
+            "sideColorTB": "#000000",
+            "frameColor": "#000000"
+          }
         },
         {
           "id": "14",
-          "title": "早い月"
+          "title": "早い月",
+          "box": {
+            "sideColorLR": "#1c2b52",
+            "sideColorTB": "#000000",
+            "frameColor": "#000000"
+          }
         }
       ]
     },
@@ -78,11 +105,18 @@
       "images": [
         {
           "id": "01",
-          "title": "白い光と盛り上がり"
+          "title": "白い光と盛り上がり",
+          "box": {
+            "sideColorTB": "#b9bec4",
+            "frameColor": "#b9bec4"
+          }
         },
         {
           "id": "06",
-          "title": "差し込む光の帯"
+          "title": "差し込む光の帯",
+          "box": {
+            "frame": false
+          }
         },
         {
           "id": "08",
@@ -90,15 +124,26 @@
         },
         {
           "id": "10",
-          "title": "ひび割れた白"
+          "title": "ひび割れた白",
+          "box": {
+            "sideColorTB": "#b9bec4",
+            "frameColor": "#b9bec4"
+          }
         },
         {
           "id": "11",
-          "title": "段々に濃くなる縞"
+          "title": "段々に濃くなる縞",
+          "box": {
+            "frame": false
+          }
         },
         {
           "id": "13",
-          "title": "白に走る波形"
+          "title": "白に走る波形",
+          "box": {
+            "sideColorTB": "#b9bec4",
+            "frameColor": "#b9bec4"
+          }
         }
       ]
     }

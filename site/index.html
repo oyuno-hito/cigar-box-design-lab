@@ -15,6 +15,7 @@
   <header class="top">
     <h1><img class="logo" src="logo-navy.svg" alt="" width="42" height="30"><span>Cigar Box Design Lab</span><img class="logo" src="logo-white.svg" alt="" width="42" height="30"></h1>
     <p>シガーボックスジャグリングの道具に貼る装飾デザイン検討記録。AIを使って画像を生成しています</p>
+    <p>タップ・クリックで実際にデコレーションしたイメージを確認できます</p>
     <div id="tabs" class="chips" role="tablist" aria-label="テーマ"></div>
   </header>
   <div id="theme-head" class="theme-head">
@@ -36,11 +37,16 @@
       <div id="viewer-title" class="viewer-title"></div>
       <div id="viewer-sub" class="viewer-sub"></div>
     </div>
+    <div class="viewer-modes" role="group" aria-label="見せ方">
+      <button type="button" data-mode="one" aria-pressed="true">一箱</button>
+      <button type="button" data-mode="stack" aria-pressed="false">縦に並べる</button>
+      <button type="button" data-mode="row" aria-pressed="false">横に並べる</button>
+    </div>
     <button id="viewer-close" type="button" aria-label="閉じる">×</button>
   </div>
   <div class="viewer-body">
     <button id="viewer-prev" class="step" type="button" aria-label="前の画像">‹</button>
-    <img id="viewer-img" alt="">
+    <div id="viewer-stage" class="viewer-stage" role="group" aria-label=""></div>
     <button id="viewer-next" class="step" type="button" aria-label="次の画像">›</button>
   </div>
   <div id="viewer-count" class="viewer-count"></div>

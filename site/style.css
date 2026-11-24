@@ -80,10 +80,10 @@ dialog {
 dialog[open] { display: flex; }
 dialog::backdrop { background: #000; }
 .viewer-head {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px;
   padding: calc(8px + env(safe-area-inset-top)) 12px 8px 16px;
 }
-.viewer-titles { min-width: 0; }
+.viewer-titles { min-width: 0; flex: 1; }
 .viewer-title { font-size: 16px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .viewer-sub { font-size: 12px; color: var(--mute); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #viewer-close, .step {
@@ -91,12 +91,28 @@ dialog::backdrop { background: #000; }
 }
 #viewer-close { font-size: 28px; line-height: 1; width: 44px; height: 44px; }
 .viewer-body { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; position: relative; touch-action: pan-y; }
-#viewer-img { max-width: 100%; max-height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+/* 箱のイメージ。2 つ並べるときは縦に分け合い、画像は枠の中に収まるように縮む */
+.viewer-stage { flex: 1; align-self: stretch; min-height: 0; width: 100%; max-width: 1100px; padding: 0 8px; display: flex; flex-direction: column; gap: 4px; }
+.viewer-stage.cols { flex-direction: row; gap: 8px; }
+.viewer-stage figure { margin: 0; flex: 1; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+.viewer-stage svg { width: 100%; height: 100%; min-height: 0; user-select: none; }
+.viewer-stage figcaption { text-align: center; font-size: 12px; color: var(--mute); padding: 0 0 6px; }
+/* 見せ方の切り替え（一箱 / 縦に並べる / 横に並べる） */
+.viewer-modes { display: flex; gap: 6px; flex: none; }
+.viewer-modes button {
+  all: unset; cursor: pointer; font-size: 12px; padding: 3px 12px; border: 1px solid var(--line);
+  border-radius: 999px; background: var(--panel); -webkit-tap-highlight-color: transparent;
+}
+.viewer-modes button[aria-pressed="true"] { color: #1a1304; background: var(--accent); border-color: var(--accent); font-weight: 600; }
+.viewer-modes button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .step {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 1;
   width: 44px; height: 64px; font-size: 40px; line-height: 64px; background: rgba(0, 0, 0, .35); border-radius: 8px;
 }
 #viewer-prev { left: 6px; }
 #viewer-next { right: 6px; }
-@media (max-width: 639px) { .step { opacity: .55; } }
+@media (max-width: 639px) {
+  .step { opacity: .55; }
+  .viewer-modes { order: 3; flex-basis: 100%; } /* 狭い画面では、見せ方の切り替えを題名の下の段に回す */
+}
 .viewer-count { text-align: center; color: var(--mute); font-size: 12px; padding: 8px 0 calc(12px + env(safe-area-inset-bottom)); }
