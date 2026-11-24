@@ -1,0 +1,28 @@
+---
+description: cigar-box-design-lab の目的・ディレクトリ・運用ルール
+alwaysApply: true
+---
+
+# プロジェクトの前提
+
+- シガーボックスジャグリングの道具（180x120mm / 165x120mm の面）に貼るデザインを、AI で発散的に探索する個人用リポジトリ。
+- 詳細は `README.md`、`docs/workflow.md` を参照する。
+- 返答とドキュメントは日本語。
+
+# ディレクトリのルール
+
+- `generated/` は生成画像の正本。`like` / `dislike` / `maybe` / `inbox` に分ける。画像を複製しない。
+- `maybe` は分類器の学習に使わない。
+- `scorers/vNNN/` は作成後に書き換えない。更新するときは新しいバージョンを作り、`scorers/CURRENT` を更新する。
+- `generator/models/` のモデル本体はコミットしない。使ったモデルは `generator/models/MODELS.md` に記録する。
+- GitHub Pages に出すのは `artifacts/` のみ。それ以外を公開用ディレクトリにコピーしない。
+
+# 生成のルール
+
+- 探索（発散）の生成では、仕様書（`docs/style-spec.md`）を渡さない。固定の rules と組み合わせ表だけを使う。
+- 抽象語（「おしゃれ」「モダン」）より、具体的な色・形・様式・素材感を使う。
+- 画像を出力したら、プロンプト、生成元、日時をメタデータに残す。
+
+# 秘密情報
+
+- API キーや認証情報をコミットしない。`.env` は Git 管理外。

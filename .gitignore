@@ -1,0 +1,23 @@
+# OS / エディタ
+.DS_Store
+Thumbs.db
+
+# 秘密情報
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# 一時生成物（学習用データ、公開用ディレクトリなど）
+build/
+_site/
+
+# 画像生成環境（モデル本体は管理しない。備忘録だけ残す）
+generator/models/*
+!generator/models/.gitkeep
+!generator/models/MODELS.md
+generator/temp/
