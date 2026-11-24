@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "[発散セット1: アート表現・抽象] Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no text, no people. Each cell: an independent non-nature, non-Japanese-style abstract art decoration with its own palette, medium and texture. No mockup, no perspective. (cell_description が各マスの指定)",
+  "cell_description": "German expressionist woodcut with bold black gouged lines on mint green"
+}

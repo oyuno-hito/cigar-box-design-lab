@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "[発散セット2: ヴィンテージのパッケージ・ラベル] Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no captions, numbers, letters or readable text. Independent flat graphic decorations inspired by vintage packaging and printed labels, without actual labels, logos or recognizable brands. Varied palettes, aged paper, screen print, lithograph, enamel sign and embossed ink textures. (cell_description が各マスの指定)",
+  "cell_description": "old fruit crate label with stylized oranges and decorative shield, no text"
+}

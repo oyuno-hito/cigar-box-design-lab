@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "[演奏の文脈 セット7: Techno] Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no captions, numbers, letters, logos or people. Each cell: independent bold flat graphic inspired by Techno music, black or very dark background with one or two fluorescent light colors, large simple sharp forms, high contrast, glowing neon light as the main subject filling the cell, generous empty dark space, few repeated elements. No mockup, no perspective grid floor. (cell_description が各マスの指定)",
+  "cell_description": "hard-edged light shards bursting outward in white and purple on black"
+}

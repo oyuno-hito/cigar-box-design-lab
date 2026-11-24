@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "Contact sheet, 4 columns x 6 rows, 24 cells, all using the same warm ivory and dusty indigo palette. Non-geometric organic flat graphic decorations: plants, animals, water, clouds, hand-drawn ink and screen-print texture. No text, no mockup, no perspective. (cell_description は各マスの指定)",
+  "cell_description": "loose botanical stems with wild meadow flowers"
+}

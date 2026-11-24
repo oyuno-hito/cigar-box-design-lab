@@ -21,3 +21,6 @@ generator/models/*
 !generator/models/.gitkeep
 !generator/models/MODELS.md
 generator/temp/
+
+# 切り出し前の元シートと、そのメタデータ（人間が見やすい場所に置くが、Git には入れない）
+generated/999_sheet/

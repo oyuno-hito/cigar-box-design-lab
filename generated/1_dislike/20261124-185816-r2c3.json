@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "[発散セット6: ポップ・遊び] Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no captions, numbers, letters or readable text. Independent flat graphic decorations exploring pop art, playfulness and visual humor, no people, no mockup, no perspective. Vivid colors, comic print, sticker texture, screen print, airbrush, graffiti and playful hand-drawn marks. Avoid Japanese motifs, natural landscapes, realistic animals and ordinary geometric pattern tiles. (cell_description が各マスの指定)",
+  "cell_description": "toy building blocks and wind-up toy shapes in bold primary colors"
+}

@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "[発散セット5: 都市・建築・工業] Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no captions, numbers, letters or readable text. Independent flat graphic decorations exploring cities, architecture and industry, no people, no mockup, no perspective. Varied palettes and techniques: blueprint ink, screen print, enamel sign, concrete texture, technical drawing and bold poster paint. Avoid plants, animals, nature scenes, Japanese motifs and ordinary repeating geometric tiles. (cell_description が各マスの指定)",
+  "cell_description": "industrial smokestacks with stylized clouds of steam"
+}

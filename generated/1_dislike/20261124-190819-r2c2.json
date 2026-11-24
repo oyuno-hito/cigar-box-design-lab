@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "[演奏の文脈 セット9: House] Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no captions, numbers, letters, readable text, logos or people. Independent flat graphic decorations inspired by House music and a warm warehouse dance floor: four-beat pulse, warm amber and red light, deep navy shadows, neon highlights, bold readable shapes, screen-print and club-poster textures. No mockup, no perspective grid floor. (cell_description が各マスの指定)",
+  "cell_description": "warehouse ceiling beams with four pools of orange light, no people"
+}

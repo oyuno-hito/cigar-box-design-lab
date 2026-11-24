@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no text. Each cell: independent flat graphic pattern, edge to edge, screen-print look with solid colors, no mockup, no perspective. (cell_description が各マスの指定)",
+  "cell_description": "light blue + white hand-drawn koi-like fish shapes and ripples"
+}

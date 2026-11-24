@@ -1,0 +1,4 @@
+#!/bin/sh
+# push 前に generated/ の整合性を確認する（未分類の inbox が残っていたらエラー）。
+# 有効化: git config core.hooksPath .githooks
+exec python3 "$(git rev-parse --show-toplevel)/tools/check_generated.py"

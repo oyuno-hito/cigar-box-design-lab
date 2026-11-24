@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "[発散セット4: 宇宙・SF・レトロフューチャー] Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no captions, numbers, letters or readable text. Independent flat graphic decorations exploring space, science fiction and retro-futurism. No people, no mockup, no perspective. Varied palettes, screen-print, neon sign, airbrush, technical blueprint and holographic foil textures. (cell_description が各マスの指定)",
+  "cell_description": "cosmic black hole with a bright orange accretion ring and swirling dust"
+}

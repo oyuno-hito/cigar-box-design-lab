@@ -1,0 +1,5 @@
+{
+  "source": "cursor-generateimage（LLM 側の画像生成。モデル名は不明）",
+  "prompt": "[発散セット3: 異文化の染織・伝統様式] Contact sheet, 4 columns x 6 rows, 24 cells, each a 3:2 landscape rectangle separated by thick pure white gutters, no text or writing. Independent flat decorative textile or traditional craft patterns from different cultural traditions, with woven, block-print, embroidery, batik, tapestry or appliqué texture. No people, no mockup, no perspective. (cell_description が各マスの指定)",
+  "cell_description": "Andean woven textile with stylized llamas and stepped mountain-free motifs in red, black and ochre"
+}
