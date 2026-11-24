@@ -55,4 +55,5 @@ GitHub Pages に出すのは `artifacts/` だけです。`generated/`、`scorers
 
 - 画像生成環境: Docker の ComfyUI 設定を追加済み（[generator/README.md](generator/README.md)）。GPU のある PC での起動確認はまだです。
 - 画像の出力と仕分け: `tools/split_grid.py` とスキルで、24 枚ずつ `99_inbox` に出力し、手作業で仕分け中です。
-- 分類器、公開サイト: これから入れます。
+- 分類器: 入っています（`scorers/`）。
+- 公開サイト: 画像グリッドと拡大表示を `site/` に作りました（`python3 tools/build_site.py --serve` で確認）。`main` への push で GitHub Pages に出します（`.github/workflows/pages.yml`）。初回は Settings → Pages の Source を「GitHub Actions」にします。

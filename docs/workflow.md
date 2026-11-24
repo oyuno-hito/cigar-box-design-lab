@@ -51,5 +51,4 @@
 
 ## 公開
 
-- GitHub Pages に出すのは `artifacts/` のみ。
-- CI は `artifacts/` から公開用ディレクトリを作り、そのディレクトリだけを Pages にアップロードする。
+- GitHub Pages に出すのは `artifacts/` の画像と `site/` だけ。`.github/workflows/pages.yml` が `_site/` を作り、そのディレクトリだけをアップロードする。

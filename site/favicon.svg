@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="斜めから見たシガーボックス">
+  <!-- きぞはこ（180×120×60mm）。左の厚みと上面が見える角度。正面の波形は実物の箱の図柄を簡略化したもの。 -->
+  <defs>
+    <linearGradient id="bars" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#f4fbff"/>
+      <stop offset="1" stop-color="#56b8ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" fill="#111214"/>
+  <polygon points="12.47,19.61 5.12,13.45 5.12,44.39 12.47,50.55" fill="#202328" stroke="#121418" stroke-width="0.6" stroke-linejoin="round"/>
+  <polygon points="12.47,19.61 5.12,13.45 51.53,13.45 58.88,19.61" fill="#e4e0d8" stroke="#9a958c" stroke-width="0.6" stroke-linejoin="round"/>
+  <polygon points="12.47,19.61 58.88,19.61 58.88,50.55 12.47,50.55" fill="#f6f4ef" stroke="#b7b2a8" stroke-width="0.6" stroke-linejoin="round"/>
+  <rect x="16.59" y="23.74" width="38.16" height="22.69" fill="#091e3e"/>
+  <g fill="url(#bars)">
+    <rect x="19.26" y="36.02" width="2.33" height="9.21"/>
+    <rect x="23.08" y="28.81" width="2.33" height="16.42"/>
+    <rect x="26.89" y="33.61" width="2.33" height="11.61"/>
+    <rect x="30.70" y="25.21" width="2.33" height="20.02"/>
+    <rect x="34.51" y="37.22" width="2.33" height="8.01"/>
+    <rect x="38.32" y="30.81" width="2.33" height="14.41"/>
+    <rect x="42.13" y="27.21" width="2.33" height="18.02"/>
+    <rect x="45.94" y="34.82" width="2.33" height="10.41"/>
+    <rect x="49.75" y="26.01" width="2.33" height="19.22"/>
+  </g>
+</svg>

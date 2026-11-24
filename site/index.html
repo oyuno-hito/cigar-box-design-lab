@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cigar Box Design Lab</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="シガーボックスジャグリングの道具に貼る装飾デザインを、AI で探した記録。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="sticky-top">
+  <header class="top">
+    <h1>Cigar Box Design Lab</h1>
+    <p>シガーボックスジャグリングの道具に貼る装飾デザイン検討記録。AIを使って画像を生成しています</p>
+    <div id="tabs" class="chips" role="tablist" aria-label="テーマ"></div>
+  </header>
+  <div id="theme-head" class="theme-head">
+    <h2 id="theme-title"></h2>
+    <span id="theme-kind" class="kind"></span>
+    <span id="theme-count" class="count"></span>
+  </div>
+</div>
+<main>
+  <div id="grid" class="grid" role="tabpanel"></div>
+  <footer>
+    画像はすべて AI で生成したものです。曲名は題材の出典を示すだけで、アーティストや作品とは関係ありません。
+  </footer>
+</main>
+
+<dialog id="viewer" aria-label="画像の拡大表示">
+  <div class="viewer-head">
+    <div class="viewer-titles">
+      <div id="viewer-title" class="viewer-title"></div>
+      <div id="viewer-sub" class="viewer-sub"></div>
+    </div>
+    <button id="viewer-close" type="button" aria-label="閉じる">×</button>
+  </div>
+  <div class="viewer-body">
+    <button id="viewer-prev" class="step" type="button" aria-label="前の画像">‹</button>
+    <img id="viewer-img" alt="">
+    <button id="viewer-next" class="step" type="button" aria-label="次の画像">›</button>
+  </div>
+  <div id="viewer-count" class="viewer-count"></div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
