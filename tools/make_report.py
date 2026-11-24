@@ -49,6 +49,7 @@ HTML = r"""<!doctype html>
   .card.flagged { outline:4px solid var(--flag); outline-offset:-4px; } .card.flagged .flag { display:block; }
   .divider { grid-column:1/-1; border-top:2px dashed var(--mute); margin:6px 0; color:var(--mute); font-size:12px; padding-top:4px; }
   .legend span { display:inline-block; margin-right:14px; } .dot { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:middle; }
+  .lbl { color:#79c0ff; font-weight:600; }
   code { background:#21262d; padding:1px 5px; border-radius:4px; }
 </style>
 </head>
@@ -154,7 +155,7 @@ function render() {
       card.dataset.id = it.id;
       card.title = it.prompt;
       card.innerHTML = `<img loading="lazy" src="images/${esc(it.id)}.png"><span class="p">${it.p.toFixed(3)}</span><span class="flag">不一致</span>`
-        + `<div class="meta"><b>${esc(it.id)}</b> <span class="mute">${esc(it.text)}</span></div>`;
+        + `<div class="meta"><b>${esc(it.id)}</b> ${it.label ? `<span class="lbl">[${esc(it.label)}]</span> ` : ""}<span class="mute">${esc(it.text)}</span></div>`;
       card.addEventListener("click", () => {
         flags.has(it.id) ? flags.delete(it.id) : flags.add(it.id);
         card.classList.toggle("flagged", flags.has(it.id));
@@ -216,6 +217,7 @@ def main() -> int:
     review = json.loads(review_path.read_text(encoding="utf-8")) if review_path.exists() else None
 
     texts = {f"{c['name']}-{it['id']}": it["text"] for c in spec["conditions"] for it in c["items"]}
+    labels = {f"{c['name']}-{it['id']}": it.get("label", "") for c in spec["conditions"] for it in c["items"]}
     conditions = []
     for c in spec["conditions"]:
         items = []
@@ -223,7 +225,7 @@ def main() -> int:
             if s["condition"] != c["name"]:
                 continue
             meta = json.loads((run_dir / "images" / f"{s['id']}.json").read_text(encoding="utf-8"))
-            items.append({"id": s["id"], "p": s["p"], "pass": s["pass"], "text": texts.get(s["id"], ""), "prompt": meta["prompt"]})
+            items.append({"id": s["id"], "p": s["p"], "pass": s["pass"], "text": texts.get(s["id"], ""), "label": labels.get(s["id"], ""), "prompt": meta["prompt"]})
         sm = c.get("sampler", spec["sampler"])
         model = f"{c.get('checkpoint', spec['checkpoint'])} / {c.get('width', spec['width'])}x{c.get('height', spec['height'])} / {sm['sampler_name']} {sm['steps']} steps, cfg {sm['cfg']}"
         conditions.append(

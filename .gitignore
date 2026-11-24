@@ -24,3 +24,7 @@ generator/temp/
 
 # 切り出し前の元シートと、そのメタデータ（人間が見やすい場所に置くが、Git には入れない）
 generated/999_sheet/
+
+# 実験 run は画像が大きいので、通常は管理しない。手順の見本として 1 件だけ丸ごと管理する（runs/README.md 参照）
+runs/*/
+!runs/20261124-204000-gap-09-scifi/

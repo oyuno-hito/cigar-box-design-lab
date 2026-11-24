@@ -46,7 +46,7 @@
 
 - **観察**: 1 つの run で見えた。まだ再現を見ていない。
 - **仮説**: 理由を考えた。プロンプトを変えて確かめる予定。
-- **確認済み**: **2 つ以上の別の題材**で、同じ方向の変更が人間の打率を上げ、類似度（下記）が大きく悪化しなかった。
+- **確認済み**: **2 つ以上の別の題材**で、同じ方向の変更が人間の打率を上げ、類似度（下記）が大きく悪化しなかった。1 プロンプト 1 枚の評価（`/eval-prompts`）では、「句の戦績」の表で、2 題材以上で「その句あり = OK かつ同じ題材の `base` = NG」が成り立ち、「その句あり = NG かつ `base` = OK」が 0 件のとき。
 - **却下**: 試したが効かなかった、または悪化した。
 
 まだ何も確認済みではない。最初の観察は次のとおり。
@@ -64,15 +64,25 @@
 
 観察から作った、肯定形の句の案。効くかどうかは、`/tune-prompts` で条件を分けて試すまで分からない。1 つの句で 1 つの軸だけを動かす。
 
-| 軸 | 句の案 |
-| --- | --- |
-| 色の階層 | `restrained three-color palette, one dominant dark ground color, one main turquoise shape, magenta used only as a small accent, large quiet color fields, clear foreground and background hierarchy` |
-| 線・点の細かさ | `thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm` |
-| 面の処理 | `flat solid color fills only, no highlights, no cast shadows, no metallic shine` |
-| 奥行き | `everything sits on one flat plane, no perspective, no interior space` |
-| 具象度 | `subject reduced to a bold silhouette and a few flat shapes, no body, hands or face` |
+| ID | 軸 | 句の案 |
+| --- | --- | --- |
+| `color` | 色の階層 | `restrained three-color palette, one dominant dark ground color, one main turquoise shape, magenta used only as a small accent, large quiet color fields, clear foreground and background hierarchy` |
+| `fine` | 線・点の細かさ | `thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm` |
+| `flat` | 面の処理 | `flat solid color fills only, no highlights, no cast shadows, no metallic shine` |
+| `depth` | 奥行き | `everything sits on one flat plane, no perspective, no interior space` |
+| `abstract` | 具象度 | `subject reduced to a bold silhouette and a few flat shapes, no body, hands or face` |
 
 色の階層は、色を指定するだけでなく、どの色を主役にするかまで書く（題材の色味に合わせて入れ替える）。
+
+### 句の戦績（題材をまたいだ積み上げ）
+
+`/eval-prompts` の結果を、1 題材につき 1 行ずつ足す。「句あり」は、その句を単独で入れたプロンプトの結果。`base` は、同じ題材・同じ seed で句を入れなかったプロンプト。結果は、人間のレビューによる OK / NG（レビューがないときは自己評価で、末尾に「(自)」と付ける）。
+
+| ID | 題材 | 句あり | `base` | 日付 | run |
+| --- | --- | --- | --- | --- | --- |
+| （まだない） | | | | | |
+
+対照（避ける方向の句を入れたプロンプト）が NG だった場合は、その軸の「避ける方向」の根拠として、観察の行に書き足す。
 
 ### 題材レベルの傾向（抽象化前の材料）
 

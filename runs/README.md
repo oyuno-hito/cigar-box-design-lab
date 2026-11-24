@@ -26,6 +26,7 @@ open runs/<run-id>/report.html
 
 - `conditions[].prompt_prefix / prompt_suffix / negative_prompt` が条件ごとの差。好み・ガードの文はここに入れる。
 - `items[]` は条件をまたいで同じ `id` と `seed` にそろえる。条件間の差が、プロンプトの差だけになる。
+- `items[]` には任意で `label`（そのプロンプトの狙い）を付けられる。レポートのカードに表示される。1 プロンプト 1 枚の評価では、条件を 1 つにして、項目ごとに `text` を全文のプロンプトにする（`/eval-prompts`）。
 - 最終プロンプトは `prefix, text, suffix` をカンマでつないだもの。
 - 発散（`text` を考える段階）では `docs/style-spec.md` を渡さない。好み・ガードの反映は生成プロンプトに変換する段階で行う。
 
@@ -50,8 +51,9 @@ python3 tools/compare_review.py runs/<run-id>   # 1 つの run で、スコア�
 
 ## Git での扱い
 
-run は実験的な記録で、コミットするかは未定。`runs/<run>/` は `.git/info/exclude`（ローカル専用）で除外している。
-
+- `runs/<run>/` は、画像が大きく（1 run で 20〜40MB）、環境が違えば再現しないので、**通常は Git 管理外**（`.gitignore`）。
+- ただし「どう作業したか」は残す価値があるので、**見本を 1 件だけ丸ごとコミット**している: [20261124-204000-gap-09-scifi/](20261124-204000-gap-09-scifi/README.md)。spec・生成画像（容量のため 768x512 に縮小）・採点・人間のレビュー・レポート・所感が入っている。run の作り方と読み方は、まずこれを見る。
+- 見本を差し替える・増やすときは、`.gitignore` の `!runs/…/` を足す。画像は 768x512 に縮小して入れる（`Image.resize((768, 512))`）。
 - 同じ spec と seed でも、実行環境（MPS・CUDA・ComfyUI のバージョンなど）が違うと同じ画像にはならない。`review.json` は「その環境で生成した画像を見た結果」であり、別のマシンで再生成した画像には当てはまらない。
 
 ## 注意

@@ -1,0 +1,96 @@
+{
+  "concept": "ネオン以外を含む複数の方向性で、ComfyUI の出力品質が LLM 側（GenerateImage）に対してどれだけ落ちるかを見る",
+  "note": "品質ギャップの検証（scifi）。LLM 側の探索セット 09 と同じセル指定の偶数番 12 件を ComfyUI で生成。参考列は LLM 側 24 枚全体の仕分け結果。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "xl-09-scifi",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "reference": "like 6 / dislike 12 / maybe 6（24 枚中 like 25%）",
+      "items": [
+        {
+          "id": "01",
+          "text": "deep navy star map with irregular thin constellation lines and tiny planets, no labels",
+          "seed": 2000
+        },
+        {
+          "id": "03",
+          "text": "colorful ringed planet with sweeping orbital trails on black",
+          "seed": 2002
+        },
+        {
+          "id": "05",
+          "text": "chrome retro-futurist flying saucer over a striped alien horizon, no text",
+          "seed": 2004
+        },
+        {
+          "id": "07",
+          "text": "astronaut helmet silhouette filled with a star field, no face or text",
+          "seed": 2006
+        },
+        {
+          "id": "09",
+          "text": "cyberpunk neon tunnel made of glowing magenta and cyan light trails",
+          "seed": 2008
+        },
+        {
+          "id": "11",
+          "text": "retro computer circuit board traces with glowing nodes, no letters",
+          "seed": 2010
+        },
+        {
+          "id": "13",
+          "text": "colorful planets and moons floating among soft vapor trails",
+          "seed": 2012
+        },
+        {
+          "id": "15",
+          "text": "futuristic greenhouse dome on an alien moon with small plant silhouettes",
+          "seed": 2014
+        },
+        {
+          "id": "17",
+          "text": "solar system mobile of varied planets suspended in a dark field, no labels",
+          "seed": 2016
+        },
+        {
+          "id": "19",
+          "text": "retro space capsule with round windows and bold panels",
+          "seed": 2018
+        },
+        {
+          "id": "21",
+          "text": "sci-fi city skyline on another planet with neon towers and no signs",
+          "seed": 2020
+        },
+        {
+          "id": "23",
+          "text": "silver astronaut gloves holding a floating glowing orb, no person or text",
+          "seed": 2022
+        }
+      ]
+    }
+  ]
+}

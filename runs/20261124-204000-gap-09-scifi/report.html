@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>実験レポート 20261124-204000-gap-09-scifi</title>
+<style>
+  :root { color-scheme: dark; --pass:#3fb950; --rej:#f85149; --flag:#f0b72f; --bg:#0d1117; --panel:#161b22; --line:#30363d; --mute:#8b949e; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:#e6edf3; font:14px/1.6 -apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif; }
+  main { max-width:1280px; margin:0 auto; padding:24px 20px 80px; }
+  h1 { font-size:20px; margin:0 0 4px; } h2 { font-size:16px; margin:32px 0 8px; } h3 { font-size:14px; margin:0 0 4px; }
+  .mute { color:var(--mute); } .small { font-size:12px; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px 16px; margin:12px 0; }
+  table { border-collapse:collapse; width:100%; } th,td { text-align:left; padding:6px 10px; border-bottom:1px solid var(--line); } th { color:var(--mute); font-weight:500; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .warn { border-color:#6e5a1a; background:#241e0c; }
+  .bar { position:sticky; top:0; z-index:5; background:rgba(13,17,23,.96); border-bottom:1px solid var(--line); padding:8px 20px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  button, label.btn { background:#21262d; color:#e6edf3; border:1px solid var(--line); border-radius:6px; padding:4px 10px; cursor:pointer; font:inherit; }
+  button:hover, label.btn:hover { background:#30363d; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px; }
+  .card { position:relative; background:var(--panel); border:3px solid var(--line); border-radius:8px; overflow:hidden; cursor:pointer; }
+  .card.pass { border-color:var(--pass); } .card.rej { border-color:var(--rej); }
+  .card img { display:block; width:100%; aspect-ratio:3/2; object-fit:cover; background:#000; }
+  .card .meta { padding:6px 8px; font-size:12px; }
+  .card .p { position:absolute; top:6px; left:6px; background:rgba(0,0,0,.75); border-radius:4px; padding:1px 6px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .card .flag { display:none; position:absolute; top:6px; right:6px; background:var(--flag); color:#000; border-radius:4px; padding:1px 6px; font-weight:700; font-size:12px; }
+  .card.flagged { outline:4px solid var(--flag); outline-offset:-4px; } .card.flagged .flag { display:block; }
+  .divider { grid-column:1/-1; border-top:2px dashed var(--mute); margin:6px 0; color:var(--mute); font-size:12px; padding-top:4px; }
+  .legend span { display:inline-block; margin-right:14px; } .dot { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:middle; }
+  .lbl { color:#79c0ff; font-weight:600; }
+  code { background:#21262d; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <strong>人間レビュー</strong>
+  <span id="flagcount" class="mute"></span>
+  <span id="unreviewed" style="color:var(--flag)"></span>
+  <button id="download">review.json を書き出す</button>
+  <label class="btn">読み込む<input type="file" id="load" accept=".json" hidden></label>
+  <button id="clear">印をすべて外す</button>
+</div>
+<main>
+  <h1 id="title"></h1>
+  <div class="mute" id="concept"></div>
+
+  <div class="panel warn small" id="warnings"></div>
+
+  <div id="analysisWrap" class="panel" hidden><h3>考察</h3><div id="analysis" style="white-space:pre-wrap"></div></div>
+
+  <h2>条件ごとの比較</h2>
+  <div class="panel"><table id="summary"></table></div>
+
+  <div class="panel small">
+    <div class="legend">
+      <span><i class="dot" style="background:var(--pass)"></i>機械: 通過（p ≥ 足切り）</span>
+      <span><i class="dot" style="background:var(--rej)"></i>機械: 不通過</span>
+      <span><i class="dot" style="background:var(--flag)"></i>人間: 機械の判定に同意しない（クリックで印を付け外し）</span>
+    </div>
+    <div class="mute">レビューのしかた: 全体を眺め、<b>機械の判定に同意できない画像だけ</b>クリックする。通過なのに NG なものと、不通過なのに OK なものの両方に印を付ける。印のない画像は「同意」として数える。<b>条件（モデルや型）ごとに分かれているので、画面の最後まで見て、条件ごとの「最後まで見た」にチェックする。</b>すべて見たら review.json を書き出し、<code>runs/&lt;run-id&gt;/</code> に置く。</div>
+  </div>
+
+  <div id="conditions"></div>
+</main>
+<script>
+const DATA = {"run_id": "20261124-204000-gap-09-scifi", "title": "実験レポート: 20261124-204000-gap-09-scifi", "concept": "ネオン以外を含む複数の方向性で、ComfyUI の出力品質が LLM 側（GenerateImage）に対してどれだけ落ちるかを見る", "threshold": 0.2517, "warnings": ["メモ: 品質ギャップの検証（scifi）。LLM 側の探索セット 09 と同じセル指定の偶数番 12 件を ComfyUI で生成。参考列は LLM 側 24 枚全体の仕分け結果。", "機械の判定は、人間が仕分けた画像（like 85 / dislike 186）で学習した分類器のスコアです。学習データでの目安: AUC 0.8348（色だけの基準 0.6896、バッチ外 0.7937）。足切りは like を 91% 残したとき dislike の 60% を落とす値です。", "学習データは LLM 側（Cursor の GenerateImage）で作った画像です。この run は ComfyUI の別モデルで作っているため、分布がずれています。絶対値（通過率）より、同じ run 内の条件間の比較を見てください。", "枚数が少ない run では、通過率の差は偶然でも出ます。条件を比べるときは同じ seed・同じ項目で揃えた差を見てください。"], "conditions": [{"name": "xl-09-scifi", "model": "DreamShaperXL_Turbo-Lightning.safetensors / 1152x768 / dpmpp_sde 6 steps, cfg 2.0", "reference": "like 6 / dislike 12 / maybe 6（24 枚中 like 25%）", "diversity": 0.7695, "params": {"prompt_prefix": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition", "prompt_suffix": "", "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border"}, "items": [{"id": "xl-09-scifi-01", "p": 0.4013, "pass": true, "text": "deep navy star map with irregular thin constellation lines and tiny planets, no labels", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, deep navy star map with irregular thin constellation lines and tiny planets, no labels"}, {"id": "xl-09-scifi-03", "p": 0.8007, "pass": true, "text": "colorful ringed planet with sweeping orbital trails on black", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, colorful ringed planet with sweeping orbital trails on black"}, {"id": "xl-09-scifi-05", "p": 0.0733, "pass": false, "text": "chrome retro-futurist flying saucer over a striped alien horizon, no text", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, chrome retro-futurist flying saucer over a striped alien horizon, no text"}, {"id": "xl-09-scifi-07", "p": 0.0993, "pass": false, "text": "astronaut helmet silhouette filled with a star field, no face or text", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, astronaut helmet silhouette filled with a star field, no face or text"}, {"id": "xl-09-scifi-09", "p": 0.0218, "pass": false, "text": "cyberpunk neon tunnel made of glowing magenta and cyan light trails", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, cyberpunk neon tunnel made of glowing magenta and cyan light trails"}, {"id": "xl-09-scifi-11", "p": 0.058, "pass": false, "text": "retro computer circuit board traces with glowing nodes, no letters", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, retro computer circuit board traces with glowing nodes, no letters"}, {"id": "xl-09-scifi-13", "p": 0.1901, "pass": false, "text": "colorful planets and moons floating among soft vapor trails", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, colorful planets and moons floating among soft vapor trails"}, {"id": "xl-09-scifi-15", "p": 0.1472, "pass": false, "text": "futuristic greenhouse dome on an alien moon with small plant silhouettes", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, futuristic greenhouse dome on an alien moon with small plant silhouettes"}, {"id": "xl-09-scifi-17", "p": 0.8143, "pass": true, "text": "solar system mobile of varied planets suspended in a dark field, no labels", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, solar system mobile of varied planets suspended in a dark field, no labels"}, {"id": "xl-09-scifi-19", "p": 0.0108, "pass": false, "text": "retro space capsule with round windows and bold panels", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, retro space capsule with round windows and bold panels"}, {"id": "xl-09-scifi-21", "p": 0.0429, "pass": false, "text": "sci-fi city skyline on another planet with neon towers and no signs", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, sci-fi city skyline on another planet with neon towers and no signs"}, {"id": "xl-09-scifi-23", "p": 0.0212, "pass": false, "text": "silver astronaut gloves holding a floating glowing orb, no person or text", "label": "", "prompt": "flat graphic decoration exploring space, science fiction and retro-futurism, screen print, neon sign, airbrush, technical blueprint and holographic foil textures, full frame composition, silver astronaut gloves holding a floating glowing orb, no person or text"}]}], "review": {"run_id": "20261124-204000-gap-09-scifi", "reviewed": true, "reviewed_at": "2026-11-24T12:12:07.102Z", "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は同意", "flags": ["xl-09-scifi-03", "xl-09-scifi-17"]}, "analysis": ""};
+const KEY = "review:" + DATA.run_id;
+let state = JSON.parse(localStorage.getItem(KEY) || '{"flags":[]}');
+const flags = new Set(state.flags || []);
+// 旧形式（reviewed: true だけ）は、条件が 1 つの run のときだけ「その条件を見た」とみなす。複数条件の run では未確認に戻す
+const reviewedConds = new Set(state.reviewed_conditions || (state.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : []));
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = (a, b) => b ? (100 * a / b).toFixed(0) + "%" : "-";
+const median = (xs) => { const s = [...xs].sort((a,b)=>a-b), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2; };
+
+$("#title").textContent = DATA.title;
+$("#concept").textContent = DATA.concept;
+if (DATA.analysis) { $("#analysisWrap").hidden = false; $("#analysis").textContent = DATA.analysis; }
+$("#warnings").innerHTML = DATA.warnings.map(w => "・" + esc(w)).join("<br>");
+
+function save() {
+  state = { reviewed_conditions: [...reviewedConds], flags: [...flags] };
+  localStorage.setItem(KEY, JSON.stringify(state));
+}
+
+function summarize() {
+  let html = "<tr><th>条件</th><th class='num'>枚数</th><th class='num'>機械 通過</th><th class='num'>通過率</th><th>参考（LLM 側の仕分け）</th><th class='num'>p 平均</th><th class='num'>p 中央値</th><th class='num' title='条件内の画像どうしの CLIP 類似度の平均。高いほど似た絵が並んでいる'>類似度</th>"
+    + "<th class='num'>印 通過→NG</th><th class='num'>印 不通過→OK</th><th class='num'>人間 OK 率</th><th class='num'>一致率</th><th>確認</th></tr>";
+  for (const c of DATA.conditions) {
+    const n = c.items.length, passed = c.items.filter(i => i.pass).length;
+    const fp = c.items.filter(i => i.pass && flags.has(i.id)).length;
+    const fr = c.items.filter(i => !i.pass && flags.has(i.id)).length;
+    const humanOk = passed - fp + fr;
+    const reviewed = reviewedConds.has(c.name);
+    html += `<tr><td>${esc(c.name)}</td><td class="num">${n}</td><td class="num">${passed}</td><td class="num">${pct(passed, n)}</td>`
+      + `<td class="small mute">${esc(c.reference || "")}</td><td class="num">${(c.items.reduce((a,i)=>a+i.p,0)/n).toFixed(3)}</td><td class="num">${median(c.items.map(i=>i.p)).toFixed(3)}</td><td class="num">${c.diversity == null ? "-" : c.diversity.toFixed(2)}</td>`
+      + `<td class="num">${fp}</td><td class="num">${fr}</td>`
+      + `<td class="num">${reviewed ? pct(humanOk, n) : "未確認"}</td><td class="num">${reviewed ? pct(n - fp - fr, n) : "未確認"}</td><td>${reviewed ? "✔" : "<span style='color:var(--flag)'>未</span>"}</td></tr>`;
+  }
+  $("#summary").innerHTML = html;
+  $("#flagcount").textContent = `印: ${flags.size} 件`;
+  const left = DATA.conditions.filter(c => !reviewedConds.has(c.name)).map(c => c.name);
+  $("#unreviewed").textContent = left.length ? `未確認の条件: ${left.join("、")}` : "すべての条件を確認済み";
+}
+
+function render() {
+  const root = $("#conditions");
+  root.innerHTML = "";
+  for (const c of DATA.conditions) {
+    const sec = document.createElement("section");
+    const sorted = [...c.items].sort((a, b) => b.p - a.p);
+    const p = c.params;
+    sec.innerHTML = `<h2>${esc(c.name)} <label class="btn small" style="font-weight:400"><input type="checkbox" class="rc"${reviewedConds.has(c.name) ? " checked" : ""}> この条件を最後まで見た</label></h2>`
+      + `<div class="small mute">model: ${esc(c.model)}<br>prefix: ${esc(p.prompt_prefix || "(なし)")}<br>suffix: ${esc(p.prompt_suffix || "(なし)")}<br>negative: ${esc(p.negative_prompt || "(なし)")}</div>`;
+    sec.querySelector(".rc").addEventListener("change", (e) => {
+      e.target.checked ? reviewedConds.add(c.name) : reviewedConds.delete(c.name);
+      save(); summarize();
+    });
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    let dividerDone = false;
+    for (const it of sorted) {
+      if (!it.pass && !dividerDone) {
+        dividerDone = true;
+        const d = document.createElement("div");
+        d.className = "divider";
+        d.textContent = `足切り線 p = ${DATA.threshold} ── これより下は機械が「不通過」`;
+        grid.appendChild(d);
+      }
+      const card = document.createElement("div");
+      card.className = "card " + (it.pass ? "pass" : "rej") + (flags.has(it.id) ? " flagged" : "");
+      card.dataset.id = it.id;
+      card.title = it.prompt;
+      card.innerHTML = `<img loading="lazy" src="images/${esc(it.id)}.png"><span class="p">${it.p.toFixed(3)}</span><span class="flag">不一致</span>`
+        + `<div class="meta"><b>${esc(it.id)}</b> ${it.label ? `<span class="lbl">[${esc(it.label)}]</span> ` : ""}<span class="mute">${esc(it.text)}</span></div>`;
+      card.addEventListener("click", () => {
+        flags.has(it.id) ? flags.delete(it.id) : flags.add(it.id);
+        card.classList.toggle("flagged", flags.has(it.id));
+        save(); summarize();
+      });
+      grid.appendChild(card);
+    }
+    sec.appendChild(grid);
+    root.appendChild(sec);
+  }
+}
+
+$("#download").addEventListener("click", () => {
+  const body = { run_id: DATA.run_id, reviewed: DATA.conditions.every(c => reviewedConds.has(c.name)), reviewed_conditions: [...reviewedConds].sort(), reviewed_at: new Date().toISOString(),
+                 meaning: "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす", flags: [...flags].sort() };
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(body, null, 2) + "\n"], { type: "application/json" }));
+  a.download = "review.json";
+  a.click();
+});
+$("#load").addEventListener("change", async (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = JSON.parse(await f.text());
+  flags.clear(); (r.flags || []).forEach(x => flags.add(x));
+  reviewedConds.clear(); (r.reviewed_conditions || (r.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : [])).forEach(x => reviewedConds.add(x));
+  save(); render(); summarize();
+});
+$("#clear").addEventListener("click", () => { if (confirm("印と「最後まで見た」をすべて外しますか？")) { flags.clear(); reviewedConds.clear(); save(); render(); summarize(); } });
+
+render(); summarize();
+if (DATA.review) { /* review.json が run 直下にある場合は初期値として使う（localStorage が空のときだけ） */
+  if (!localStorage.getItem(KEY)) {
+    DATA.review.flags.forEach(x => flags.add(x));
+    (DATA.review.reviewed_conditions || (DATA.review.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : [])).forEach(x => reviewedConds.add(x));
+    save(); render(); summarize();
+  }
+}
+</script>
+</body>
+</html>
