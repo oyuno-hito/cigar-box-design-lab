@@ -6,7 +6,7 @@
     python3 tools/serve_runs.py --port 9000
 
 一覧（/）は、開くたびに runs/ を読み直す。run の状態は次で決める。
-  - 未採点      scores.json がない（レポートも作れない）
+  - 生成候補    scores.json がない（画像生成前、または生成が途中）
   - 未レビュー  review.json がない
   - 一部未確認  review.json はあるが、「最後まで見た」の条件が足りない
   - 確認済み    すべての条件にチェックがある
@@ -14,6 +14,7 @@
 report.html がない run は、開いたときに make_report.py で作る。
 
 各 run のレポートの「review.json に保存」は、PUT /<run>/review.json で、その run のディレクトリに書く。
+一覧の「選択した run を削除」は、確認ダイアログのあと POST /_delete で run を完全に削除する（Git 管理下の run は削除しない）。
 それ以外のファイルには書き込まない。
 """
 
@@ -23,6 +24,7 @@ import argparse
 import html
 import json
 import re
+import shutil
 import socket
 import subprocess
 import sys
@@ -35,8 +37,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 RUNS_DIR = REPO_ROOT / "runs"
 RUN_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 
-STATUS_ORDER = {"未レビュー": 0, "一部未確認": 1, "未採点": 2, "確認済み": 3}
-STATUS_COLOR = {"未レビュー": "#f85149", "一部未確認": "#f0b72f", "未採点": "#8b949e", "確認済み": "#3fb950"}
+STATUS_ORDER = {"未レビュー": 0, "一部未確認": 1, "生成候補": 2, "確認済み": 3}
+STATUS_COLOR = {"未レビュー": "#f85149", "一部未確認": "#f0b72f", "生成候補": "#8b949e", "確認済み": "#3fb950"}
 
 
 def read_json(path: Path):
@@ -61,7 +63,7 @@ def run_info(run_dir: Path) -> dict:
     missing = [c for c in conds if c not in reviewed]
 
     if scores is None:
-        status = "未採点"
+        status = "生成候補"
     elif review is None:
         status = "未レビュー"
     elif missing:
@@ -104,8 +106,8 @@ def pct(x: float | None) -> str:
     return "-" if x is None else f"{x:.0%}"
 
 
-TABS = [("todo", "未検査"), ("done", "検査済み"), ("unscored", "未採点")]
-TAB_STATUS = {"todo": ("未レビュー", "一部未確認"), "done": ("確認済み",), "unscored": ("未採点",)}
+TABS = [("todo", "未検査"), ("done", "検査済み"), ("unscored", "生成候補")]
+TAB_STATUS = {"todo": ("未レビュー", "一部未確認"), "done": ("確認済み",), "unscored": ("生成候補",)}
 
 
 def index_html(tab: str) -> str:
@@ -123,15 +125,16 @@ def index_html(tab: str) -> str:
         elif r["status"] == "未レビュー":
             detail = "review.json なし"
         name = html.escape(r["name"])
-        link = f'<a href="/{name}/report.html">{name}</a>' if r["status"] != "未採点" else name
+        link = f'<a href="/{name}/report.html">{name}</a>' if r["status"] != "生成候補" else name
         rows.append(
-            f"<tr><td><span class='tag' style='background:{color}'>{r['status']}</span></td>"
+            f"<tr><td><input type='checkbox' class='pick' value='{name}'></td>"
+            f"<td><span class='tag' style='background:{color}'>{r['status']}</span></td>"
             f"<td>{link}<div class='mute small'>{html.escape(r['concept'])}</div></td>"
             f"<td class='small'>{html.escape(detail)}</td>"
             f"<td class='num'>{len(r['conditions'])}</td><td class='num'>{r['n_images']}</td><td class='num'>{pct(r['pass_rate'])}</td>"
             f"<td class='num'>{pct(r['human_ok'])}</td><td class='num'>{r['flags']}</td></tr>"
         )
-    body = "\n".join(rows) or "<tr><td colspan='8' class='mute'>この区分の run はありません</td></tr>"
+    body = "\n".join(rows) or "<tr><td colspan='9' class='mute'>この区分の run はありません</td></tr>"
     tabs = "".join(
         f'<a class="tab{" active" if k == tab else ""}" href="/?tab={k}">{label}<span class="cnt">{count[k]}</span></a>'
         for k, label in TABS
@@ -155,14 +158,41 @@ def index_html(tab: str) -> str:
   th, td {{ text-align:left; padding:8px 10px; border-bottom:1px solid #30363d; vertical-align:top; }}
   th {{ color:#8b949e; font-weight:500; }} .num {{ text-align:right; font-variant-numeric:tabular-nums; }}
   .tag {{ display:inline-block; color:#000; font-weight:700; font-size:12px; padding:1px 8px; border-radius:4px; white-space:nowrap; }}
+  .tools {{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:12px 0 4px; }}
+  button {{ background:#21262d; color:#e6edf3; border:1px solid #30363d; border-radius:6px; padding:4px 10px; cursor:pointer; font:inherit; }}
+  button:hover {{ background:#30363d; }} button.danger {{ border-color:#f85149; color:#ffa198; }}
+  td:first-child, th:first-child {{ width:28px; padding-right:0; }}
 </style></head><body><main>
 <h1>runs 一覧</h1>
 <div class="mute small">未レビュー = review.json なし。一部未確認 = 「最後まで見た」のチェックが足りない条件がある。このページは開くたびに読み直す。</div>
 <div class="tabs">{tabs}</div>
+<div class="tools">
+  <button id="pick-all">表示中を全選択</button>
+  <button id="pick-none">選択を外す</button>
+  <button id="delete" class="danger">選択した run を削除</button>
+  <span id="delete-status" class="mute small"></span>
+</div>
 <table>
-<tr><th>状態</th><th>run</th><th>詳細</th><th class="num">条件</th><th class="num">枚数</th><th class="num">機械 通過率</th><th class="num">人間 OK 率</th><th class="num">印</th></tr>
+<tr><th></th><th>状態</th><th>run</th><th>詳細</th><th class="num">条件</th><th class="num">枚数</th><th class="num">機械 通過率</th><th class="num">人間 OK 率</th><th class="num">印</th></tr>
 {body}
-</table></main></body></html>
+</table></main>
+<script>
+const picks = () => [...document.querySelectorAll(".pick")];
+const statusEl = document.querySelector("#delete-status");
+const count = () => {{ statusEl.textContent = `${{picks().filter(x => x.checked).length}} 件を選択`; }};
+document.querySelector("#pick-all").addEventListener("click", () => {{ picks().forEach(x => x.checked = true); count(); }});
+document.querySelector("#pick-none").addEventListener("click", () => {{ picks().forEach(x => x.checked = false); statusEl.textContent = ""; }});
+picks().forEach(x => x.addEventListener("change", count));
+document.querySelector("#delete").addEventListener("click", async () => {{
+  const runs = picks().filter(x => x.checked).map(x => x.value);
+  if (!runs.length) {{ statusEl.textContent = "run が選ばれていません"; return; }}
+  if (!confirm(`${{runs.length}} 件を完全に削除します。元に戻せません。続けますか？\\n\\n` + runs.slice(0, 12).join("\\n") + (runs.length > 12 ? "\\n…" : ""))) return;
+  const res = await fetch("/_delete", {{ method: "POST", headers: {{ "Content-Type": "application/json" }}, body: JSON.stringify({{ runs }}) }});
+  const data = await res.json();
+  if (data.skipped.length) alert("削除しなかった run:\\n" + data.skipped.map(x => `${{x.run}}: ${{x.reason}}`).join("\\n"));
+  location.reload();
+}});
+</script></body></html>
 """
 
 
@@ -194,6 +224,36 @@ class Handler(SimpleHTTPRequestHandler):
             if (run_dir / "scores.json").exists() and not (run_dir / "report.html").exists():
                 subprocess.run([sys.executable, str(REPO_ROOT / "tools" / "make_report.py"), str(run_dir)], check=False)
         super().do_GET()
+
+    def do_POST(self):
+        if unquote(urlsplit(self.path).path) != "/_delete":
+            self.send_body(404, b'{"ok":false}\n', "application/json")
+            return
+        length = int(self.headers.get("Content-Length", "0"))
+        if length > 1_000_000:
+            self.send_body(413, b'{"ok":false}\n', "application/json")
+            return
+        try:
+            names = json.loads(self.rfile.read(length))["runs"]
+            if not isinstance(names, list) or not all(isinstance(x, str) for x in names):
+                raise ValueError
+        except (json.JSONDecodeError, KeyError, ValueError, TypeError):
+            self.send_body(400, b'{"ok":false}\n', "application/json")
+            return
+        deleted, skipped = [], []
+        for name in dict.fromkeys(names):
+            target = RUNS_DIR / name
+            if not RUN_NAME.match(name) or not (target / "spec.json").exists():
+                skipped.append({"run": name, "reason": "run が見つかりません"})
+                continue
+            tracked = subprocess.run(["git", "ls-files", "--error-unmatch", f"runs/{name}"], cwd=REPO_ROOT, capture_output=True)
+            if tracked.returncode == 0:
+                skipped.append({"run": name, "reason": "Git 管理下の見本 run です"})
+                continue
+            shutil.rmtree(target)
+            deleted.append(name)
+        body = json.dumps({"ok": True, "deleted": deleted, "skipped": skipped}, ensure_ascii=False).encode("utf-8")
+        self.send_body(200, body, "application/json; charset=utf-8")
 
     def do_PUT(self):
         m = re.fullmatch(r"/([^/]+)/review\.json", unquote(urlsplit(self.path).path))
