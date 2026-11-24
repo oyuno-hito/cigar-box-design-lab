@@ -14,7 +14,7 @@
 report.html がない run は、開いたときに make_report.py で作る。
 
 各 run のレポートの「review.json に保存」は、PUT /<run>/review.json で、その run のディレクトリに書く。
-一覧の「選択した run を削除」は、確認ダイアログのあと POST /_delete で run を完全に削除する（Git 管理下の run は削除しない）。
+一覧の「選択した run を削除」は、確認ダイアログのあと POST /_delete で run を完全に削除する（見本として Git 管理する run は削除しない）。
 それ以外のファイルには書き込まない。
 """
 
@@ -246,9 +246,11 @@ class Handler(SimpleHTTPRequestHandler):
             if not RUN_NAME.match(name) or not (target / "spec.json").exists():
                 skipped.append({"run": name, "reason": "run が見つかりません"})
                 continue
+            # 見本 run は .gitignore の例外にしてある。コミット前でも消さないよう、無視されていない run も守る
             tracked = subprocess.run(["git", "ls-files", "--error-unmatch", f"runs/{name}"], cwd=REPO_ROOT, capture_output=True)
-            if tracked.returncode == 0:
-                skipped.append({"run": name, "reason": "Git 管理下の見本 run です"})
+            ignored = subprocess.run(["git", "check-ignore", "-q", f"runs/{name}/"], cwd=REPO_ROOT, capture_output=True)
+            if tracked.returncode == 0 or ignored.returncode != 0:
+                skipped.append({"run": name, "reason": "見本 run です（.gitignore の例外）"})
                 continue
             shutil.rmtree(target)
             deleted.append(name)
