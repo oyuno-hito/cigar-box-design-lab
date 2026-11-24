@@ -8,6 +8,7 @@
 前提:
   - ComfyUI が起動していること（既定は http://127.0.0.1:8188。--host で変更）
   - ワークフローは generator/workflows/ のテンプレート（spec.json の workflow）を使い、プロンプト・seed・サイズなどを差し替える
+  - checkpoint / width / height / sampler は run 全体の既定で、条件（conditions[]）ごとに上書きできる
 
 出力:
   runs/<run-id>/images/<条件名>-<番号>.png と、同名の .json（source / prompt / negative_prompt / seed）
@@ -46,14 +47,19 @@ def join_prompt(*parts: str) -> str:
     return ", ".join(p.strip().strip(",") for p in parts if p and p.strip())
 
 
-def build_workflow(template: dict, spec: dict, prompt: str, negative: str, seed: int) -> dict:
+def effective(spec: dict, cond: dict) -> dict:
+    """run 全体の設定を、条件ごとの指定（checkpoint / width / height / sampler）で上書きしたもの。"""
+    return {k: cond.get(k, spec[k]) for k in ("checkpoint", "width", "height", "sampler")}
+
+
+def build_workflow(template: dict, eff: dict, prompt: str, negative: str, seed: int) -> dict:
     wf = copy.deepcopy(template)
-    wf["1"]["inputs"]["ckpt_name"] = spec["checkpoint"]
+    wf["1"]["inputs"]["ckpt_name"] = eff["checkpoint"]
     wf["2"]["inputs"]["text"] = prompt
     wf["3"]["inputs"]["text"] = negative
-    wf["4"]["inputs"]["width"] = spec["width"]
-    wf["4"]["inputs"]["height"] = spec["height"]
-    wf["5"]["inputs"].update(spec["sampler"])
+    wf["4"]["inputs"]["width"] = eff["width"]
+    wf["4"]["inputs"]["height"] = eff["height"]
+    wf["5"]["inputs"].update(eff["sampler"])
     wf["5"]["inputs"]["seed"] = seed
     return wf
 
@@ -102,24 +108,26 @@ def main() -> int:
         print(f"ComfyUI に接続できません（{args.host}）: {e}", file=sys.stderr)
         return 1
     version = stats.get("system", {}).get("comfyui_version", "unknown")
-    source = f"comfyui {version} / {spec['checkpoint']} / {spec['sampler']['sampler_name']} {spec['sampler']['steps']}steps cfg{spec['sampler']['cfg']}"
 
     jobs = []
     for cond in spec["conditions"]:
+        eff = effective(spec, cond)
+        sm = eff["sampler"]
+        source = f"comfyui {version} / {eff['checkpoint']} / {sm['sampler_name']} {sm['steps']}steps cfg{sm['cfg']} / {eff['width']}x{eff['height']}"
         items = cond["items"][: args.limit] if args.limit else cond["items"]
         for it in items:
             prompt = join_prompt(cond.get("prompt_prefix", ""), it["text"], cond.get("prompt_suffix", ""))
-            jobs.append((f"{cond['name']}-{it['id']}", prompt, cond.get("negative_prompt", ""), int(it["seed"])))
+            jobs.append((f"{cond['name']}-{it['id']}", prompt, cond.get("negative_prompt", ""), int(it["seed"]), eff, source))
 
     t0 = time.time()
     done = 0
-    for i, (name, prompt, negative, seed) in enumerate(jobs, 1):
+    for i, (name, prompt, negative, seed, eff, source) in enumerate(jobs, 1):
         png = out / f"{name}.png"
         if png.exists() and not args.force:
             print(f"[{i}/{len(jobs)}] {name}: 既にあるのでスキップ")
             continue
         t = time.time()
-        data = run_one(args.host, build_workflow(template, spec, prompt, negative, seed))
+        data = run_one(args.host, build_workflow(template, eff, prompt, negative, seed))
         png.write_bytes(data)
         meta = {"source": source, "prompt": prompt, "negative_prompt": negative, "seed": seed}
         png.with_suffix(".json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

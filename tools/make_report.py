@@ -55,8 +55,8 @@ HTML = r"""<!doctype html>
 <body>
 <div class="bar">
   <strong>人間レビュー</strong>
-  <label><input type="checkbox" id="reviewed"> 全画像を最後まで見た</label>
   <span id="flagcount" class="mute"></span>
+  <span id="unreviewed" style="color:var(--flag)"></span>
   <button id="download">review.json を書き出す</button>
   <label class="btn">読み込む<input type="file" id="load" accept=".json" hidden></label>
   <button id="clear">印をすべて外す</button>
@@ -67,6 +67,8 @@ HTML = r"""<!doctype html>
 
   <div class="panel warn small" id="warnings"></div>
 
+  <div id="analysisWrap" class="panel" hidden><h3>考察</h3><div id="analysis" style="white-space:pre-wrap"></div></div>
+
   <h2>条件ごとの比較</h2>
   <div class="panel"><table id="summary"></table></div>
 
@@ -76,7 +78,7 @@ HTML = r"""<!doctype html>
       <span><i class="dot" style="background:var(--rej)"></i>機械: 不通過</span>
       <span><i class="dot" style="background:var(--flag)"></i>人間: 機械の判定に同意しない（クリックで印を付け外し）</span>
     </div>
-    <div class="mute">レビューのしかた: 全体を眺め、<b>機械の判定に同意できない画像だけ</b>クリックする。通過なのに NG なものと、不通過なのに OK なものの両方に印を付ける。印のない画像は「同意」として数える。最後まで見たら「最後まで見た」にチェックし、review.json を <code>runs/&lt;run-id&gt;/</code> に置く。</div>
+    <div class="mute">レビューのしかた: 全体を眺め、<b>機械の判定に同意できない画像だけ</b>クリックする。通過なのに NG なものと、不通過なのに OK なものの両方に印を付ける。印のない画像は「同意」として数える。<b>条件（モデルや型）ごとに分かれているので、画面の最後まで見て、条件ごとの「最後まで見た」にチェックする。</b>すべて見たら review.json を書き出し、<code>runs/&lt;run-id&gt;/</code> に置く。</div>
   </div>
 
   <div id="conditions"></div>
@@ -84,8 +86,10 @@ HTML = r"""<!doctype html>
 <script>
 const DATA = __DATA__;
 const KEY = "review:" + DATA.run_id;
-let state = JSON.parse(localStorage.getItem(KEY) || '{"reviewed":false,"flags":[]}');
+let state = JSON.parse(localStorage.getItem(KEY) || '{"flags":[]}');
 const flags = new Set(state.flags || []);
+// 旧形式（reviewed: true だけ）は、条件が 1 つの run のときだけ「その条件を見た」とみなす。複数条件の run では未確認に戻す
+const reviewedConds = new Set(state.reviewed_conditions || (state.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : []));
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pct = (a, b) => b ? (100 * a / b).toFixed(0) + "%" : "-";
@@ -93,29 +97,32 @@ const median = (xs) => { const s = [...xs].sort((a,b)=>a-b), m = s.length >> 1; 
 
 $("#title").textContent = DATA.title;
 $("#concept").textContent = DATA.concept;
+if (DATA.analysis) { $("#analysisWrap").hidden = false; $("#analysis").textContent = DATA.analysis; }
 $("#warnings").innerHTML = DATA.warnings.map(w => "・" + esc(w)).join("<br>");
 
 function save() {
-  state = { reviewed: $("#reviewed").checked, flags: [...flags] };
+  state = { reviewed_conditions: [...reviewedConds], flags: [...flags] };
   localStorage.setItem(KEY, JSON.stringify(state));
 }
 
 function summarize() {
-  const reviewed = $("#reviewed").checked;
-  let html = "<tr><th>条件</th><th class='num'>枚数</th><th class='num'>機械 通過</th><th class='num'>通過率</th><th class='num'>p 平均</th><th class='num'>p 中央値</th>"
-    + "<th class='num'>印 通過→NG</th><th class='num'>印 不通過→OK</th><th class='num'>人間 OK 率</th><th class='num'>一致率</th></tr>";
+  let html = "<tr><th>条件</th><th class='num'>枚数</th><th class='num'>機械 通過</th><th class='num'>通過率</th><th>参考（LLM 側の仕分け）</th><th class='num'>p 平均</th><th class='num'>p 中央値</th><th class='num' title='条件内の画像どうしの CLIP 類似度の平均。高いほど似た絵が並んでいる'>類似度</th>"
+    + "<th class='num'>印 通過→NG</th><th class='num'>印 不通過→OK</th><th class='num'>人間 OK 率</th><th class='num'>一致率</th><th>確認</th></tr>";
   for (const c of DATA.conditions) {
     const n = c.items.length, passed = c.items.filter(i => i.pass).length;
     const fp = c.items.filter(i => i.pass && flags.has(i.id)).length;
     const fr = c.items.filter(i => !i.pass && flags.has(i.id)).length;
     const humanOk = passed - fp + fr;
+    const reviewed = reviewedConds.has(c.name);
     html += `<tr><td>${esc(c.name)}</td><td class="num">${n}</td><td class="num">${passed}</td><td class="num">${pct(passed, n)}</td>`
-      + `<td class="num">${(c.items.reduce((a,i)=>a+i.p,0)/n).toFixed(3)}</td><td class="num">${median(c.items.map(i=>i.p)).toFixed(3)}</td>`
+      + `<td class="small mute">${esc(c.reference || "")}</td><td class="num">${(c.items.reduce((a,i)=>a+i.p,0)/n).toFixed(3)}</td><td class="num">${median(c.items.map(i=>i.p)).toFixed(3)}</td><td class="num">${c.diversity == null ? "-" : c.diversity.toFixed(2)}</td>`
       + `<td class="num">${fp}</td><td class="num">${fr}</td>`
-      + `<td class="num">${reviewed ? pct(humanOk, n) : "未確認"}</td><td class="num">${reviewed ? pct(n - fp - fr, n) : "未確認"}</td></tr>`;
+      + `<td class="num">${reviewed ? pct(humanOk, n) : "未確認"}</td><td class="num">${reviewed ? pct(n - fp - fr, n) : "未確認"}</td><td>${reviewed ? "✔" : "<span style='color:var(--flag)'>未</span>"}</td></tr>`;
   }
   $("#summary").innerHTML = html;
   $("#flagcount").textContent = `印: ${flags.size} 件`;
+  const left = DATA.conditions.filter(c => !reviewedConds.has(c.name)).map(c => c.name);
+  $("#unreviewed").textContent = left.length ? `未確認の条件: ${left.join("、")}` : "すべての条件を確認済み";
 }
 
 function render() {
@@ -125,8 +132,12 @@ function render() {
     const sec = document.createElement("section");
     const sorted = [...c.items].sort((a, b) => b.p - a.p);
     const p = c.params;
-    sec.innerHTML = `<h2>${esc(c.name)}</h2>`
-      + `<div class="small mute">prefix: ${esc(p.prompt_prefix || "(なし)")}<br>suffix: ${esc(p.prompt_suffix || "(なし)")}<br>negative: ${esc(p.negative_prompt || "(なし)")}</div>`;
+    sec.innerHTML = `<h2>${esc(c.name)} <label class="btn small" style="font-weight:400"><input type="checkbox" class="rc"${reviewedConds.has(c.name) ? " checked" : ""}> この条件を最後まで見た</label></h2>`
+      + `<div class="small mute">model: ${esc(c.model)}<br>prefix: ${esc(p.prompt_prefix || "(なし)")}<br>suffix: ${esc(p.prompt_suffix || "(なし)")}<br>negative: ${esc(p.negative_prompt || "(なし)")}</div>`;
+    sec.querySelector(".rc").addEventListener("change", (e) => {
+      e.target.checked ? reviewedConds.add(c.name) : reviewedConds.delete(c.name);
+      save(); summarize();
+    });
     const grid = document.createElement("div");
     grid.className = "grid";
     let dividerDone = false;
@@ -156,11 +167,9 @@ function render() {
   }
 }
 
-$("#reviewed").checked = !!state.reviewed;
-$("#reviewed").addEventListener("change", () => { save(); summarize(); });
 $("#download").addEventListener("click", () => {
-  const body = { run_id: DATA.run_id, reviewed: $("#reviewed").checked, reviewed_at: new Date().toISOString(),
-                 meaning: "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は同意", flags: [...flags].sort() };
+  const body = { run_id: DATA.run_id, reviewed: DATA.conditions.every(c => reviewedConds.has(c.name)), reviewed_conditions: [...reviewedConds].sort(), reviewed_at: new Date().toISOString(),
+                 meaning: "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす", flags: [...flags].sort() };
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([JSON.stringify(body, null, 2) + "\n"], { type: "application/json" }));
   a.download = "review.json";
@@ -170,14 +179,18 @@ $("#load").addEventListener("change", async (e) => {
   const f = e.target.files[0]; if (!f) return;
   const r = JSON.parse(await f.text());
   flags.clear(); (r.flags || []).forEach(x => flags.add(x));
-  $("#reviewed").checked = !!r.reviewed;
+  reviewedConds.clear(); (r.reviewed_conditions || (r.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : [])).forEach(x => reviewedConds.add(x));
   save(); render(); summarize();
 });
-$("#clear").addEventListener("click", () => { if (confirm("印をすべて外しますか？")) { flags.clear(); save(); render(); summarize(); } });
+$("#clear").addEventListener("click", () => { if (confirm("印と「最後まで見た」をすべて外しますか？")) { flags.clear(); reviewedConds.clear(); save(); render(); summarize(); } });
 
 render(); summarize();
 if (DATA.review) { /* review.json が run 直下にある場合は初期値として使う（localStorage が空のときだけ） */
-  if (!localStorage.getItem(KEY)) { DATA.review.flags.forEach(x => flags.add(x)); $("#reviewed").checked = !!DATA.review.reviewed; save(); render(); summarize(); }
+  if (!localStorage.getItem(KEY)) {
+    DATA.review.flags.forEach(x => flags.add(x));
+    (DATA.review.reviewed_conditions || (DATA.review.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : [])).forEach(x => reviewedConds.add(x));
+    save(); render(); summarize();
+  }
 }
 </script>
 </body>
@@ -211,9 +224,14 @@ def main() -> int:
                 continue
             meta = json.loads((run_dir / "images" / f"{s['id']}.json").read_text(encoding="utf-8"))
             items.append({"id": s["id"], "p": s["p"], "pass": s["pass"], "text": texts.get(s["id"], ""), "prompt": meta["prompt"]})
+        sm = c.get("sampler", spec["sampler"])
+        model = f"{c.get('checkpoint', spec['checkpoint'])} / {c.get('width', spec['width'])}x{c.get('height', spec['height'])} / {sm['sampler_name']} {sm['steps']} steps, cfg {sm['cfg']}"
         conditions.append(
             {
                 "name": c["name"],
+                "model": model,
+                "reference": c.get("reference", ""),
+                "diversity": scores.get("conditions", {}).get(c["name"], {}).get("mean_pairwise_cosine"),
                 "params": {k: c.get(k, "") for k in ("prompt_prefix", "prompt_suffix", "negative_prompt")},
                 "items": items,
             }
@@ -228,7 +246,6 @@ def main() -> int:
         f"学習データでの目安: AUC {nested}（色だけの基準 {color}、バッチ外 {lob}）。足切りは like を {cutoff['like_recall']:.0%} 残したとき dislike の {cutoff['dislike_rejected']:.0%} を落とす値です。",
         "学習データは LLM 側（Cursor の GenerateImage）で作った画像です。この run は ComfyUI の別モデルで作っているため、分布がずれています。絶対値（通過率）より、同じ run 内の条件間の比較を見てください。",
         "枚数が少ない run では、通過率の差は偶然でも出ます。条件を比べるときは同じ seed・同じ項目で揃えた差を見てください。",
-        f"生成: {spec['checkpoint']} / {spec['width']}x{spec['height']} / {spec['sampler']['sampler_name']} {spec['sampler']['steps']} steps, cfg {spec['sampler']['cfg']}",
     ]
     if spec.get("note"):
         warnings.insert(0, "メモ: " + spec["note"])
@@ -241,6 +258,7 @@ def main() -> int:
         "warnings": warnings,
         "conditions": conditions,
         "review": review,
+        "analysis": (run_dir / "analysis.md").read_text(encoding="utf-8") if (run_dir / "analysis.md").exists() else "",
     }
     html = HTML.replace("__TITLE__", f"実験レポート {run_dir.name}").replace("__DATA__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
     out = run_dir / "report.html"

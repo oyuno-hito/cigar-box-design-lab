@@ -42,7 +42,17 @@ def main() -> int:
     p = 1.0 / (1.0 + np.exp(-z))
     threshold = scorer["cutoff"]["threshold"]
 
+    # 条件内の画像どうしの類似度（CLIP 埋め込みの平均コサイン類似度。高いほど似た絵が並んでいる）
+    conditions: dict[str, dict] = {}
+    names = [it["id"].rsplit("-", 1)[0] for it in items]
+    for c in sorted(set(names)):
+        idx = [i for i, n in enumerate(names) if n == c]
+        if len(idx) > 1:
+            S = X[idx] @ X[idx].T
+            conditions[c] = {"n": len(idx), "mean_pairwise_cosine": round(float((S.sum() - len(idx)) / (len(idx) * (len(idx) - 1))), 4)}
+
     result = {
+        "conditions": conditions,
         "scored_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "scorer": {
             "embedding": scorer["embedding"],
@@ -61,7 +71,8 @@ def main() -> int:
         by_cond.setdefault(r["condition"], []).append(r["p"])
     for c, ps in by_cond.items():
         passed = sum(v >= threshold for v in ps)
-        print(f"{c}: {len(ps)} 枚 / 通過 {passed}（{passed / len(ps):.0%}）/ p 平均 {np.mean(ps):.3f}")
+        div = conditions.get(c, {}).get("mean_pairwise_cosine")
+        print(f"{c}: {len(ps)} 枚 / 通過 {passed}（{passed / len(ps):.0%}）/ p 平均 {np.mean(ps):.3f} / 類似度 {div}")
     print(f"→ {run_dir / 'scores.json'}（足切り p >= {threshold}）")
     return 0
 
