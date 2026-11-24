@@ -1,6 +1,8 @@
 # generator
 
-画像生成環境です。Docker で ComfyUI を動かします。
+画像生成環境です。Docker で ComfyUI を動かす構成を置いています。
+
+Docker は NVIDIA GPU のある PC 向けです。macOS など Docker で GPU が使えない環境では、Comfy Desktop などで各自 ComfyUI を用意してください。`tools/run_generate.py` は起動中の ComfyUI の HTTP API（既定は `http://127.0.0.1:8188`）だけを使うので、どの方法で起動していても動きます。モデルの置き場所や名前は環境ごとに合わせてください。
 
 ```text
 generator/
