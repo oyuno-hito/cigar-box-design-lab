@@ -51,10 +51,22 @@ HTML = r"""<!doctype html>
   .card { position:relative; background:var(--panel); border:3px solid var(--line); border-radius:8px; overflow:hidden; cursor:pointer; }
   .card.pass { border-color:var(--pass); } .card.rej { border-color:var(--rej); }
   .card img { display:block; width:100%; aspect-ratio:3/2; object-fit:cover; background:#000; }
-  .card .meta { padding:6px 8px; font-size:12px; }
+  .card .meta { padding:6px 8px 4px; font-size:12px; }
+  .prompt { margin-top:2px; } .prompt summary { color:var(--mute); cursor:pointer; font-size:11px; }
   .card .p { position:absolute; top:6px; left:6px; background:rgba(0,0,0,.75); border-radius:4px; padding:1px 6px; font-weight:600; font-variant-numeric:tabular-nums; }
   .card .flag { display:none; position:absolute; top:6px; right:6px; background:var(--flag); color:#000; border-radius:4px; padding:1px 6px; font-weight:700; font-size:12px; }
   .card.flagged { outline:4px solid var(--flag); outline-offset:-4px; } .card.flagged .flag { display:block; }
+  .ratings { display:grid; gap:4px; padding:0 8px 8px; }
+  .rate-row { display:grid; grid-template-columns:34px 1fr; gap:4px; align-items:center; }
+  .rate-row .name { color:var(--mute); font-size:11px; }
+  .pills { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; }
+  .pills button { padding:4px 0; font-size:11px; line-height:1.2; }
+  .pills button.on.like { background:#3fb950; color:#04140a; border-color:#3fb950; }
+  .pills button.on.hold { background:#f0b72f; color:#241e0c; border-color:#f0b72f; }
+  .pills button.on.dislike { background:#f85149; color:#fff; border-color:#f85149; }
+  .pills button.on.high { background:#79c0ff; color:#041018; border-color:#79c0ff; }
+  .pills button.on.mid { background:#388bfd; color:#fff; border-color:#388bfd; }
+  .pills button.on.low { background:#6e7681; color:#fff; border-color:#6e7681; }
   .divider { grid-column:1/-1; border-top:2px dashed var(--mute); margin:6px 0; color:var(--mute); font-size:12px; padding-top:4px; }
   .legend span { display:inline-block; margin-right:14px; } .dot { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:middle; }
   .lbl { color:#79c0ff; font-weight:600; }
@@ -64,7 +76,7 @@ HTML = r"""<!doctype html>
 <body>
 <div class="bar">
   <a id="backlink" href="/" hidden>← runs 一覧</a>
-  <strong>人間レビュー</strong>
+  <strong>人間レビュー（3項目）</strong>
   <span id="flagcount" class="mute"></span>
   <span id="unreviewed" style="color:var(--flag)"></span>
   <button id="download">review.json に保存</button>
@@ -75,6 +87,7 @@ HTML = r"""<!doctype html>
 <main>
   <h1 id="title"></h1>
   <div class="mute" id="concept"></div>
+  <div class="small" id="brief"></div>
 
   <div class="panel warn small" id="warnings"></div>
 
@@ -88,9 +101,9 @@ HTML = r"""<!doctype html>
     <div class="legend">
       <span><i class="dot" style="background:var(--pass)"></i>機械: 通過（p ≥ 足切り）</span>
       <span><i class="dot" style="background:var(--rej)"></i>機械: 不通過</span>
-      <span><i class="dot" style="background:var(--flag)"></i>人間: 機械の判定に同意しない（クリックで印を付け外し）</span>
+      <span><i class="dot" style="background:var(--flag)"></i>機械判定への異議（カードをクリック）</span>
     </div>
-    <div class="mute">レビューのしかた: 全体を眺め、<b>機械の判定に同意できない画像だけ</b>クリックする。通過なのに NG なものと、不通過なのに OK なものの両方に印を付ける。印のない画像は「同意」として数える。<b>条件（モデルや型）は、比較表の下のタブで切り替える。各タブを最後まで見て、条件ごとの「最後まで見た」にチェックする（タブの ✔ / 未 が目印）。</b>見終わったら「review.json に保存」を押す。<code>python3 tools/serve_runs.py</code> で開いたページなら、この HTML と同じディレクトリに書き込まれる。</div>
+    <div class="mute">レビューのしかた: 画像をクリックすると<b>機械判定への異議</b>です。各カード下のボタンは、押すだけで<b>自分の好み</b>と<b>お題との一致</b>を記録します。同じボタンをもう一度押すと未評価に戻ります。<br>使い道: 好みは複数のお題に共通する `style-spec` の更新、一致はコンセプト文・方向分け・プロンプトの改善に使います。好み「残す」／一致「弱い」は、絵は好きだがお題から外れた発見です。<b>条件は比較表の下のタブで切り替え、各タブの「最後まで見た」にチェックします。</b>見終わったら「review.json に保存」を押します。</div>
   </div>
 
   <div id="conditions"></div>
@@ -100,6 +113,7 @@ const DATA = __DATA__;
 const KEY = "review:" + DATA.run_id;
 let state = JSON.parse(localStorage.getItem(KEY) || '{"flags":[]}');
 const flags = new Set(state.flags || []);
+const ratings = state.ratings || {};
 // 旧形式（reviewed: true だけ）は、条件が 1 つの run のときだけ「その条件を見た」とみなす。複数条件の run では未確認に戻す
 const reviewedConds = new Set(state.reviewed_conditions || (state.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : []));
 const $ = (s) => document.querySelector(s);
@@ -116,11 +130,12 @@ const median = (xs) => { const s = [...xs].sort((a,b)=>a-b), m = s.length >> 1; 
 
 $("#title").textContent = DATA.title;
 $("#concept").textContent = DATA.concept;
+if (DATA.brief) { $("#brief").textContent = `入力ブリーフ（${DATA.brief_type || "未分類"}）: ${DATA.brief}`; }
 if (DATA.analysis) { $("#analysisWrap").hidden = false; $("#analysis").textContent = DATA.analysis; }
 $("#warnings").innerHTML = DATA.warnings.map(w => "・" + esc(w)).join("<br>");
 
 function save() {
-  state = { reviewed_conditions: [...reviewedConds], flags: [...flags] };
+  state = { reviewed_conditions: [...reviewedConds], flags: [...flags], ratings };
   localStorage.setItem(KEY, JSON.stringify(state));
 }
 
@@ -132,7 +147,7 @@ function renderTabs() {
     const nflag = c.items.filter(i => flags.has(i.id)).length;
     const b = document.createElement("button");
     b.className = "tab" + (c.name === active ? " active" : "");
-    b.innerHTML = `${esc(c.name)}<span class="st ${done ? "ok" : "todo"}">${done ? "✔" : "未"}</span><span class="cnt">${c.items.length} 枚 / 印 ${nflag}</span>`;
+    b.innerHTML = `${esc(c.name)}<span class="st ${done ? "ok" : "todo"}">${done ? "✔" : "未"}</span><span class="cnt">${c.items.length} 枚 / 異議 ${nflag}</span>`;
     b.addEventListener("click", () => {
       active = c.name;
       history.replaceState(null, "", "#cond=" + encodeURIComponent(active));
@@ -144,7 +159,7 @@ function renderTabs() {
 
 function summarize() {
   let html = "<tr><th>条件</th><th class='num'>枚数</th><th class='num'>機械 通過</th><th class='num'>通過率</th><th>参考（LLM 側の仕分け）</th><th class='num'>p 平均</th><th class='num'>p 中央値</th><th class='num' title='条件内の画像どうしの CLIP 類似度の平均。高いほど似た絵が並んでいる'>類似度</th>"
-    + "<th class='num'>印 通過→NG</th><th class='num'>印 不通過→OK</th><th class='num'>人間 OK 率</th><th class='num'>一致率</th><th>確認</th></tr>";
+    + "<th class='num'>異議 通過→NG</th><th class='num'>異議 不通過→OK</th><th class='num'>人間 OK 率</th><th class='num'>一致率</th><th>確認</th></tr>";
   for (const c of DATA.conditions) {
     const n = c.items.length, passed = c.items.filter(i => i.pass).length;
     const fp = c.items.filter(i => i.pass && flags.has(i.id)).length;
@@ -157,7 +172,8 @@ function summarize() {
       + `<td class="num">${reviewed ? pct(humanOk, n) : "未確認"}</td><td class="num">${reviewed ? pct(n - fp - fr, n) : "未確認"}</td><td>${reviewed ? "✔" : "<span style='color:var(--flag)'>未</span>"}</td></tr>`;
   }
   $("#summary").innerHTML = html;
-  $("#flagcount").textContent = `印: ${flags.size} 件`;
+  const rated = Object.values(ratings);
+  $("#flagcount").textContent = `機械訂正 ${flags.size} / 好み ${rated.filter(r => r.preference).length} / 一致 ${rated.filter(r => r.concept).length}`;
   const left = DATA.conditions.filter(c => !reviewedConds.has(c.name)).map(c => c.name);
   const total = DATA.conditions.length;
   $("#unreviewed").textContent = left.length ? `確認済み ${total - left.length} / ${total} 条件（未: ${left.join("、")}）` : `全 ${total} 条件を確認済み`;
@@ -193,8 +209,30 @@ function render() {
       card.className = "card " + (it.pass ? "pass" : "rej") + (flags.has(it.id) ? " flagged" : "");
       card.dataset.id = it.id;
       card.title = it.prompt;
-      card.innerHTML = `<img loading="lazy" src="images/${esc(it.id)}.png"><span class="p">${it.p.toFixed(3)}</span><span class="flag">不一致</span>`
-        + `<div class="meta"><b>${esc(it.id)}</b> ${it.label ? `<span class="lbl">[${esc(it.label)}]</span> ` : ""}<span class="mute">${esc(it.text)}</span></div>`;
+      const rating = ratings[it.id] || {};
+      const pills = (kind, options) => `<div class="rate-row"><span class="name">${kind === "preference" ? "好み" : "一致"}</span><span class="pills">`
+        + options.map(([value, label]) => `<button type="button" data-kind="${kind}" data-value="${value}" class="${value}${rating[kind] === value ? " on" : ""}">${label}</button>`).join("")
+        + `</span></div>`;
+      card.innerHTML = `<img loading="lazy" src="images/${esc(it.id)}.png"><span class="p">${it.p.toFixed(3)}</span><span class="flag">機械訂正</span>`
+        + `<div class="meta"><b>${esc(it.id)}</b> ${it.label ? `<span class="lbl">[${esc(it.label)}]</span> ` : ""}${it.direction ? `<br><span class="lbl">${esc(it.direction)}</span>` : ""}`
+        + `<details class="prompt"><summary>プロンプト</summary><span class="mute">${esc(it.text)}</span></details></div>`
+        + `<div class="ratings">${pills("preference", [["like","残す"],["hold","保留"],["dislike","外す"]])}${pills("concept", [["high","強い"],["mid","部分"],["low","弱い"]])}</div>`;
+      card.querySelector(".prompt").addEventListener("click", (e) => e.stopPropagation());
+      card.querySelectorAll(".pills button").forEach(button => {
+        button.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const kind = button.dataset.kind;
+          const current = ratings[it.id] || {};
+          const nextValue = current[kind] === button.dataset.value ? "" : button.dataset.value;
+          const next = { ...current, [kind]: nextValue };
+          if (!next.preference) delete next.preference;
+          if (!next.concept) delete next.concept;
+          if (!next.preference && !next.concept) delete ratings[it.id];
+          else ratings[it.id] = next;
+          button.parentElement.querySelectorAll("button").forEach(other => other.classList.toggle("on", other.dataset.value === nextValue));
+          save(); summarize();
+        });
+      });
       card.addEventListener("click", () => {
         flags.has(it.id) ? flags.delete(it.id) : flags.add(it.id);
         card.classList.toggle("flagged", flags.has(it.id));
@@ -209,7 +247,8 @@ function render() {
 
 function reviewBody() {
   return { run_id: DATA.run_id, reviewed: DATA.conditions.every(c => reviewedConds.has(c.name)), reviewed_conditions: [...reviewedConds].sort(), reviewed_at: new Date().toISOString(),
-           meaning: "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす", flags: [...flags].sort() };
+           meaning: "flags = 機械の判定（scores.json の pass）に同意しない画像。ratings.preference = 好み、ratings.concept = 共通の核と direction の一致度。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+           flags: [...flags].sort(), ratings };
 }
 if (location.protocol === "file:") {
   $("#savestatus").textContent = "同じディレクトリへ保存するには、python3 tools/serve_runs.py で開いてください。";
@@ -233,15 +272,18 @@ $("#load").addEventListener("change", async (e) => {
   const f = e.target.files[0]; if (!f) return;
   const r = JSON.parse(await f.text());
   flags.clear(); (r.flags || []).forEach(x => flags.add(x));
+  Object.keys(ratings).forEach(x => delete ratings[x]);
+  Object.assign(ratings, r.ratings || {});
   reviewedConds.clear(); (r.reviewed_conditions || (r.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : [])).forEach(x => reviewedConds.add(x));
   save(); render(); summarize();
 });
-$("#clear").addEventListener("click", () => { if (confirm("印と「最後まで見た」をすべて外しますか？")) { flags.clear(); reviewedConds.clear(); save(); render(); summarize(); } });
+$("#clear").addEventListener("click", () => { if (confirm("機械判定への異議・評価・「最後まで見た」をすべて外しますか？")) { flags.clear(); Object.keys(ratings).forEach(x => delete ratings[x]); reviewedConds.clear(); save(); render(); summarize(); } });
 
 render(); summarize();
 if (DATA.review) { /* review.json が run 直下にある場合は初期値として使う（localStorage が空のときだけ） */
   if (!localStorage.getItem(KEY)) {
     DATA.review.flags.forEach(x => flags.add(x));
+    Object.assign(ratings, DATA.review.ratings || {});
     (DATA.review.reviewed_conditions || (DATA.review.reviewed && DATA.conditions.length === 1 ? [DATA.conditions[0].name] : [])).forEach(x => reviewedConds.add(x));
     save(); render(); summarize();
   }
@@ -273,6 +315,7 @@ def main() -> int:
 
     texts = {f"{c['name']}-{it['id']}": it["text"] for c in spec["conditions"] for it in c["items"]}
     labels = {f"{c['name']}-{it['id']}": it.get("label", "") for c in spec["conditions"] for it in c["items"]}
+    directions = {f"{c['name']}-{it['id']}": it.get("direction", "") for c in spec["conditions"] for it in c["items"]}
     conditions = []
     for c in spec["conditions"]:
         items = []
@@ -280,7 +323,7 @@ def main() -> int:
             if s["condition"] != c["name"]:
                 continue
             meta = json.loads((run_dir / "images" / f"{s['id']}.json").read_text(encoding="utf-8"))
-            items.append({"id": s["id"], "p": s["p"], "pass": s["pass"], "text": texts.get(s["id"], ""), "label": labels.get(s["id"], ""), "prompt": meta["prompt"]})
+            items.append({"id": s["id"], "p": s["p"], "pass": s["pass"], "text": texts.get(s["id"], ""), "label": labels.get(s["id"], ""), "direction": directions.get(s["id"], ""), "prompt": meta["prompt"]})
         sm = c.get("sampler", spec["sampler"])
         model = f"{c.get('checkpoint', spec['checkpoint'])} / {c.get('width', spec['width'])}x{c.get('height', spec['height'])} / {sm['sampler_name']} {sm['steps']} steps, cfg {sm['cfg']}"
         conditions.append(
@@ -311,6 +354,8 @@ def main() -> int:
         "run_id": run_dir.name,
         "title": f"実験レポート: {run_dir.name}",
         "concept": spec.get("concept", ""),
+        "brief_type": spec.get("brief_type", ""),
+        "brief": spec.get("brief", ""),
         "threshold": cutoff["threshold"],
         "warnings": warnings,
         "conditions": conditions,
