@@ -23,7 +23,8 @@ alwaysApply: true
 
 # 生成のルール
 
-- 探索（発散）の生成では、仕様書（`docs/style-spec.md`）を渡さない。固定の rules と組み合わせ表だけを使う。
+- 探索（発散。`runs/`、`/eval-prompts`）の生成では、仕様書（`docs/style-spec.md`）を渡さない。固定の rules と組み合わせ表だけを使う。
+- 実使用（`sessions/`）は、題材が決まったあとなので、brief を書くときと、AI にプロンプトを書かせるときに `docs/style-spec.md` を読み、描き方の軸に反映する（題材と方向は変えない）。session は、毎回、brief を一から書く（`sessions/` や `generator/temp/briefs/` の過去の内容を流用・複製しない）。
 - `docs/style-spec.md` を使うのは、題材が決まったあとの生成プロンプトの調整（`/tune-prompts`、`/eval-prompts`）だけ。題材は変えず、描き方を抽象的な性質（軸）で指定する。様式名は書かない。
 - 抽象語（「おしゃれ」「モダン」）より、具体的な色・形・様式・素材感を使う。
 - 画像を出力したら、同名の `.json` にプロンプトと生成元を残す（日時はファイル名に入れる。サイズやラベルは書かない）。
