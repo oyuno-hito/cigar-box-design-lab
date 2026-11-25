@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """実使用の session（sessions/<日時>-<名前>/）を作り、候補の生成と、選択に沿った再生成まで進める。
 
-実験の run（runs/）と違い、採点やレポートは作らない。分類器は、画像の生成直後に足切りするためだけに内部で使い、
-スコアは画面にも出力にも出さない（state.json の内部値）。出力先は基本 Git 管理外（sessions/README.md）。
+実験の run（runs/）と違い、採点やレポートは作らない。**機械による足切りもしない**（分類器は使わない）。
+出力先は基本 Git 管理外（sessions/README.md）。
 
     uv run tools/session.py new brief.json [--size 8]        # sessions/<日時>-<slug>/ を作る（brief は tools/new_eval_run.py と同じ形式）
     uv run tools/session.py generate sessions/<id>           # 最初の候補を生成する（バックグラウンドで実行する）
@@ -16,27 +16,27 @@
 カードのページは tools/serve_session.py で配信する。
 
 件数のルール（size。既定 8 件）:
-  - 1 prompt につき画像を 1 枚生成する。同じ idea_id に複数の prompt があれば、最初に足切りを通った 1 枚でそのアイデアを終了する。
-  - 足切りを通らなかった画像は、カードになる前に削除する。採用済みカードは後から削除しない。
-  - 予備が尽きても size 件に届かなければ、status の shortfall に足りない件数が出る。`add --auto` が AI に新しいアイデアを依頼する。
+  - 最初は、spec.json の先頭 size 件を、1 prompt = 1 枚で順に生成する。できたものから、すべてカードに出す（足切りなし）。
+  - 残りの項目は予備。再生成の空き枠を、予備の先頭から同じ数だけ埋める。予備が尽きて size 件に届かなければ、status の shortfall に足りない件数が出る。
+    `add --auto` が AI に新しいアイデアを依頼する。
+  - 画像（images/ と cards/）は、カードから外しても削除しない。結果として残す。
 
 再生成の計画（--auto）:
-  - 残すカード = ページで選んだカードだけ。選んでいないカードは、個別の方向が入っていても削除する。
-  - 選んだカードに個別の方向があれば、元の画像を残したまま、異なる prompt の派生を 3 件作る。派生は、スコアの足切りをせず表示する。
+  - 残すカード = ページで選んだカードだけ。選んでいないカードは、個別の方向が入っていても、カードから外す（画像は残る）。
+  - 選んだカードに個別の方向があれば、元の画像を残したまま、異なる prompt の派生を 3 件作る。
     派生は、元の画像と**はっきり違う**ことを求める（方向の語句に重みを付け、語句の残りは 3〜8 割、派生どうしも似すぎないよう検査する）。
   - 空き枠は、まだ試していない予備のアイデアから埋める。全体の方針は、予備が作る新しい候補に反映する。
   - 個別の派生には全体の方針を反映しない。予備が尽きても、regen では AI に新しいアイデアを頼まない（足りない件数だけ出す）。人が「足りない分を補う」（add）を押したときに、AI に新しいアイデアを書いてもらう。
     AI の呼び方は、環境変数 CIGAR_COMPOSER_CMD（依頼文を標準入力、返答を標準出力）が設定されているときだけ、サーバーが呼ぶ。未設定なら、ページの依頼文を任意の AI に貼り、返ってきた JSON をページに貼る。
 
-items.json（`--items`。AI が項目を直接書くとき）は項目の配列。複数 prompt を同じアイデアにする場合は、同じ `idea_id` と異なる `variant` を付ける。派生には `parent` と `protect: true` を付ける:
-    [{"label": "...", "direction": "日本語の方針", "idea_id": "idea-01", "variant": 1, "text": "プロンプト全文（英語）"}, ...]
+items.json（`--items`。AI が項目を直接書くとき）は項目の配列（1 項目 = 1 prompt = 1 枚）。派生には `parent` と `protect: true` を付ける:
+    [{"label": "...", "direction": "日本語の方針", "text": "プロンプト全文（英語）"}, ...]
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import math
 import os
 import re
 import shlex
@@ -101,56 +101,6 @@ def read_selection(sdir: Path) -> dict | None:
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else None
 
 
-# ---- 採点（生成直後の足切りに使う内部値）---------------------------------------------
-
-
-def score_cards(sdir: Path, ids: list[str]) -> dict[str, float]:
-    """画像を分類器で採点して、like らしさ p を返す。"""
-    import numpy as np
-
-    from train_scorer import SCORERS, clip_embeddings, sha256
-
-    scorer = json.loads((SCORERS / "scorer.json").read_text(encoding="utf-8"))
-    items = [{"id": i, "path": sdir / "images" / f"{i}.png", "sha256": sha256(sdir / "images" / f"{i}.png")} for i in ids]
-    X, _ = clip_embeddings(items)
-    z = X @ np.array(scorer["coef"], dtype=np.float64) + scorer["intercept"]
-    p = 1.0 / (1.0 + np.exp(-z))
-    return {i: round(float(v), 4) for i, v in zip(ids, p)}
-
-
-class OnlineScorer:
-    """分類器を 1 回だけ読み込み、生成直後の画像を採点する。"""
-
-    def __init__(self) -> None:
-        import torch
-        from transformers import CLIPModel
-        from train_scorer import MODEL_ID, CLIP_MEAN, CLIP_STD, SCORERS
-
-        self.np = __import__("numpy")
-        self.torch = torch
-        self.mean = CLIP_MEAN
-        self.std = CLIP_STD
-        self.scorer = json.loads((SCORERS / "scorer.json").read_text(encoding="utf-8"))
-        self.threshold = float(self.scorer.get("cutoff", {}).get("threshold", 0.0))
-        self.device = "mps" if torch.backends.mps.is_available() else "cpu"
-        self.model = CLIPModel.from_pretrained(MODEL_ID).eval().to(self.device)
-
-    def score(self, path: Path) -> float:
-        from PIL import Image
-
-        arr = (
-            self.np.asarray(Image.open(path).convert("RGB").resize((224, 224), Image.BICUBIC), dtype=self.np.float32) / 255.0
-            - self.mean
-        ) / self.std
-        x = self.torch.from_numpy(arr).permute(2, 0, 1).unsqueeze(0).to(self.device)
-        with self.torch.no_grad():
-            out = self.model.get_image_features(pixel_values=x)
-        feats = out if isinstance(out, self.torch.Tensor) else out.pooler_output
-        feats = self.torch.nn.functional.normalize(feats, dim=-1).cpu().numpy()[0]
-        z = feats @ self.np.array(self.scorer["coef"], dtype=self.np.float64) + self.scorer["intercept"]
-        return round(float(1.0 / (1.0 + self.np.exp(-z))), 4)
-
-
 def make_thumbs(sdir: Path, ids: list[str]) -> None:
     """カードのページ用に、画像を WebP（幅 960）にして cards/ に置く。"""
     from PIL import Image
@@ -163,28 +113,12 @@ def make_thumbs(sdir: Path, ids: list[str]) -> None:
         im.save(out / f"{i}.webp", "WEBP", quality=82, method=4)
 
 
-def remove_candidate(sdir: Path, state: dict, cid: str, score: float, reason: str = "below_cutoff") -> None:
-    """表示前に落とした画像を削除し、理由だけ state.json に残す。"""
-    spec = load_spec(sdir)
-    by_id = {card_id(it["id"]): it for it in spec_items(spec)}
-    it = by_id.get(cid)
-    if it:
-        state.setdefault("rejected", []).append({"id": cid, "score": score, "reason": reason, "item": it})
-    state["scores"][cid] = score
-    for f in (sdir / "images" / f"{cid}.png", sdir / "images" / f"{cid}.json", sdir / "cards" / f"{cid}.webp"):
-        f.unlink(missing_ok=True)
-
-
-def discard(sdir: Path, state: dict, spec: dict, ids: list[str]) -> None:
-    """カードから外す画像を削除する。spec.json からも外し（再生成されないように）、項目の内容は state.json に残す。"""
+def discard(state: dict, sdir: Path, spec: dict, ids: list[str]) -> None:
+    """カードから外す。画像（images/ cards/）は削除せず、結果として残す。spec.json からは外し（再生成されないように）、項目の内容は state.json に残す。"""
     items = spec_items(spec)
     gone = {item_id(c) for c in ids}
     state.setdefault("dropped_items", []).extend(it for it in items if it["id"] in gone)
     items[:] = [it for it in items if it["id"] not in gone]
-    for c in ids:
-        for f in (sdir / "images" / f"{c}.png", sdir / "images" / f"{c}.json", sdir / "cards" / f"{c}.webp"):
-            f.unlink(missing_ok=True)
-        state["scores"].pop(c, None)
     write_json(sdir / "spec.json", spec)
 
 
@@ -196,14 +130,14 @@ def item_idea(item: dict) -> str:
 
 
 def run_round(sdir: Path, state: dict, *, keep: list[str], new_items: list[dict], comfy: str, selection: dict | None) -> None:
-    """keep を残し、候補をアイデア単位で順に生成する。低スコア画像は表示前に捨てる。"""
+    """keep を残し、新しい候補を 1 prompt = 1 枚で順に生成する。足切りはしない。外したカードの画像も消さない。"""
     from run_generate import generate_one
 
     old_cards = list(state["cards"])
     keep = [c for c in old_cards if c in keep]  # 前の並び順のまま
     drop_old = [c for c in old_cards if c not in keep]
     if drop_old:
-        discard(sdir, state, load_spec(sdir), drop_old)
+        discard(state, sdir, load_spec(sdir), drop_old)
 
     spec = load_spec(sdir)
     items = spec_items(spec)
@@ -264,71 +198,17 @@ def run_round(sdir: Path, state: dict, *, keep: list[str], new_items: list[dict]
     state["progress"] = {"done": 0, "total": len(new_ids)}
     save_state(sdir, state)
 
-    # 同じ idea_id の prompt は、1 枚通った時点で打ち切る。
-    groups: list[tuple[str, list[str]]] = []
-    for cid in new_ids:
-        idea = item_idea(by_new[cid])
-        if groups and groups[-1][0] == idea:
-            groups[-1][1].append(cid)
-        else:
-            groups.append((idea, [cid]))
-
+    # 1 prompt = 1 枚。足切りはしない。できた順にカードへ出す。
     accepted: list[str] = []
     generated: list[str] = []
-    rejected: list[str] = []
-    idea_status = state.setdefault("idea_status", {})
-    scorer: OnlineScorer | None = None
-    top_now = top_count(keep, state.get("origin", {}))
-    slots = max(0, state["size"] - top_now)
-
-    for idea, group in groups:
-        if top_now >= state["size"] and not (group and all(cid in protected for cid in group)):
-            break
-        if group and all(cid in protected for cid in group):
-            for cid in group:
-                generated.append(cid)
-                generate_one(sdir, item_id(cid), host=comfy)
-                accepted.append(cid)
-                make_thumbs(sdir, [cid])
-                state["live"].append(cid)
-                state["progress"] = {"done": len(generated), "total": len(new_ids)}
-                save_state(sdir, state)
-            idea_status[idea] = "accepted"
-            continue
-        passed = False
-        for cid in group:
-            iid = item_id(cid)
-            generated.append(cid)
-            try:
-                generate_one(sdir, iid, host=comfy)
-            except Exception:
-                raise
-            png = sdir / "images" / f"{cid}.png"
-            if cid in protected:
-                accepted.append(cid)
-                make_thumbs(sdir, [cid])
-                state["live"].append(cid)
-                passed = True
-            else:
-                if scorer is None:
-                    scorer = OnlineScorer()
-                score = scorer.score(png)
-                state["scores"][cid] = score
-                if score >= scorer.threshold:
-                    accepted.append(cid)
-                    make_thumbs(sdir, [cid])
-                    state["live"].append(cid)
-                    passed = True
-                else:
-                    rejected.append(cid)
-                    remove_candidate(sdir, state, cid, score)
-            state["progress"] = {"done": len(generated), "total": len(new_ids)}
-            save_state(sdir, state)
-            if passed:
-                break
-        idea_status[idea] = "accepted" if passed else "exhausted"
-        if passed and group[0] not in protected:
-            top_now += 1
+    for cid in new_ids:
+        generated.append(cid)
+        generate_one(sdir, item_id(cid), host=comfy)
+        accepted.append(cid)
+        make_thumbs(sdir, [cid])
+        state["live"].append(cid)
+        state["progress"] = {"done": len(generated), "total": len(new_ids)}
+        save_state(sdir, state)
 
     prev_origin = state.get("origin", {})
     chosen_new = accepted
@@ -350,7 +230,7 @@ def run_round(sdir: Path, state: dict, *, keep: list[str], new_items: list[dict]
             "selection": selection,
             "new": generated,
             "kept": keep,
-            "discarded": drop_old + rejected,
+            "discarded": drop_old,
         }
     )
     state["cards"] = cards
@@ -362,7 +242,7 @@ def run_round(sdir: Path, state: dict, *, keep: list[str], new_items: list[dict]
     state["progress"] = {}
     save_state(sdir, state)
     (sdir / "selection.json").unlink(missing_ok=True)
-    print(f"カードを更新しました（{len(cards)} 件。残した {len(keep)}、生成を試した {len(generated)}、採用 {len(accepted)}、捨てた {len(drop_old) + len(rejected)}）")
+    print(f"カードを更新しました（{len(cards)} 件。残した {len(keep)}、新しく生成 {len(generated)}、カードから外した {len(drop_old)}。画像は残しています）")
     if state["shortfall"]:
         print(f"注意: あと {state['shortfall']} 件足りません。追加のアイデアを用意して add してください", file=sys.stderr)
 
@@ -415,20 +295,16 @@ DERIVE_VARIANTS = 3
 
 
 def reserve_groups(sdir: Path, state: dict, limit: int) -> list[list[dict]]:
-    """まだ試していないアイデアを、spec.json の順に取り出す。"""
-    by_idea: dict[str, list[dict]] = {}
-    for it in spec_items(load_spec(sdir)):
-        by_idea.setdefault(item_idea(it), []).append(it)
-    status = state.setdefault("idea_status", {})
+    """まだ生成していない予備のアイデアを、spec.json の順に取り出す（1 アイデア = 1 prompt）。"""
     active = set(state.get("cards", []))
-    rejected = {x.get("id") for x in state.get("rejected", [])}
     groups = []
-    for idea, items in by_idea.items():
-        if len(groups) >= limit or status.get(idea) in ("accepted", "exhausted"):
+    for it in spec_items(load_spec(sdir)):
+        cid = card_id(it["id"])
+        if len(groups) >= limit:
+            break
+        if cid in active or (sdir / "images" / f"{cid}.png").exists():
             continue
-        items = [it for it in items if card_id(it["id"]) not in active and card_id(it["id"]) not in rejected]
-        if items:
-            groups.append(items)
+        groups.append([it])
     return groups
 
 
@@ -470,8 +346,8 @@ def build_plan(sdir: Path, state: dict, sel: dict | None, *, mode: str = "regen"
                 }
             )
 
-    # 空き枠より多めのアイデアを予約する。同じアイデアの別 prompt は run_round が順番に試す。
-    reserve_limit = max(1, math.ceil(slots * 1.5)) if slots else 0
+    # 空き枠の数だけ、まだ生成していない予備のアイデアを使う。
+    reserve_limit = slots  # 足切りがないので、空き枠と同じ数だけ使う
     reserve = reserve_groups(sdir, state, reserve_limit)
     for group in reserve:
         for it in group:
@@ -538,6 +414,7 @@ COMPOSE_RULES = """あなたは、画像生成（Stable Diffusion 系）のプ�
 【共通】
 - 形式（flat graphic decoration, full frame composition, ... no text, no people, no hands のような、カンマ区切りの英語）を保つ。
 - 様式名・作者名・人物は書かない。色・形・素材感を具体的に書く。文字は入れない。
+- 箱・額縁・枠・木・葉巻（cigar box, panel, frame, wood, cigar など）のように、物体を連想させる語は書かない。物体や木枠の写真が出る。用途は、プロンプトに書かない。
 - needs_ai が false の項目は、出力に含めない。
 
 【タイトルと理由】
@@ -569,6 +446,36 @@ def keep_ratio(base: str, new: str) -> float:
     return sum(1 for x in b if x in n) / len(b) if b else 1.0
 
 
+STYLE_SPEC = REPO_ROOT / "docs" / "style-spec.md"
+
+
+def style_guide(path: Path | None = None) -> str:
+    """docs/style-spec.md の「好む方向 / 避ける方向」の表から、AI に渡す描き方の指針を作る。表がなければ空文字。"""
+    path = path or STYLE_SPEC
+    if not path.exists():
+        return ""
+    text = path.read_text(encoding="utf-8")
+    start = text.find("## 好みの記録")  # 「好みの記録」の節（「試す句の案」の前まで）の表だけを読む
+    end = text.find("### 試す句の案")
+    text = text[start : end if end > start else None] if start >= 0 else ""
+    lines: list[str] = []
+    for line in text.splitlines():
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if not line.startswith("|") or len(cells) < 3 or cells[0] in ("軸", "ID") or cells[0].startswith("`") or set(cells[0]) <= {"-", " "}:
+            continue
+        if cells[1] in ("", "—") or cells[1].startswith("（"):
+            continue
+        lines.append(f"- {cells[0]}: 好む = {cells[1]} / 避ける = {cells[2]}")
+    if not lines:
+        return ""
+    return (
+        "【描き方の指針（docs/style-spec.md。過去の評価からの観察で、確認済みではない）】\n"
+        "題材と方向は変えず、描き方だけ、矛盾しない範囲でこの指針に寄せる。避ける方向は、反対側を肯定する句で書く（negative は効きにくい）。\n"
+        + "\n".join(lines)
+        + "\n\n"
+    )
+
+
 def compose_text(plan: dict, problem: str = "") -> str:
     """AI に渡す依頼文。problem は、前回の返答の差し戻し理由。"""
     reqs = [
@@ -582,7 +489,7 @@ def compose_text(plan: dict, problem: str = "") -> str:
         "global_note": plan["global_note"],
         "requests": reqs,
     }
-    text = COMPOSE_RULES + "\n```json\n" + json.dumps(payload, ensure_ascii=False, indent=2) + "\n```\n"
+    text = COMPOSE_RULES + "\n" + style_guide() + "```json\n" + json.dumps(payload, ensure_ascii=False, indent=2) + "\n```\n"
     if problem:
         text += f"\n前回の返答は、次の理由で差し戻されました。直してください。\n{problem}\n"
     return text
@@ -774,9 +681,6 @@ def cmd_new(args) -> int:
         "cards": [],
         "live": [],
         "origin": {},
-        "scores": {},
-        "rejected": [],
-        "idea_status": {},
         "shortfall": 0,
         "next_no": len(items) + 1,
         "dropped_items": [],
@@ -804,58 +708,26 @@ def cmd_generate(args) -> int:
 
 
 def _first_round(sdir: Path, state: dict, ids: list[str], comfy: str) -> None:
-    """候補をアイデア単位で生成し、画像直後の足切りを通ったものだけカードにする。"""
+    """spec.json の先頭 size 件を、1 prompt = 1 枚で順に生成する。足切りはしない。できた順にカードへ出す。"""
     from run_generate import generate_one
 
-    spec = load_spec(sdir)
-    by_id = {card_id(it["id"]): it for it in spec_items(spec)}
-    groups: list[tuple[str, list[str]]] = []
-    for cid in ids:
-        idea = item_idea(by_id[cid])
-        if groups and groups[-1][0] == idea:
-            groups[-1][1].append(cid)
-        else:
-            groups.append((idea, [cid]))
-
+    ids = ids[: state["size"]]  # 残りは予備（再生成のとき使う）
     state["phase"] = "generating"
     state["live"] = []
     state["error"] = ""
     state["progress"] = {"done": 0, "total": len(ids)}
     save_state(sdir, state)
-    scorer: OnlineScorer | None = None
-    accepted: list[str] = []
     generated: list[str] = []
-    rejected: list[str] = []
-    idea_status = state.setdefault("idea_status", {})
+    for cid in ids:
+        generated.append(cid)
+        generate_one(sdir, item_id(cid), host=comfy)
+        make_thumbs(sdir, [cid])
+        state["live"].append(cid)
+        state["progress"] = {"done": len(generated), "total": len(ids)}
+        save_state(sdir, state)
 
-    for idea, group in groups:
-        if len(accepted) >= state["size"]:
-            break
-        passed = False
-        for cid in group:
-            generated.append(cid)
-            generate_one(sdir, item_id(cid), host=comfy)
-            png = sdir / "images" / f"{cid}.png"
-            if scorer is None:
-                scorer = OnlineScorer()
-            score = scorer.score(png)
-            state["scores"][cid] = score
-            if score >= scorer.threshold:
-                accepted.append(cid)
-                make_thumbs(sdir, [cid])
-                state["live"].append(cid)
-                passed = True
-            else:
-                rejected.append(cid)
-                remove_candidate(sdir, state, cid, score)
-            state["progress"] = {"done": len(generated), "total": len(ids)}
-            save_state(sdir, state)
-            if passed:
-                break
-        idea_status[idea] = "accepted" if passed else "exhausted"
-
-    state["cards"] = accepted
-    state["origin"] = {c: {"kind": "new"} for c in accepted}
+    state["cards"] = generated
+    state["origin"] = {c: {"kind": "new"} for c in generated}
     state["history"].append(
         {
             "round": 0,
@@ -863,16 +735,16 @@ def _first_round(sdir: Path, state: dict, ids: list[str], comfy: str) -> None:
             "selection": None,
             "new": generated,
             "kept": [],
-            "discarded": rejected,
+            "discarded": [],
         }
     )
     state["live"] = []
     state["round"] = 1
     state["phase"] = "ready"
-    state["shortfall"] = max(0, state["size"] - len(accepted))
+    state["shortfall"] = max(0, state["size"] - len(generated))
     state["progress"] = {}
     save_state(sdir, state)
-    print(f"カードを作りました（{len(accepted)} 件。生成を試した {len(generated)}、捨てた {len(rejected)}）")
+    print(f"カードを作りました（{len(generated)} 件）")
     if state["shortfall"]:
         print(f"注意: あと {state['shortfall']} 件足りません。追加のアイデアを用意して add してください", file=sys.stderr)
 

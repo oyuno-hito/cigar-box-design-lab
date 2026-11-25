@@ -60,9 +60,6 @@ def build_session(root: Path, *, cards=(1, 2, 3, 4), size=4, n_ideas=6, name="20
         "cards": ids,
         "live": [],
         "origin": {c: {"kind": "new"} for c in ids},
-        "scores": {},
-        "rejected": [],
-        "idea_status": {f"idea-{n:02d}": "accepted" for n in cards},
         "shortfall": max(0, size - len(ids)),
         "next_no": n_ideas + 4,
         "dropped_items": [],
@@ -70,16 +67,6 @@ def build_session(root: Path, *, cards=(1, 2, 3, 4), size=4, n_ideas=6, name="20
     }
     S.save_state(sdir, state)
     return sdir
-
-
-class FakeScorer:
-    """名前に reject を含む…ではなく、通すカードの番号を指定する偽の分類器。"""
-
-    allow: set[str] = set()
-    threshold = 0.5
-
-    def score(self, path: Path) -> float:
-        return 0.9 if path.stem in self.allow else 0.1
 
 
 def fake_generate_one(run_dir: Path, item_id: str, host: str = "") -> Path:

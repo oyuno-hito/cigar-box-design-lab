@@ -1,0 +1,11 @@
+$ session.py new /tmp/e2e-brief.json --size 8 
+ /tmp/cigar-e2e/20261125-220838-fixture
+$ session.py generate /tmp/cigar-e2e/20261125-220838-fixture 
+ カードを作りました（8 件）
+FIRST ROUND cards: ['p-01', 'p-02', 'p-03', 'p-04', 'p-05', 'p-06', 'p-07', 'p-08'] shortfall 0
+$ session.py regen /tmp/cigar-e2e/20261125-220838-fixture --auto --prompts /tmp/cigar-e2e/20261125-220838-fixture/compose_result.json 
+ カードを更新しました（8 件。残した 3、新しく生成 5、カードから外した 5。画像は残しています）
+注意: あと 3 件足りません。追加のアイデアを用意して add してください
+AFTER REGEN cards: ['p-01', 'p-02', 'p-03', 'p-11', 'p-12', 'p-13', 'p-09', 'p-10'] origin: {'p-01': 'kept', 'p-02': 'kept', 'p-03': 'kept', 'p-11': 'derived', 'p-12': 'derived', 'p-13': 'derived', 'p-09': 'new', 'p-10': 'new'} shortfall 3
+PNG files kept: ['p-01', 'p-02', 'p-03', 'p-04', 'p-05', 'p-06', 'p-07', 'p-08', 'p-09', 'p-10', 'p-11', 'p-12', 'p-13']
+DONE /tmp/cigar-e2e/20261125-220838-fixture

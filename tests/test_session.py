@@ -172,6 +172,16 @@ class ComposeChecks(Base):
         raw = self.answer(plan, self.good)
         S.parse_compose_result("説明です\n" + raw[:-1] + ",]", plan)
 
+    def test_compose_text_includes_style_guide(self):
+        _, plan = self.plan()
+        text = S.compose_text(plan)
+        self.assertIn("描き方の指針", text)
+        self.assertIn("反復: 好む", text)  # docs/style-spec.md の「好みの記録」の表から読む
+        self.assertNotIn("`flat`", text)  # 「試す句の案」の表は入れない
+
+    def test_style_guide_empty_without_file(self):
+        self.assertEqual(S.style_guide(self.root / "none.md"), "")
+
 
 class ComposerRun(Base):
     def setUp(self) -> None:
@@ -201,15 +211,13 @@ class ComposerRun(Base):
 
 
 class RunRound(Base):
-    def run_regen(self, sdir: Path, sel: dict, prompts: dict | None = None, allow=()) -> dict:
+    def run_regen(self, sdir: Path, sel: dict, prompts: dict | None = None) -> dict:
         import run_generate
 
         state = S.load_state(sdir)
         plan = S.build_plan(sdir, state, sel)
         items = S.plan_items(plan, prompts or {})
-        scorer = F.FakeScorer()
-        scorer.allow = set(allow)
-        with mock.patch.object(run_generate, "generate_one", F.fake_generate_one), mock.patch.object(S, "OnlineScorer", lambda: scorer):
+        with mock.patch.object(run_generate, "generate_one", F.fake_generate_one):
             S.run_round(sdir, state, keep=plan["keep"], new_items=items, comfy="", selection=sel)
         return S.load_state(sdir)
 
@@ -223,22 +231,22 @@ class RunRound(Base):
                 out[r["key"]] = {"title": f"合体方針 {k}", "reason": f"理由 {k}", "text": ", ".join(ph[:2] + [f"(big {k}:1.3)"] + ph[2:7] + [f"s{k}", f"l{k}", "no text"])}
         return out
 
-    def test_kept_stay_kept_derived_are_ungated_and_hidden(self):
+    def test_kept_stay_kept_derived_are_hidden_and_nothing_is_gated(self):
         sdir = self.session()
         sel = self.select(sdir, ["p-01", "p-02"], {"p-01": "円を大きく"})
-        st = self.run_regen(sdir, sel, self.prompts_for(sdir, sel), allow={"p-05"})  # p-06 は足切りで落ちる。派生は足切りしない
+        st = self.run_regen(sdir, sel, self.prompts_for(sdir, sel))
         self.assertEqual(st["origin"]["p-01"]["kind"], "kept")
         self.assertEqual(st["origin"]["p-02"]["kind"], "kept")
         kids = [c for c, o in st["origin"].items() if o.get("kind") == "derived"]
         self.assertEqual(len(kids), 3)  # 足切りなしで 3 件
         self.assertTrue(all(st["origin"][c]["parent"] == "p-01" for c in kids))
-        self.assertEqual(S.top_count(st["cards"], st["origin"]), 3)  # p-01, p-02, p-05（派生は数えない）
+        self.assertEqual(S.top_count(st["cards"], st["origin"]), 4)  # p-01, p-02, p-05, p-06（派生は数えない。足切りなしで空き枠 2 件が両方入る）
         self.assertIn("p-05", st["cards"])
-        self.assertNotIn("p-06", st["cards"])
+        self.assertIn("p-06", st["cards"])
         spec = {S.card_id(i["id"]): i for i in S.spec_items(S.load_spec(sdir))}
         self.assertEqual(spec[kids[0]]["card_note"], "円を大きく")
         self.assertEqual(spec[kids[0]]["reason"], "理由 1")
-        self.assertEqual(st["shortfall"], 1)  # size 4 に 1 件足りない。AI は呼ばれない
+        self.assertEqual(st["shortfall"], 0)
 
     def test_regen_with_empty_reserve_keeps_selection_and_reports_shortfall(self):
         sdir = self.session(n_ideas=4)
@@ -246,14 +254,30 @@ class RunRound(Base):
         st = self.run_regen(sdir, sel)
         self.assertEqual(st["cards"], ["p-02"])
         self.assertEqual(st["shortfall"], 3)
-        self.assertFalse((sdir / "images" / "p-01.png").exists())  # 選ばなかったカードは捨てられる
+        self.assertTrue((sdir / "images" / "p-01.png").exists())  # 選ばなかったカードも、画像は残る
+        self.assertTrue((sdir / "cards" / "p-01.webp").exists())
 
-    def test_unselected_card_with_note_is_discarded(self):
+    def test_unselected_card_with_note_leaves_the_cards_but_keeps_files(self):
         sdir = self.session(n_ideas=4)
-        sel = self.select(sdir, ["p-03"], {"p-02": "捨てられる方向"})
+        sel = self.select(sdir, ["p-03"], {"p-02": "外される方向"})
         st = self.run_regen(sdir, sel)
         self.assertEqual(st["cards"], ["p-03"])
-        self.assertFalse((sdir / "cards" / "p-02.webp").exists())
+        self.assertTrue((sdir / "cards" / "p-02.webp").exists())
+
+    def test_first_round_generates_size_ideas_without_gating(self):
+        import run_generate
+
+        sdir = F.build_session(self.root, cards=(), size=3, n_ideas=5, name="20261125-000001-first")
+        state = S.load_state(sdir)
+        state.update({"round": 0, "phase": "new", "cards": [], "origin": {}, "shortfall": 0})
+        S.save_state(sdir, state)
+        with mock.patch.object(run_generate, "generate_one", F.fake_generate_one):
+            S._first_round(sdir, state, [S.card_id(f"{n:02d}") for n in range(1, 6)], "")
+        st = S.load_state(sdir)
+        self.assertEqual(st["cards"], ["p-01", "p-02", "p-03"])  # 先頭 size 件がすべてカード。残り 2 件は予備
+        self.assertEqual(st["shortfall"], 0)
+        self.assertEqual([c for c in st["cards"] if not (sdir / "cards" / f"{c}.webp").exists()], [])
+        self.assertFalse((sdir / "images" / "p-04.png").exists())
 
 
 class ApiAndServer(Base):

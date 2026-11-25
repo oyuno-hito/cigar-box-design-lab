@@ -1,0 +1,73 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面（葉やしずくのような塊）が重なるコラージュ柄。黒の細い縞や線が横切る。色数は少なく、白と濃い色の明暗差が強い。人物や衣装そのものではなく、配色と、色面の大きさ・重なりの根拠として使う。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: signals passed back and forth, answering shapes, rhythmic electronic movement, bold flat color shapes in teal, deep green, magenta and black",
+ "note": "シガーボックスの面に貼る前提の3:2横長平面デザイン。人物や衣装の再現ではなく、抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-t3",
+ "seed_base": 9600,
+ "items": [
+  {
+   "label": "大きな葉形のコラージュ",
+   "direction": "大きな葉形の色面が重なる",
+   "idea_id": "idea-01",
+   "reason": "衣装の葉のような色面を、拡大して重ねる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, five or six huge leaf-like shapes in teal, deep green and maroon overlapping across the frame, a few thin black stripes cutting across them, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "黒い縞と色の塊",
+   "direction": "黒い横縞に大きな色の塊が載る",
+   "idea_id": "idea-02",
+   "reason": "衣装の黒い縞と色の塊の関係を、強い構図に落とす。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, bold black horizontal stripes of different thickness across a white background, three huge blobs in teal, magenta and deep green sitting over the stripes, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "しずく形の流れ",
+   "direction": "大きなしずく形が斜めに流れる",
+   "idea_id": "idea-03",
+   "reason": "衣装の丸みのある形を、方向のある流れにする。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, a handful of large teardrop shapes in teal, magenta and deep green flowing diagonally from upper left to lower right, a black teardrop among them, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "白黒縞に色面",
+   "direction": "白黒の太い縞に二つの色面",
+   "idea_id": "idea-04",
+   "reason": "白黒の地に色を少なく置いて、衣装の明暗差を強く出す。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, wide black and white vertical stripes of uneven widths as the background, two huge flat color shapes, one magenta and one teal, overlapping in the center, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "ひとつの大きな花",
+   "direction": "大きな花が画面を占める",
+   "idea_id": "idea-05",
+   "reason": "衣装の色面から、一つの大きな花に絞って見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, a single huge flower with six fat petals in teal, magenta and deep green filling most of the frame, a black center, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "流れる三色の塊",
+   "direction": "三色の大きな塊が右上へ流れる",
+   "idea_id": "idea-06",
+   "reason": "色の塊が一方向に流れる、動きのある案。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, three huge flowing blobs in teal, magenta and black sweeping from lower left to upper right with tapered ends, small deep green leaf shapes beside them, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "三角と半円の重なり",
+   "direction": "大きな三角と半円が重なる",
+   "idea_id": "idea-07",
+   "reason": "衣装の不定形を、三角と半円の幾何に置き換える。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, large flat triangles and half circles in teal, deep green, magenta and black overlapping like a bold collage, filling the frame, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "暗地の色の塊",
+   "direction": "黒地に大きな色の塊",
+   "idea_id": "idea-08",
+   "reason": "明暗を反転して、衣装の色を暗地に際立たせる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, deep black background with huge blobs in bright teal, magenta and deep green, one big white blob, bold overlapping shapes filling the frame, flat solid color fills, bold clear edges, no text, no logo, no people"
+  }
+ ]
+}

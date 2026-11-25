@@ -1,0 +1,73 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面（葉やしずくのような塊）が重なるコラージュ柄。黒の細い縞や線が横切る。色数は少なく、白と濃い色の明暗差が強い。人物や衣装そのものではなく、配色と、色面の大きさ・重なりの根拠として使う。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: signals passed back and forth, answering shapes, rhythmic electronic movement, bold flat color shapes in teal, deep green, magenta and black",
+ "note": "シガーボックスの面に貼る前提の3:2横長平面デザイン。人物や衣装の再現ではなく、抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-t2",
+ "seed_base": 9500,
+ "items": [
+  {
+   "label": "放たれる大きな円",
+   "direction": "大きな円から小さな円が続く",
+   "idea_id": "idea-01",
+   "reason": "発信した信号が相手へ届くまでを、大きな円から小さな円へ続く並びで見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, one huge solid magenta disc on the left followed by progressively smaller solid teal discs trailing to the right like pulses, deep black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "太い折れ線の信号",
+   "direction": "太いジグザグ線が画面を横切る",
+   "idea_id": "idea-02",
+   "reason": "電子的な信号の波形を、細線ではなく太い折れ線で大胆に見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, one thick sharp zigzag signal line in bright teal crossing the whole frame from left to right with a few big magenta bars behind it, deep black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "不揃いなイコライザ",
+   "direction": "幅も高さも違う縦棒が下から立ち上がる",
+   "idea_id": "idea-03",
+   "reason": "曲のビートを、不揃いな太い縦棒の高さで見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, tall vertical bars of uneven widths and heights rising from the bottom edge, teal, deep green and magenta bars with white caps, deep black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "太い花弁の放射",
+   "direction": "太い花弁形が一点から広がる",
+   "idea_id": "idea-04",
+   "reason": "発信が広がる様子を、細い放射線ではなく、太い花弁の広がりで見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, a large burst of eight fat petal-shaped rays spreading from the left-center, alternating teal and magenta, with a black solid circle at the center, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "斜めに走る光の帯",
+   "direction": "幅の違う太い斜めの帯が走る",
+   "idea_id": "idea-05",
+   "reason": "曲のスピード感を、斜めの太い帯が画面を横切る動きで見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, bold diagonal bands of different widths in teal, magenta and white sweeping from lower left to upper right across a black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "尖った波形",
+   "direction": "太い白い波形が深い青緑の地を走る",
+   "idea_id": "idea-06",
+   "reason": "電子音の波を、明暗差の強い一本の太い波形で見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, one thick white electronic waveform line with sharp peaks running across the frame, on a deep teal background, with two big magenta blocks behind the line, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "連なる大きな塊",
+   "direction": "大小の丸い塊が斜めに連なる",
+   "idea_id": "idea-07",
+   "reason": "メッセージが次々と受け渡される様子を、大小の塊の連なりで表す。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, five large irregular rounded blobs of different sizes in magenta, teal and black linked in a diagonal chain from lower left to upper right, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "大きな結び目のリボン",
+   "direction": "太いリボンが緩い輪になる",
+   "idea_id": "idea-08",
+   "reason": "つながりそのものを、一本の太いリボンの輪で象徴的に見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, one huge thick teal ribbon forming a loose loop across the frame, a magenta ribbon crossing through the loop, a black ribbon tail, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  }
+ ]
+}

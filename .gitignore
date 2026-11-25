@@ -34,3 +34,7 @@ runs/*/report.html
 # 実使用の session（画像・選択の履歴）は管理しない。README だけ管理する（sessions/README.md 参照）
 sessions/*
 !sessions/README.md
+
+# tests/results の実際の生成物の一覧画像（検証用。ルールにより管理しない。tests/README.md 参照）
+tests/results/*.webp
+tests/results/style-spec-trial-*/*.webp

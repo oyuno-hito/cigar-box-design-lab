@@ -1,0 +1,73 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面（葉やしずくのような塊）が重なるコラージュ柄。黒の細い縞や線が横切る。色数は少なく、白と濃い色の明暗差が強い。人物や衣装そのものではなく、配色と、色面の大きさ・重なりの根拠として使う。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: signals passed back and forth, answering shapes, rhythmic electronic movement, bold flat color shapes in teal, deep green, magenta and black",
+ "note": "シガーボックスの面に貼る前提の3:2横長平面デザイン。人物や衣装の再現ではなく、抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-t5",
+ "seed_base": 9400,
+ "items": [
+  {
+   "label": "往復する二本のリボン",
+   "direction": "反対側から入る二色の太いリボンが斜めに交差する",
+   "idea_id": "idea-01",
+   "reason": "呼びかけと返事が真ん中で交わる動きを、二色の太い帯の交差で一目で見せる。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, two wide bold ribbons, one teal and one magenta, sweeping in from opposite corners and crossing diagonally across the whole frame, white background, thick black stroke accents, strong light and dark contrast, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "重なる大きな吹き出し",
+   "direction": "吹き出し形のシルエットを大中小で重ねる",
+   "idea_id": "idea-02",
+   "reason": "言葉そのものは描かず、吹き出しの形だけで会話を記号化する。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, three large overlapping rounded speech-bubble silhouettes in deep green, magenta and black, shapes of different sizes cascading from left to right, white background, no letters inside the shapes, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "答え合う縦縞",
+   "direction": "幅の不揃いな縦縞が左右で色を入れ替える",
+   "idea_id": "idea-03",
+   "reason": "左右で配色が入れ替わる縞が、言葉を返し合うリズムになる。衣装の黒い縞の要素も使える。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, uneven wide vertical stripes of different widths and heights, teal and black stripes on the left half answering with magenta and black stripes on the right half, white gaps between, bold flat color blocks, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "すれ違う二つの彗星",
+   "direction": "左から右、右から左へ飛ぶ大きな彗星",
+   "idea_id": "idea-04",
+   "reason": "届いて返る一往復を、すれ違う二つの流れ星で表す。暗地に暖色を使う。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, two large comet shapes with long flowing tails, one teal streaking from left to right and one magenta streaking from right to left, passing each other in the middle, deep black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "手渡される花びら",
+   "direction": "大きな花びら形が受け渡しのように連なる",
+   "idea_id": "idea-05",
+   "reason": "花びらを手渡す連なりが、思いを渡していく様子になる。衣装の葉のような色面にも近い。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, a chain of six large petal shapes in teal, deep green and magenta passing from left to right across the frame, each petal overlapping the next, white background, one thick black accent line underneath, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "呼応する二本の波",
+   "direction": "太い波線が上下で呼応する",
+   "idea_id": "idea-06",
+   "reason": "一方が上がるとき他方が下がる波が、呼びかけと返事の呼吸を見せる。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, two thick bold wave lines in magenta and teal flowing across the full width, one rising where the other dips, a thick black brush stroke between them, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "入れ替わるハート",
+   "direction": "大きなハート二つが重なる",
+   "idea_id": "idea-07",
+   "reason": "気持ちが重なる瞬間を、大きな二つのハートの重なりで素直に伝える。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, one large teal heart and one large magenta heart overlapping at the center, deep green leaf shapes around them, a few black brush accents, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "色を渡す横筆",
+   "direction": "長さの違う太い横筆を積んで色が移る",
+   "idea_id": "idea-08",
+   "reason": "一本ずつ色が移っていく横筆で、メッセージが人から人へ渡っていくことを表す。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, five broad horizontal brush strokes of different lengths stacked from top to bottom, teal, deep green, magenta and black, each stroke starting where the previous one ends, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  }
+ ]
+}

@@ -1,0 +1,73 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面（葉やしずくのような塊）が重なるコラージュ柄。黒の細い縞や線が横切る。色数は少なく、白と濃い色の明暗差が強い。人物や衣装そのものではなく、配色と、色面の大きさ・重なりの根拠として使う。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: signals passed back and forth, answering shapes, rhythmic electronic movement, bold flat color shapes in teal, deep green, magenta and black",
+ "note": "シガーボックスの面に貼る前提の3:2横長平面デザイン。人物や衣装の再現ではなく、抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-t4",
+ "seed_base": 9700,
+ "items": [
+  {
+   "label": "同じ向きに動く三本の帯",
+   "direction": "三色の太い曲線の帯が同時に動く",
+   "idea_id": "idea-01",
+   "reason": "三人が揃って動くことを、三色の帯が同じ向きに動く構図で表す。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, three bold wide curved bands in teal, magenta and deep green sweeping together in the same direction across the whole frame, white background, one thin black line along them, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "並ぶ三つの大きな円",
+   "direction": "大きさの違う三つの円が並ぶ",
+   "idea_id": "idea-02",
+   "reason": "三人それぞれの個性を、大きさと色が違う三つの円で表す。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, three huge solid discs of different sizes in teal, magenta and black aligned across the frame, connected by one thick wave stroke, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "揃って立つしずく",
+   "direction": "背の高い三つのしずくが並ぶ",
+   "idea_id": "idea-03",
+   "reason": "同じ形が少しずつ違って揃う様子を、三つの縦長のしずくで見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, three tall teardrop shapes standing side by side in magenta, teal and deep green, each slightly different in height, black base stripe, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "同じ向きに倒れる花",
+   "direction": "三輪の大きな花が同じ方向に傾く",
+   "idea_id": "idea-04",
+   "reason": "息を合わせた動きを、同じ向きに傾く花で見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, three large flowers with fat petals in teal, magenta and deep green all tilting toward the right, black stems sweeping in the same direction, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "三色の斜め縞",
+   "direction": "幅の不揃いな三色の斜め縞",
+   "idea_id": "idea-05",
+   "reason": "拍に合わせたリズムを、斜めの太い縞の幅の違いで見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, bold diagonal stripes of uneven widths in teal, magenta, deep green and black running from lower left to upper right across the frame, a few white gaps, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "ずれて重なる三本の波",
+   "direction": "三色の太い波線が少しずつずれる",
+   "idea_id": "idea-06",
+   "reason": "同じ動きを少しずつずらして重ねる、ダンスの同期を波線で見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, three thick bold wave lines in teal, magenta and black, the same shape offset slightly from each other, crossing the whole width, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "同じ向きの三角",
+   "direction": "大きさの違う三角が同じ向きに進む",
+   "idea_id": "idea-07",
+   "reason": "進む方向をそろえた三角で、揃ったステップを表す。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, a row of three large flat triangles pointing to the right in magenta, teal and deep green, getting bigger toward the right, black bars behind them, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "三つの彗星",
+   "direction": "三つの彗星が同じ向きに飛ぶ",
+   "idea_id": "idea-08",
+   "reason": "三人が揃って走り抜けるスピードを、三つの彗星で見せる。",
+   "text": "Flat graphic decoration for a cigar box panel, 3:2 landscape, full frame composition, three large comet shapes with long tails in teal, magenta and white flying in the same direction from left to right at different heights, deep black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  }
+ ]
+}
