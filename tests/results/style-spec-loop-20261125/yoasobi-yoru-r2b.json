@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "YOASOBIの「夜に駆ける」という曲にあうシガーのデコレーションを考えたい。",
+ "context_sources": [
+  {
+   "kind": "song_context",
+   "source": "曲名・アーティスト",
+   "visual_elements": "夜の街を走り抜ける疾走感。濃い藍と群青の夜に、暖かい黄色と白の光、淡いピンクと紫。色は、夜と光の組を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や風景は描かない。"
+  }
+ ],
+ "concept": "abstract visual for a song about running through the night: speed, night blues and warm yellow light, bold flat color shapes",
+ "note": "3:2横長の平面デザイン。抽象的なグラフィックとして展開する。",
+ "slug": "yoasobi-yoru-r2b",
+ "seed_base": 10200,
+ "items": [
+  {
+   "label": "藍の縦帯と黄の一本",
+   "direction": "幅の不揃いな藍と群青の縦帯の中に、黄色の高い帯が一本",
+   "idea_id": "idea-01",
+   "reason": "夜の中を一筋の光が走る様子を、黄色の一本の帯で見せる。紺地に藍と黄。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, bold vertical bands of indigo and navy of uneven widths and heights, one very tall warm yellow band among them, deep navy background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "斜めに駆け上がる帯",
+   "direction": "紫・藍・淡いピンクの太い帯が右上へ走る",
+   "idea_id": "idea-02",
+   "reason": "疾走感を、右上へ走る太い斜めの帯で見せる。紺地に紫・藍・淡いピンク。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, broad diagonal bands in violet, indigo and pale pink sweeping up to the upper right across the whole frame, deep navy background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "積まれた横棒",
+   "direction": "黄・白・藍の長さの違う横棒が積まれる",
+   "idea_id": "idea-03",
+   "reason": "速度の層を、長さの違う横棒で見せる。紫地に黄・白・藍。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, thick horizontal bars of different lengths in warm yellow, white and indigo stacked from top to bottom, solid violet background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "端で切れた大きな円",
+   "direction": "藍・ピンク・黄の大きな平らな円が重なる",
+   "idea_id": "idea-04",
+   "reason": "夜に灯る光を、端で切れた大きな円で見せる。紺地に藍・ピンク・黄。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large flat circles in indigo, pink and yellow overlapping and cropped by the frame edges, deep navy background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "黄と白の太い波",
+   "direction": "黄と白の波の帯が藍の地を横切る",
+   "idea_id": "idea-05",
+   "reason": "駆ける呼吸を、太い波で見せる。藍地に黄と白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, thick wave bands in yellow and white flowing across the full width, solid indigo background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "向きをそろえた三角",
+   "direction": "淡いピンク・紫・紺の大きな三角が右を向く",
+   "idea_id": "idea-06",
+   "reason": "走る向きを、同じ向きの大きな三角で見せる。黄色地に淡いピンク・紫・紺。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large triangles in pale pink, violet and navy all pointing to the right and cropped by the frame edges, solid warm yellow background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  }
+ ]
+}

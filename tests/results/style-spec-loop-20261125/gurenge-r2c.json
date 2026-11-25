@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "LiSAの「紅蓮華」という曲にあうシガーのデコレーションを考えたい。",
+ "context_sources": [
+  {
+   "kind": "song_context",
+   "source": "曲名・アーティスト",
+   "visual_elements": "力強い決意と、燃えるような熱。深い紅と黒、金、白、深い紫。色は、紅と黒を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や風景は描かない。"
+  }
+ ],
+ "concept": "abstract visual for a powerful song about resolve and burning heat: crimson and black, bold flat color shapes with sharp edges",
+ "note": "3:2横長の平面デザイン。抽象的なグラフィックとして展開する。",
+ "slug": "gurenge-r2c",
+ "seed_base": 10300,
+ "items": [
+  {
+   "label": "下から立ち上がる舌形",
+   "direction": "紅と橙の舌のような曲線の帯が、下の縁から立ち上がる",
+   "idea_id": "idea-01",
+   "reason": "燃える熱の勢いを、下から立ち上がる曲線の帯で見せる。黒地に紅と橙。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, tall curved tongue-shaped bands in crimson and orange rising from the bottom edge and cropped by the frame, deep black background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "紅・白・黒の斜め帯",
+   "direction": "鋭い縁の斜めの帯が交差する",
+   "idea_id": "idea-02",
+   "reason": "決意の鋭さを、斜めの帯の交差で見せる。金色の地に紅・白・黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, sharp-edged diagonal bands in crimson, white and black crossing each other, solid gold background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "黒と紅の縦縞",
+   "direction": "幅の不揃いな縦縞が白地を走る",
+   "idea_id": "idea-03",
+   "reason": "力強い鼓動を、幅の不揃いな縦縞で見せる。白地に黒と紅。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, bold vertical stripes of uneven widths in black and crimson, white background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "端で切れた大きな円",
+   "direction": "紅・黒・白の大きな平らな円が重なる",
+   "idea_id": "idea-04",
+   "reason": "燃える熱の核を、重なる円で見せる。深い紫の地に紅・黒・白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, huge flat circles in crimson, black and white overlapping and cropped by the frame edges, deep purple background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "角ばった塊",
+   "direction": "黒と金の大きな角ばった塊が、紅の地に並ぶ",
+   "idea_id": "idea-05",
+   "reason": "力強さを、大きな角ばった塊で見せる。紅の地に黒と金。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large angular blocks in black and gold of different sizes cropped by the frame edges, solid crimson background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "白地を走る太い墨筆",
+   "direction": "黒の太い墨の筆が横切り、紅の一筆が重なる",
+   "idea_id": "idea-06",
+   "reason": "迷いのない一筆を、太い筆の線で見せる。白地に黒と紅。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, bold black ink strokes crossing a white field from left to right, one thick crimson stroke overlapping them, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  }
+ ]
+}

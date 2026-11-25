@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面が重なり、黒の細い縞が横切る。色数は少なく明暗差が強い。この色を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や衣装そのものは再現しない。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: messages passed back and forth, rhythmic electronic movement, bold flat color shapes",
+ "note": "3:2横長の平面デザイン。抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-r2a",
+ "seed_base": 10100,
+ "items": [
+  {
+   "label": "白黒の縦帯と赤紫の斜め帯",
+   "direction": "幅の不揃いな白黒の縦帯を、二本の赤紫の太い帯が斜めに横切る",
+   "idea_id": "idea-01",
+   "reason": "呼びかけに別の声が斜めに割り込む様子を、縦帯と斜め帯の交差で見せる。白地に黒と赤紫。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, wide black and white vertical bands of uneven widths, crossed by two broad magenta bands cutting diagonally, white background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "ずれて並ぶ色の塊",
+   "direction": "青緑とクリームの大きな塊が、段をずらして画面を横切る",
+   "idea_id": "idea-02",
+   "reason": "メッセージが受け渡される動きを、段違いの塊の連なりで見せる。黒地に青緑とクリーム。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large teal blocks and cream blocks of different sizes in a staggered row crossing the frame, cropped by the frame edges, deep black background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "深緑とクリームの太い弧",
+   "direction": "太い曲線の帯が左から右へ重なって流れる",
+   "idea_id": "idea-03",
+   "reason": "ゆるやかに続く会話の流れを、重なる太い帯で見せる。えんじ地に深緑とクリーム。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, broad overlapping curved bands in deep green and cream sweeping from left to right across the whole frame, deep maroon background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "長さの違う横棒",
+   "direction": "黒・白・橙の太い横棒が積み重なる",
+   "idea_id": "idea-04",
+   "reason": "言葉が積み重なっていく様子を、長さの違う横棒で見せる。青緑地に黒・白・橙。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, five thick horizontal bars of different lengths in black, white and one in orange, stacked from top to bottom, solid teal background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "大きな三角の交差",
+   "direction": "赤紫と黒の大きな三角が、画面の端で切れて向き合う",
+   "idea_id": "idea-05",
+   "reason": "向き合う二者を、端で切れた三角の対で見せる。クリーム地に赤紫と黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large triangles in magenta and black pointing at each other, cropped by the frame edges, cream background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "うねる太い波の帯",
+   "direction": "青緑・白・黒の波の帯が横切る",
+   "idea_id": "idea-06",
+   "reason": "電子音のうねりを、太い波の帯で見せる。えんじ地に青緑・白・黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, wide wavy bands in teal, white and black flowing across the full width, deep maroon background, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  }
+ ]
+}
