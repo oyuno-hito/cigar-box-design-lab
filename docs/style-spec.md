@@ -144,7 +144,7 @@ LLM 側の画像の仕分け（`generated/`、312 枚）から。**題材の傾�
 
 | モデル | 設定 | わかっていること |
 | --- | --- | --- |
-| DreamShaperXL Turbo-Lightning | 1152x768、dpmpp_sde、6 steps、cfg 2 | 以後の調整はこれを既定にする。1 枚約 20 秒。cfg が低く、negative はほとんど効かない（肯定形の言い換えが必要）。具体的な名詞（astronaut, capsule, gears）を渡すと、「flat graphic」より写実側に倒れる |
+| DreamShaperXL Turbo-Lightning | 1152x768、dpmpp_sde、6 steps、cfg 2 | 以後の調整はこれを既定にする。cfg が低く、negative はほとんど効かない（肯定形の言い換えが必要）。具体的な名詞（astronaut, capsule, gears）を渡すと、「flat graphic」より写実側に倒れる |
 | DreamShaper8（SD1.5） | 768x512、dpmpp_2m、25 steps、cfg 6.5 | 人間の所感では XL より明確に劣る。染織・Techno では機械の通過率も XL より低い。比較用に残し、調整サイクルの既定にはしない |
 
 ## 履歴

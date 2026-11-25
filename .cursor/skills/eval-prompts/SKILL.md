@@ -62,7 +62,7 @@ ComfyUI が起動している（`http://127.0.0.1:8188`）。`uv sync` 済み（
 
 ```bash
 uv run tools/new_eval_run.py generator/temp/briefs/<slug>.json    # runs/<日時>-eval-prompts-<slug>/spec.json を作る
-uv run tools/run_generate.py runs/<run-id>                        # 生成（バックグラウンドで実行。1 枚約 17 秒）
+uv run tools/run_generate.py runs/<run-id>                        # 生成（バックグラウンドで実行）
 uv run tools/score_run.py runs/<run-id>
 uv run tools/make_report.py runs/<run-id>
 uv run tools/montage.py runs/<run-id> --sort id           # 作業用のシート（generator/temp/montage/）

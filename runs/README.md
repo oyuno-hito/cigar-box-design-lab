@@ -65,7 +65,7 @@ uv run tools/montage.py runs/<run-id>          # 条件ごとのコンタクト�
 | `contact.webp`（run ごとに 1 枚、全画像の一覧） | 管理する（約 70〜450KB。全 run で約 4.5MB） |
 | `images/*.png`、`report.html` | 管理しない（`.gitignore`）。再生成できる |
 
-- 別の環境で画像が要るときは、ComfyUI を起動して `uv run tools/run_generate.py runs/<run-id>`（PNG が無いものだけ作る）→ 必要なら `uv run tools/make_report.py runs/<run-id>`。1 枚あたり約 20 秒。
+- 別の環境で画像が要るときは、ComfyUI を起動して `uv run tools/run_generate.py runs/<run-id>`（PNG が無いものだけ作る）→ 必要なら `uv run tools/make_report.py runs/<run-id>`。
 - 再現性: 同じ spec・seed・チェックポイント・サンプラーで、この Mac（Apple Silicon・MPS）では PNG のバイト列まで同じになることを確認している。**別のハードウェア（NVIDIA / CUDA など）や、torch・ComfyUI のバージョンが違う環境では同じにならないことがある**。`review.json` は「その環境で生成した画像を見た結果」であり、再生成した画像には厳密には当てはまらない。画像そのものの記録は `contact.webp` を見る。
 - 新しい run を作ったら、レビューまで終えたあとに `uv run tools/montage.py runs/<run-id> --contact` で `contact.webp` を作り直す（印・好みの枠が入る）。
 - 画像を置いてよいのは `generated/` `artifacts/` `site/` と `runs/*/contact.webp` だけ。それ以外の場所の画像（`runs/*/images/*.png` を `git add -f` した場合など）や、1MB を超えるファイルをコミットしようとすると、pre-commit（`tools/check_staged.py`）が止める。意図して入れるときだけ `ALLOW_STAGED=1 git commit`。
