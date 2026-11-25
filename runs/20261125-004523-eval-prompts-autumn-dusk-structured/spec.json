@@ -1,0 +1,149 @@
+{
+  "brief_type": "mood",
+  "brief": "秋の夕暮れの、金色で少し寂しい感じ",
+  "context_sources": [
+    {
+      "kind": "mood",
+      "source": "ユーザー入力型の世界観（調査なし）",
+      "visual_elements": "金色の光、長い影、枯れ葉の色、澄んだ空気、少し冷たい"
+    }
+  ],
+  "concept": "A warm fading glow crosses a quiet muted field, leaving a tender trace between fullness and emptiness.",
+  "note": "再発散。暖かな残光、くすんだ静けさ、残る一本の痕跡の3軸で振った。夕景や葉の写実写真には寄せない。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "基準: 金色の夕暮れ",
+          "text": "flat graphic decoration, full frame composition, layered flat bands of gold, amber and dusty rose fading into deep blue-violet at the top, calm and wide, no text, no people, no hands",
+          "seed": 7201
+        },
+        {
+          "id": "02",
+          "label": "direction-fallen-leaves",
+          "direction": "散る葉",
+          "text": "flat graphic decoration, full frame composition, simple flat leaf shapes in amber, rust and mustard scattered with wide gaps on a deep brown-violet ground, no text, no people, no hands",
+          "seed": 7202
+        },
+        {
+          "id": "03",
+          "label": "direction-long-shadows",
+          "direction": "長い影の帯",
+          "text": "flat graphic decoration, full frame composition, long dark diagonal bands across a golden field like long shadows, no objects, calm, no text, no people, no hands",
+          "seed": 7203
+        },
+        {
+          "id": "04",
+          "label": "direction-sun-low-gold",
+          "direction": "低い大きな金の日",
+          "text": "flat graphic decoration, full frame composition, one very large low gold sun disc partly cut by the bottom edge over layered dusty violet bands, no text, no people, no hands",
+          "seed": 7204
+        },
+        {
+          "id": "05",
+          "label": "direction-branch-silhouette",
+          "direction": "枝のシルエット",
+          "text": "flat graphic decoration, full frame composition, a few bare thin branch lines against a gold-to-rose gradient sky, sparse, no text, no people, no hands",
+          "seed": 7205
+        },
+        {
+          "id": "06",
+          "label": "direction-woven-rust",
+          "direction": "錆色の織り",
+          "text": "flat graphic decoration, full frame composition, flat woven pattern in rust, mustard and deep brown threads, calm repeating rhythm, no text, no people, no hands",
+          "seed": 7206
+        },
+        {
+          "id": "07",
+          "label": "direction-paper-autumn",
+          "direction": "切り紙の秋色",
+          "text": "flat graphic decoration, full frame composition, hand-cut paper layers in mustard, rust, olive and plum, rough edges, large negative space, no text, no people, no hands",
+          "seed": 7207
+        },
+        {
+          "id": "08",
+          "label": "direction-ink-gold-rust",
+          "direction": "金と錆の墨",
+          "text": "flat graphic decoration, full frame composition, soft bleeding fields of gold and rust on a warm gray paper with thin dark lines, no text, no people, no hands",
+          "seed": 7208
+        },
+        {
+          "id": "09",
+          "label": "direction-flock-dots",
+          "direction": "渡る点の列",
+          "text": "flat graphic decoration, full frame composition, a loose line of small dark dots crossing a gold-to-violet sky, minimal, no text, no people, no hands",
+          "seed": 7209
+        },
+        {
+          "id": "10",
+          "label": "direction-stripes-fade-gold",
+          "direction": "縞の移ろい",
+          "text": "flat graphic decoration, full frame composition, wide horizontal stripes shifting from gold to rose to plum to navy, smooth flat bands, no text, no people, no hands",
+          "seed": 7210
+        },
+        {
+          "id": "11",
+          "label": "direction-round-fruit",
+          "direction": "丸い実",
+          "text": "flat graphic decoration, full frame composition, a few big round fruit-like shapes in persimmon orange and rust on a dusty teal ground, flat and sparse, no text, no people, no hands",
+          "seed": 7211
+        },
+        {
+          "id": "12",
+          "label": "direction-cold-edge",
+          "direction": "冷たい縁",
+          "text": "flat graphic decoration, full frame composition, a golden field with a thin cold blue band cutting in along the right edge, quiet, no text, no people, no hands",
+          "seed": 7212
+        },
+        {
+          "id": "13",
+          "label": "direction-pampas-lines",
+          "direction": "穂のような線",
+          "text": "flat graphic decoration, full frame composition, soft vertical grass-like strokes in tan and cream on a dusky blue ground, airy and sparse, no text, no people, no hands",
+          "seed": 7213
+        },
+        {
+          "id": "14",
+          "label": "direction-moon-early",
+          "direction": "早い月",
+          "text": "flat graphic decoration, full frame composition, a pale crescent moon rising over a gold-to-lavender gradient, one tiny star, empty space, no text, no people, no hands",
+          "seed": 7214
+        },
+        {
+          "id": "15",
+          "label": "wildcard",
+          "direction": "小さな橙",
+          "text": "flat graphic decoration, full frame composition, a vast deep indigo-violet field with one small orange circle low and a faint gold line beneath, no text, no people, no hands",
+          "seed": 7215
+        }
+      ]
+    }
+  ]
+}

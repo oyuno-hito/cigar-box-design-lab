@@ -1,0 +1,95 @@
+{
+  "concept": "暗い地面の上に集まった半透明のガラス玉",
+  "note": "プロンプト10本ノック。お題文は10本で固定し、描き方の軸だけを変える。題材は素材・物体の方向から選んだ。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "base",
+          "text": "flat graphic decoration, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "02",
+          "label": "+color",
+          "text": "flat graphic decoration, restrained three-color palette, one dominant deep navy ground color, one main turquoise form, amber used only as a small accent, large quiet color fields, clear foreground and background hierarchy, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "03",
+          "label": "+fine",
+          "text": "flat graphic decoration, thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "04",
+          "label": "+flat",
+          "text": "flat graphic decoration, flat solid color fills only, no highlights, no cast shadows, no metallic shine, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "05",
+          "label": "+depth",
+          "text": "flat graphic decoration, everything sits on one flat plane, no perspective, no interior space, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "06",
+          "label": "+abstract",
+          "text": "flat graphic decoration, the subject reduced to bold circles and a few flat shapes, symbolic rather than literal, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "07",
+          "label": "combo-color+fine",
+          "text": "flat graphic decoration, restrained three-color palette, one dominant deep navy ground color, one main turquoise form, amber used only as a small accent, large quiet color fields, clear foreground and background hierarchy, thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "08",
+          "label": "combo-flat+depth+abstract",
+          "text": "flat graphic decoration, flat solid color fills only, no highlights, no cast shadows, no metallic shine, everything sits on one flat plane, no perspective, no interior space, the subject reduced to bold circles and a few flat shapes, symbolic rather than literal, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "09",
+          "label": "combo-all",
+          "text": "flat graphic decoration, restrained three-color palette, one dominant deep navy ground color, one main turquoise form, amber used only as a small accent, large quiet color fields, clear foreground and background hierarchy, thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm, flat solid color fills only, no highlights, no cast shadows, no metallic shine, everything sits on one flat plane, no perspective, no interior space, the subject reduced to bold circles and a few flat shapes, symbolic rather than literal, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        },
+        {
+          "id": "10",
+          "label": "control",
+          "text": "flat graphic decoration, multiple saturated colors at equal intensity across the whole frame, dense fine lines and tiny highlights everywhere, strong cast shadows, metallic reflections, deep perspective and photorealistic glass, full frame composition, a cluster of translucent glass marbles on a dark ground",
+          "seed": 2400
+        }
+      ]
+    }
+  ]
+}

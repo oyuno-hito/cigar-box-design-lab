@@ -1,0 +1,53 @@
+{
+  "(全体)": {
+    "n": 24,
+    "human_ok": 11,
+    "auc": 0.7762237762237763,
+    "at_cutoff": {
+      "pass": 8,
+      "precision": 0.625,
+      "recall": 0.45454545454545453
+    },
+    "top25%_precision": 0.6666666666666666,
+    "top50%_precision": 0.6666666666666666,
+    "recall80": {
+      "threshold": 0.1788,
+      "pass_rate": 0.5833333333333334,
+      "precision": 0.6428571428571429
+    }
+  },
+  "sd15-12-techno": {
+    "n": 12,
+    "human_ok": 3,
+    "auc": 0.48148148148148145,
+    "at_cutoff": {
+      "pass": 3,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    "top25%_precision": 0.0,
+    "top50%_precision": 0.3333333333333333,
+    "recall80": {
+      "threshold": 0.1631,
+      "pass_rate": 0.75,
+      "precision": 0.3333333333333333
+    }
+  },
+  "xl-12-techno": {
+    "n": 12,
+    "human_ok": 8,
+    "auc": 1.0,
+    "at_cutoff": {
+      "pass": 5,
+      "precision": 1.0,
+      "recall": 0.625
+    },
+    "top25%_precision": 1.0,
+    "top50%_precision": 1.0,
+    "recall80": {
+      "threshold": 0.1788,
+      "pass_rate": 0.5833333333333334,
+      "precision": 1.0
+    }
+  }
+}

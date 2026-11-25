@@ -1,0 +1,101 @@
+{
+  "conditions": {
+    "xl-07-vintage": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.588
+    }
+  },
+  "scored_at": "2026-11-24T21:34:10+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "d026a08fbcc260f2a0da8b844f25406712895cca",
+      "dirty": true
+    }
+  },
+  "items": [
+    {
+      "id": "xl-07-vintage-01",
+      "condition": "xl-07-vintage",
+      "p": 0.4122,
+      "pass": true
+    },
+    {
+      "id": "xl-07-vintage-03",
+      "condition": "xl-07-vintage",
+      "p": 0.7261,
+      "pass": true
+    },
+    {
+      "id": "xl-07-vintage-05",
+      "condition": "xl-07-vintage",
+      "p": 0.5681,
+      "pass": true
+    },
+    {
+      "id": "xl-07-vintage-07",
+      "condition": "xl-07-vintage",
+      "p": 0.0268,
+      "pass": false
+    },
+    {
+      "id": "xl-07-vintage-09",
+      "condition": "xl-07-vintage",
+      "p": 0.031,
+      "pass": false
+    },
+    {
+      "id": "xl-07-vintage-11",
+      "condition": "xl-07-vintage",
+      "p": 0.215,
+      "pass": false
+    },
+    {
+      "id": "xl-07-vintage-13",
+      "condition": "xl-07-vintage",
+      "p": 0.2222,
+      "pass": false
+    },
+    {
+      "id": "xl-07-vintage-15",
+      "condition": "xl-07-vintage",
+      "p": 0.17,
+      "pass": false
+    },
+    {
+      "id": "xl-07-vintage-17",
+      "condition": "xl-07-vintage",
+      "p": 0.3677,
+      "pass": true
+    },
+    {
+      "id": "xl-07-vintage-19",
+      "condition": "xl-07-vintage",
+      "p": 0.2236,
+      "pass": false
+    },
+    {
+      "id": "xl-07-vintage-21",
+      "condition": "xl-07-vintage",
+      "p": 0.3638,
+      "pass": true
+    },
+    {
+      "id": "xl-07-vintage-23",
+      "condition": "xl-07-vintage",
+      "p": 0.6514,
+      "pass": true
+    }
+  ]
+}

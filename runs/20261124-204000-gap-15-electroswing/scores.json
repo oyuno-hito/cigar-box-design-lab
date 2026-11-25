@@ -1,0 +1,101 @@
+{
+  "conditions": {
+    "xl-15-electroswing": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.7304
+    }
+  },
+  "scored_at": "2026-11-24T21:35:18+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "d026a08fbcc260f2a0da8b844f25406712895cca",
+      "dirty": true
+    }
+  },
+  "items": [
+    {
+      "id": "xl-15-electroswing-01",
+      "condition": "xl-15-electroswing",
+      "p": 0.08,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-03",
+      "condition": "xl-15-electroswing",
+      "p": 0.0081,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-05",
+      "condition": "xl-15-electroswing",
+      "p": 0.1099,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-07",
+      "condition": "xl-15-electroswing",
+      "p": 0.1338,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-09",
+      "condition": "xl-15-electroswing",
+      "p": 0.0068,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-11",
+      "condition": "xl-15-electroswing",
+      "p": 0.0423,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-13",
+      "condition": "xl-15-electroswing",
+      "p": 0.0368,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-15",
+      "condition": "xl-15-electroswing",
+      "p": 0.0455,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-17",
+      "condition": "xl-15-electroswing",
+      "p": 0.3732,
+      "pass": true
+    },
+    {
+      "id": "xl-15-electroswing-19",
+      "condition": "xl-15-electroswing",
+      "p": 0.0101,
+      "pass": false
+    },
+    {
+      "id": "xl-15-electroswing-21",
+      "condition": "xl-15-electroswing",
+      "p": 0.4277,
+      "pass": true
+    },
+    {
+      "id": "xl-15-electroswing-23",
+      "condition": "xl-15-electroswing",
+      "p": 0.1019,
+      "pass": false
+    }
+  ]
+}

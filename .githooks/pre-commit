@@ -1,7 +1,10 @@
 #!/bin/sh
-# commit 前に、画像と .json の置き場所のずれをエラーにする。
+# commit 前に、次の 2 つを確認する。
+#   1. 画像と .json の置き場所のずれ（tools/check_generated.py --pairs-only）
+#   2. 置き場の決まっていない画像や、1 MB 超のファイルが混ざっていないか（tools/check_staged.py）
 # inbox の未分類は pre-push で見る。
 # 有効化: git config core.hooksPath .githooks
 # 実行は uv（README の「開発環境」を参照）。
 ROOT="$(git rev-parse --show-toplevel)"
-exec uv run --quiet --project "$ROOT" "$ROOT/tools/check_generated.py" --pairs-only
+uv run --quiet --project "$ROOT" "$ROOT/tools/check_generated.py" --pairs-only || exit 1
+uv run --quiet --project "$ROOT" "$ROOT/tools/check_staged.py" || exit 1

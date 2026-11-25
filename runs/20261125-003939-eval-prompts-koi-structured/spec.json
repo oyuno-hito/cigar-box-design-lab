@@ -1,0 +1,154 @@
+{
+  "brief_type": "music",
+  "brief": "星野源『恋』（TBSドラマ『逃げるは恥だが役に立つ』主題歌）",
+  "context_sources": [
+    {
+      "kind": "drama",
+      "source": "既知情報（調査なし）",
+      "visual_elements": "リズミカルで軽やか、ステップ、ほのぼのした温かさ、黄色と赤、シンプルなポップ"
+    },
+    {
+      "kind": "dance",
+      "source": "既知情報（調査なし）",
+      "visual_elements": "反復するステップの動き、腕を振る軽やかなリズム（人物は描かない）"
+    }
+  ],
+  "concept": "A tender bright feeling travels through a quiet field, repeating gently while leaving one clear emotional trace.",
+  "note": "再発散。やわらかな明るさ、静かな反復、残る一本の感情の線の3軸で振った。写実的な水や生物の表現には寄せない。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "基準: 軽やかなステップ",
+          "text": "flat graphic decoration, full frame composition, simple warm flat shapes stepping in a repeating rhythm across a cream field in yellow, coral and teal, no text, no people, no hands",
+          "seed": 7101
+        },
+        {
+          "id": "02",
+          "label": "direction-step-dots",
+          "direction": "足跡のような点の列",
+          "text": "flat graphic decoration, full frame composition, alternating round dots in coral and teal marching in a loose zigzag across a pale yellow field, no text, no people, no hands",
+          "seed": 7102
+        },
+        {
+          "id": "03",
+          "label": "direction-heart-pop",
+          "direction": "ハートの崩し",
+          "text": "flat graphic decoration, full frame composition, a few simple flat heart shapes of varied size in coral, mustard and teal scattered on cream, slightly tilted, no text, no people, no hands",
+          "seed": 7103
+        },
+        {
+          "id": "04",
+          "label": "direction-checker-warm",
+          "direction": "市松の温かさ",
+          "text": "flat graphic decoration, full frame composition, loose checker pattern in mustard, coral and cream with irregular gaps, warm and calm, no text, no people, no hands",
+          "seed": 7104
+        },
+        {
+          "id": "05",
+          "label": "direction-wave-line",
+          "direction": "揺れる一本線",
+          "text": "flat graphic decoration, full frame composition, one long wavy line in teal crossing a pale yellow field with small coral dots, no text, no people, no hands",
+          "seed": 7105
+        },
+        {
+          "id": "06",
+          "label": "direction-paper-shapes",
+          "direction": "切り紙のポップ",
+          "text": "flat graphic decoration, full frame composition, hand-cut paper shapes in coral, mustard, teal and cream tossed on a warm beige ground, large negative space, no text, no people, no hands",
+          "seed": 7106
+        },
+        {
+          "id": "07",
+          "label": "direction-sun-circles",
+          "direction": "丸の重なり",
+          "text": "flat graphic decoration, full frame composition, overlapping translucent-free flat circles in yellow, coral and pink, asymmetric, cheerful, no text, no people, no hands",
+          "seed": 7107
+        },
+        {
+          "id": "08",
+          "label": "direction-tile-pattern",
+          "direction": "小さなタイル柄",
+          "text": "flat graphic decoration, full frame composition, small flat tile pattern in teal and cream with a single coral tile, regular and calm, no text, no people, no hands",
+          "seed": 7108
+        },
+        {
+          "id": "09",
+          "label": "direction-stripes-soft",
+          "direction": "やさしい縞",
+          "text": "flat graphic decoration, full frame composition, wide soft stripes in butter yellow, peach and sage, slightly uneven, calm, no text, no people, no hands",
+          "seed": 7109
+        },
+        {
+          "id": "10",
+          "label": "direction-bounce-arcs",
+          "direction": "跳ねる弧",
+          "text": "flat graphic decoration, full frame composition, a few bold arcs bouncing across a cream field in coral and navy, rhythmic and light, no text, no people, no hands",
+          "seed": 7110
+        },
+        {
+          "id": "11",
+          "label": "direction-flower-simple",
+          "direction": "単純な花",
+          "text": "flat graphic decoration, full frame composition, simple flat flowers with round petals in coral and mustard on a teal ground, large spacing, no text, no people, no hands",
+          "seed": 7111
+        },
+        {
+          "id": "12",
+          "label": "direction-ink-circles",
+          "direction": "手描きの丸",
+          "text": "flat graphic decoration, full frame composition, loosely hand-drawn circles in red ink on cream paper, some overlapping, playful and sparse, no text, no people, no hands",
+          "seed": 7112
+        },
+        {
+          "id": "13",
+          "label": "direction-night-warm",
+          "direction": "夜の暖かい灯",
+          "text": "flat graphic decoration, full frame composition, deep teal ground with a few warm yellow round lights of varied size, calm, no text, no people, no hands",
+          "seed": 7113
+        },
+        {
+          "id": "14",
+          "label": "direction-ribbon-pair",
+          "direction": "二本のリボン",
+          "text": "flat graphic decoration, full frame composition, two ribbons in coral and teal crossing and looping on a cream field, simple and calm, no text, no people, no hands",
+          "seed": 7114
+        },
+        {
+          "id": "15",
+          "label": "wildcard",
+          "direction": "ひとつだけの赤",
+          "text": "flat graphic decoration, full frame composition, a pale yellow field with one small red heart-like shape off to the side, no text, no people, no hands",
+          "seed": 7115
+        }
+      ]
+    }
+  ]
+}

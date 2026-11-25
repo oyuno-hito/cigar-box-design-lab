@@ -1,0 +1,175 @@
+{
+  "concept": "ネオン以外を含む複数の方向性で、ComfyUI の出力品質が LLM 側（GenerateImage）に対してどれだけ落ちるかを見る",
+  "note": "品質ギャップの検証（textile）。LLM 側の探索セット 08 と同じセル指定の偶数番 12 件を ComfyUI で生成。参考列は LLM 側 24 枚全体の仕分け結果。SD1.5 は XL との比較用。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "xl-08-textile",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "flat decorative textile or traditional craft pattern from a cultural tradition, woven, block-print, embroidery, batik, tapestry or applique texture, edge to edge, full frame composition",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "reference": "like 4 / dislike 20 / maybe 0（24 枚中 like 17%）",
+      "items": [
+        {
+          "id": "01",
+          "text": "Indian kalamkari hand block print with stylized vines and parrots in rust, indigo and cream",
+          "seed": 2000
+        },
+        {
+          "id": "03",
+          "text": "Turkish çintemani-inspired three-lobed cloud motifs in red, cobalt and ivory",
+          "seed": 2002
+        },
+        {
+          "id": "05",
+          "text": "Moroccan zellige-inspired irregular star and arabesque tile ornament in cobalt, white and terracotta",
+          "seed": 2004
+        },
+        {
+          "id": "07",
+          "text": "Central Asian suzani embroidery with large medallion flowers and curling vines in red, pink and green",
+          "seed": 2006
+        },
+        {
+          "id": "09",
+          "text": "Scottish tartan-inspired woven bands in forest green, rust and cream",
+          "seed": 2008
+        },
+        {
+          "id": "11",
+          "text": "Andean woven textile with stylized llamas and stepped mountain-free motifs in red, black and ochre",
+          "seed": 2010
+        },
+        {
+          "id": "13",
+          "text": "Chinese blue-and-white porcelain-inspired cloud and peony ornament, no characters",
+          "seed": 2012
+        },
+        {
+          "id": "15",
+          "text": "Ukrainian-style floral embroidery with dense red and black thread",
+          "seed": 2014
+        },
+        {
+          "id": "17",
+          "text": "African mudcloth-inspired irregular hand-painted marks in black, white and clay red",
+          "seed": 2016
+        },
+        {
+          "id": "19",
+          "text": "Navajo-inspired woven diamond and zigzag bands in rust, turquoise and sand",
+          "seed": 2018
+        },
+        {
+          "id": "21",
+          "text": "Thai silk-inspired peacock and flame motifs in purple, gold and dark teal",
+          "seed": 2020
+        },
+        {
+          "id": "23",
+          "text": "Persian carpet-inspired central medallion with dense floral arabesques in sapphire, wine and gold",
+          "seed": 2022
+        }
+      ]
+    },
+    {
+      "name": "sd15-08-textile",
+      "checkpoint": "DreamShaper8_pruned.safetensors",
+      "width": 768,
+      "height": 512,
+      "sampler": {
+        "steps": 25,
+        "cfg": 6.5,
+        "sampler_name": "dpmpp_2m",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "flat decorative textile or traditional craft pattern from a cultural tradition, woven, block-print, embroidery, batik, tapestry or applique texture, edge to edge, full frame composition",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "reference": "like 4 / dislike 20 / maybe 0（24 枚中 like 17%）",
+      "items": [
+        {
+          "id": "01",
+          "text": "Indian kalamkari hand block print with stylized vines and parrots in rust, indigo and cream",
+          "seed": 2000
+        },
+        {
+          "id": "03",
+          "text": "Turkish çintemani-inspired three-lobed cloud motifs in red, cobalt and ivory",
+          "seed": 2002
+        },
+        {
+          "id": "05",
+          "text": "Moroccan zellige-inspired irregular star and arabesque tile ornament in cobalt, white and terracotta",
+          "seed": 2004
+        },
+        {
+          "id": "07",
+          "text": "Central Asian suzani embroidery with large medallion flowers and curling vines in red, pink and green",
+          "seed": 2006
+        },
+        {
+          "id": "09",
+          "text": "Scottish tartan-inspired woven bands in forest green, rust and cream",
+          "seed": 2008
+        },
+        {
+          "id": "11",
+          "text": "Andean woven textile with stylized llamas and stepped mountain-free motifs in red, black and ochre",
+          "seed": 2010
+        },
+        {
+          "id": "13",
+          "text": "Chinese blue-and-white porcelain-inspired cloud and peony ornament, no characters",
+          "seed": 2012
+        },
+        {
+          "id": "15",
+          "text": "Ukrainian-style floral embroidery with dense red and black thread",
+          "seed": 2014
+        },
+        {
+          "id": "17",
+          "text": "African mudcloth-inspired irregular hand-painted marks in black, white and clay red",
+          "seed": 2016
+        },
+        {
+          "id": "19",
+          "text": "Navajo-inspired woven diamond and zigzag bands in rust, turquoise and sand",
+          "seed": 2018
+        },
+        {
+          "id": "21",
+          "text": "Thai silk-inspired peacock and flame motifs in purple, gold and dark teal",
+          "seed": 2020
+        },
+        {
+          "id": "23",
+          "text": "Persian carpet-inspired central medallion with dense floral arabesques in sapphire, wine and gold",
+          "seed": 2022
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, fluttering ribbon trails transformed into visible sound waves that enter a dark hollow center, repeated arcs and sudden angular cuts, asymmetrical movement, deep black ground, crimson as the main color and cyan as a small echo, no recognizable person or face",
+  "negative_prompt": "",
+  "seed": 3500
+}

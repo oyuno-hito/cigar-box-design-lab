@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "non-geometric organic flat graphic decoration, plants, animals, water, clouds, hand-drawn ink and screen-print texture, warm ivory and dusty indigo palette, edge to edge, full frame composition, expressive koi fish swimming through loose water ripples",
+  "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+  "seed": 2004
+}

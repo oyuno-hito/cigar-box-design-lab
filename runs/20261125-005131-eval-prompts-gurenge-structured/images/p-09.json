@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, tiny ember dots in orange and yellow scattered over a deep black ground, sparse, a few bigger sparks, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 7309
+}

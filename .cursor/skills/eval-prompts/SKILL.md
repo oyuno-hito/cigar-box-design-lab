@@ -65,8 +65,11 @@ uv run tools/new_eval_run.py generator/temp/briefs/<slug>.json    # runs/<日時
 uv run tools/run_generate.py runs/<run-id>                        # 生成（バックグラウンドで実行。1 枚約 17 秒）
 uv run tools/score_run.py runs/<run-id>
 uv run tools/make_report.py runs/<run-id>
-uv run tools/montage.py runs/<run-id> --sort id
+uv run tools/montage.py runs/<run-id> --sort id           # 作業用のシート（generator/temp/montage/）
+uv run tools/montage.py runs/<run-id> --contact           # runs/<run-id>/contact.webp（Git 管理する一覧画像）
 ```
+
+`runs/` は、テキスト（spec・scores・review・画像ごとの `.json`）と `contact.webp` だけを Git 管理する。PNG と `report.html` は管理外（`runs/README.md`「Git での扱い」）。
 
 生成中に、次のブリーフを書く（ComfyUI は順番に処理する）。
 
@@ -93,7 +96,7 @@ uv run tools/montage.py runs/<run-id> --sort id
 一致度は、全画像に同じ表現を要求するのではなく、共通の核と各画像の
 `direction` の両方で見る。
 
-人間のレビューは、離席中などで後から行う。レポートは一覧の「未検査」に出る。
+人間のレビューは、離席中などで後から行う。レポートは一覧の「未検査」に出る。レビューが終わったら `uv run tools/montage.py runs/<run-id> --contact` で `contact.webp` を作り直す（印が枠に入る）。
 
 ### 5. 最後にまとめて `docs/style-spec.md` を更新する
 

@@ -17,7 +17,7 @@ disable-model-invocation: true
 - **様式名で書かない。** 「浮世絵風」「ヴィンテージ風」ではなく、軸の語彙（`docs/style-spec.md` の「軸の語彙」）で書く。
 - **打率だけで判断しない。** 類似度（条件内の画像が似ていく度合い）が悪化していないこと、別の題材でも効くことを確かめる。
 - **人間のレビューが一次。** 機械の通過率と自己評価は暫定。
-- コミットはしない。`runs/` の画像は Git 管理外にしておく。`generated/` には何も入れない（あれはラベル付け用）。
+- コミットはしない。`runs/` の PNG と `report.html` は Git 管理外（テキストと `contact.webp` は管理対象。`runs/README.md`「Git での扱い」）。`generated/` には何も入れない（あれはラベル付け用）。
 
 ## 前提
 
@@ -82,6 +82,8 @@ uv run tools/make_report.py runs/<run-id>
 ```
 
 ### 5. 評価する
+
+評価が終わったら、`uv run tools/montage.py runs/<run-id> --contact` で `contact.webp`（Git 管理する一覧画像）を作る。
 
 1. **人間のレビュー（一次）**: `uv run tools/make_report.py runs/<run-id> --serve` でレポートを開いてもらう（サーバーが動いていれば、一覧 `http://127.0.0.1:8765/` の未検査から開いてもらう）。条件ごとに「この条件を最後まで見た」をチェックし、「review.json に保存」を押してもらう（`report.html` と同じディレクトリに書かれる）。待つ間は、終わった題材から先に見てもらう。
 2. **自己評価（人間が見られないとき）**: `montage.py` のシートを見て、画像ごとに「明確に OK / 明確に NG / 保留」を付ける。付けた結果は `self_review.json`（`{"ok": [...], "ng": [...]}` の画像 id）として run に保存し、`review.json` とは混ぜない。

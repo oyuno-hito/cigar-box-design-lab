@@ -1,0 +1,154 @@
+{
+  "brief_type": "music",
+  "brief": "米津玄師『KICK BACK』（TVアニメ『チェンソーマン』オープニング）",
+  "context_sources": [
+    {
+      "kind": "anime",
+      "source": "既知情報（調査なし）",
+      "visual_elements": "ポップで危うい、素早いカット、チェンソーの勢い、明るい色と暗さの同居"
+    },
+    {
+      "kind": "music",
+      "source": "既知情報（調査なし）",
+      "visual_elements": "疾走する反復、ひねった構成、チープなレトロ感"
+    }
+  ],
+  "concept": "a loud cheerful rush of energy that is slightly dangerous underneath, abrupt cuts and sudden bursts",
+  "note": "発散。15 方向を、構図・密度・色・素材感・題材の切り口で大きく振った。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "基準: 明るい勢いと危うさ",
+          "text": "flat graphic decoration, full frame composition, abrupt rush of bright pop energy with jagged cuts, saturated orange and hot pink on a black ground, no text, no people, no hands",
+          "seed": 4101
+        },
+        {
+          "id": "02",
+          "label": "direction-torn-collage",
+          "direction": "破れた紙片のコラージュ",
+          "text": "flat graphic decoration, full frame composition, torn paper collage of hot orange, pink and cream scraps overlapping at hard angles, asymmetric layout, dark ground, no text, no people, no hands",
+          "seed": 4102
+        },
+        {
+          "id": "03",
+          "label": "direction-zigzag-teeth",
+          "direction": "ぎざぎざの歯の列",
+          "text": "flat graphic decoration, full frame composition, repeating zigzag teeth rushing along a fast diagonal, bold flat orange and black stripes, broad calm areas, no text, no people, no hands",
+          "seed": 4103
+        },
+        {
+          "id": "04",
+          "label": "direction-sticker-pop",
+          "direction": "ステッカー風の散らばり",
+          "text": "flat graphic decoration, full frame composition, scattered cheerful sticker-like blobs and stars of varied sizes on a deep red ground, large quiet gaps between them, no text, no people, no hands",
+          "seed": 4104
+        },
+        {
+          "id": "05",
+          "label": "direction-film-cut",
+          "direction": "フィルムの切り替え",
+          "text": "flat graphic decoration, full frame composition, horizontal bands shifted sideways like a fast film cut, pink, cyan and black, clean edges, no text, no people, no hands",
+          "seed": 4105
+        },
+        {
+          "id": "06",
+          "label": "direction-crayon-scratch",
+          "direction": "クレヨンの引っかき",
+          "text": "flat graphic decoration, full frame composition, rough hand-scratched marks with crayon grain, yellow and magenta on black, sparse and uneven, no text, no people, no hands",
+          "seed": 4106
+        },
+        {
+          "id": "07",
+          "label": "direction-paint-dots",
+          "direction": "明るい赤の飛沫",
+          "text": "flat graphic decoration, full frame composition, cheerful red paint dot splashes of different sizes on a cream field, playful not violent, one large splash as the focus, no text, no people, no hands",
+          "seed": 4107
+        },
+        {
+          "id": "08",
+          "label": "direction-halftone",
+          "direction": "網点のグラデーション",
+          "text": "flat graphic decoration, full frame composition, halftone dot gradients in orange and cream, one big bold sweeping curve crossing the frame, no text, no people, no hands",
+          "seed": 4108
+        },
+        {
+          "id": "09",
+          "label": "direction-sawtooth-ring",
+          "direction": "大きな鋸歯の輪",
+          "text": "flat graphic decoration, full frame composition, one large circular sawtooth ring placed off to the right, flat red and cream, wide empty ground, no text, no people, no hands",
+          "seed": 4109
+        },
+        {
+          "id": "10",
+          "label": "direction-speed-blocks",
+          "direction": "太い斜線のブロック",
+          "text": "flat graphic decoration, full frame composition, large simple blocks of bold parallel diagonal stripes in orange and black, hard edges, high contrast, no text, no people, no hands",
+          "seed": 4110
+        },
+        {
+          "id": "11",
+          "label": "direction-pulse",
+          "direction": "脈打つ波形",
+          "text": "flat graphic decoration, full frame composition, a bold pulse waveform crossing the frame over a flat magenta field, one cyan accent, no text, no people, no hands",
+          "seed": 4111
+        },
+        {
+          "id": "12",
+          "label": "direction-patchwork",
+          "direction": "つぎはぎの縫い目",
+          "text": "flat graphic decoration, full frame composition, mismatched flat patches of warm color joined with loose stitched seams, handmade feel, no text, no people, no hands",
+          "seed": 4112
+        },
+        {
+          "id": "13",
+          "label": "direction-pictogram-grid",
+          "direction": "記号のばらばら配置",
+          "text": "flat graphic decoration, full frame composition, irregular arrangement of simple bold shapes: star, zigzag, circle, burst, in flat colors on a cream ground, no text, no people, no hands",
+          "seed": 4113
+        },
+        {
+          "id": "14",
+          "label": "direction-night-streaks",
+          "direction": "夜の光の筋",
+          "text": "flat graphic decoration, full frame composition, a few long horizontal light streaks in yellow and pink on deep navy, sparse, calm and fast at once, no text, no people, no hands",
+          "seed": 4114
+        },
+        {
+          "id": "15",
+          "label": "wildcard",
+          "direction": "静かな面を割る一撃",
+          "text": "flat graphic decoration, full frame composition, a quiet pale pink field split by one violent orange zigzag crack, nothing else, no text, no people, no hands",
+          "seed": 4115
+        }
+      ]
+    }
+  ]
+}

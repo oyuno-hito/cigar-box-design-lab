@@ -1,0 +1,159 @@
+{
+  "brief_type": "music",
+  "brief": "米津玄師『KICK BACK』（TVアニメ『チェンソーマン』オープニング）",
+  "context_sources": [
+    {
+      "kind": "official-anime",
+      "source": "https://www.chainsawman.dog/news/220919_01/",
+      "visual_elements": "『チェンソーマン』OP、常田大希の共同編曲、モーニング娘。『そうだ！We're ALIVE』のサンプリング"
+    },
+    {
+      "kind": "interview",
+      "source": "https://www.billboard-japan.com/special/detail/3721",
+      "visual_elements": "ドラムンベース、ジェットコースターのような急変、深刻さがポップに反転する痛快さ、明るい幸福語の平坦さと不幸の裏返し"
+    },
+    {
+      "kind": "music-video",
+      "source": "https://reissuerecords.net/2022/10/25/kick-back_mv/",
+      "visual_elements": "米津玄師と常田大希の筋トレ、予想外でユーモラスな展開、黒と黄色の強い対比"
+    }
+  ],
+  "concept": "A bright, blunt hunger for happiness keeps jolting through a dirty, breathless rush; each cheerful surface suddenly reveals a dry, unstable underside.",
+  "note": "再発散。共通の核を保ち、急変・明るさと乾いた空虚・せわしない反復の3群に分けて方向を振った。流血・人物・写実の質感には寄せない。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "明るい表面と乾いた裏面の基準案",
+          "text": "flat graphic decoration, full frame composition, bright yellow and hot pink bursts interrupted by blunt black and off-white slabs, cheerful pop surface with a dry unstable underside, abrupt visual changes, clean matte paper-like surfaces, no text, no people, no hands",
+          "seed": 5101
+        },
+        {
+          "id": "02",
+          "label": "jet-cut-paper",
+          "direction": "急な場面転換を切り紙の断片で表す",
+          "text": "flat graphic decoration, full frame composition, several flat paper panels changing color and scale abruptly from left to right, sunny yellow, pink, black, and dirty cream, playful then unexpectedly severe, crisp cut edges, generous quiet gaps, no text, no people, no hands",
+          "seed": 5102
+        },
+        {
+          "id": "03",
+          "label": "jet-offset-bands",
+          "direction": "曲調の急変をずれた帯で表す",
+          "text": "flat graphic decoration, full frame composition, horizontal bands that suddenly switch width, direction, and palette at hard seams, yellow and cyan against black with one hot pink interruption, fast but controlled, flat ink surfaces, no text, no people, no hands",
+          "seed": 5103
+        },
+        {
+          "id": "04",
+          "label": "jet-collision",
+          "direction": "陽気さと荒さの衝突",
+          "text": "flat graphic decoration, full frame composition, cheerful cream stars and yellow blocks abruptly colliding with rough black angular cuts, one hot pink accent, asymmetrical full-frame rhythm, dry matte print surface, broad calm areas, no text, no people, no hands",
+          "seed": 5104
+        },
+        {
+          "id": "05",
+          "label": "jet-false-calm",
+          "direction": "静かな面が突然破られる急変",
+          "text": "flat graphic decoration, full frame composition, a large quiet pale yellow field interrupted by a sudden sequence of black and magenta planar cuts, humorous pop energy without violence, sparse composition, solid flat colors, no text, no people, no hands",
+          "seed": 5105
+        },
+        {
+          "id": "06",
+          "label": "happy-void",
+          "direction": "明るい幸福感の下に黒い余白を置く",
+          "text": "flat graphic decoration, full frame composition, small optimistic yellow stars and pink confetti floating over a very large dry black ground, cheerful symbols becoming sparse and lonely toward one edge, flat poster-like shapes, no text, no people, no hands",
+          "seed": 5106
+        },
+        {
+          "id": "07",
+          "label": "happy-plain",
+          "direction": "平坦なポップさと虚無の同居",
+          "text": "flat graphic decoration, full frame composition, repeated simple yellow and cream tokens on a pale pink field, one wide empty gray-black interruption crossing the composition, naive cheerful rhythm with a blank aftertaste, matte cut-paper surfaces, no text, no people, no hands",
+          "seed": 5107
+        },
+        {
+          "id": "08",
+          "label": "happy-lucky",
+          "direction": "安直な明るさを大胆な面で表す",
+          "text": "flat graphic decoration, full frame composition, oversized sunny yellow and candy pink geometric decals scattered with uneven spacing on a dirty navy ground, bluntly happy but emotionally dry, two-dimensional screen-print feel, no text, no people, no hands",
+          "seed": 5108
+        },
+        {
+          "id": "09",
+          "label": "happy-reversal",
+          "direction": "ポップな記号が途中で乾いた面に反転する",
+          "text": "flat graphic decoration, full frame composition, a field of playful yellow bursts and cream dots gradually replaced by flat charcoal rectangles, one pink remnant left behind, clear visual reversal, clean edges, no text, no people, no hands",
+          "seed": 5109
+        },
+        {
+          "id": "10",
+          "label": "breakbeat-grid",
+          "direction": "ドラムンベースのせわしない反復",
+          "text": "flat graphic decoration, full frame composition, an irregular grid of short offset bars and small blocks suggesting a breathless breakbeat, black, yellow, dirty cream, and one pink accent, syncopated spacing with large pauses, flat ink, no text, no people, no hands",
+          "seed": 5110
+        },
+        {
+          "id": "11",
+          "label": "breakbeat-stutter",
+          "direction": "反復がつまずきながら加速する",
+          "text": "flat graphic decoration, full frame composition, repeated compact stripes that stutter, skip, and restart across the frame, alternating cheerful yellow and abrasive black with small pink flashes, controlled asymmetry, matte graphic surfaces, no text, no people, no hands",
+          "seed": 5111
+        },
+        {
+          "id": "12",
+          "label": "breakbeat-dirty-pop",
+          "direction": "不良っぽい荒さとポップ色の反復",
+          "text": "flat graphic decoration, full frame composition, rough-edged black marks and bright yellow blocks locked into a restless repeated rhythm, hot pink interruptions, playful but unruly, no photographic texture, broad flat areas, no text, no people, no hands",
+          "seed": 5112
+        },
+        {
+          "id": "13",
+          "label": "wildcard-dry-celebration",
+          "direction": "祝祭の形だけ残った乾いた余韻",
+          "text": "flat graphic decoration, full frame composition, a few faded yellow and pink celebration marks stranded on a vast charcoal and cream field, sudden awkward spacing, funny and bleak at once, flat distressed print without realism, no text, no people, no hands",
+          "seed": 5113
+        },
+        {
+          "id": "14",
+          "label": "wildcard-misfit",
+          "direction": "明るい部品が噛み合わないポップな違和感",
+          "text": "flat graphic decoration, full frame composition, mismatched cheerful panels in yellow, pink, cyan, and black that almost form a pattern but keep slipping out of alignment, abrupt palette changes, clean matte shapes, no text, no people, no hands",
+          "seed": 5114
+        },
+        {
+          "id": "15",
+          "label": "wildcard-empty-kick",
+          "direction": "空虚な面に一度だけ勢いが戻る",
+          "text": "flat graphic decoration, full frame composition, a nearly empty off-white and black field with one compact explosive yellow and pink interruption near the edge, a brief ridiculous flash of hope against dryness, simple flat shapes, no text, no people, no hands",
+          "seed": 5115
+        }
+      ]
+    }
+  ]
+}

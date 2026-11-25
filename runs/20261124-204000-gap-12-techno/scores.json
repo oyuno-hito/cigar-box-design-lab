@@ -1,0 +1,177 @@
+{
+  "conditions": {
+    "sd15-12-techno": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.8031
+    },
+    "xl-12-techno": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.8791
+    }
+  },
+  "scored_at": "2026-11-24T21:35:01+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "d026a08fbcc260f2a0da8b844f25406712895cca",
+      "dirty": true
+    }
+  },
+  "items": [
+    {
+      "id": "sd15-12-techno-01",
+      "condition": "sd15-12-techno",
+      "p": 0.377,
+      "pass": true
+    },
+    {
+      "id": "sd15-12-techno-03",
+      "condition": "sd15-12-techno",
+      "p": 0.1945,
+      "pass": false
+    },
+    {
+      "id": "sd15-12-techno-05",
+      "condition": "sd15-12-techno",
+      "p": 0.2803,
+      "pass": true
+    },
+    {
+      "id": "sd15-12-techno-07",
+      "condition": "sd15-12-techno",
+      "p": 0.2123,
+      "pass": false
+    },
+    {
+      "id": "sd15-12-techno-09",
+      "condition": "sd15-12-techno",
+      "p": 0.1659,
+      "pass": false
+    },
+    {
+      "id": "sd15-12-techno-11",
+      "condition": "sd15-12-techno",
+      "p": 0.1473,
+      "pass": false
+    },
+    {
+      "id": "sd15-12-techno-13",
+      "condition": "sd15-12-techno",
+      "p": 0.0566,
+      "pass": false
+    },
+    {
+      "id": "sd15-12-techno-15",
+      "condition": "sd15-12-techno",
+      "p": 0.4391,
+      "pass": true
+    },
+    {
+      "id": "sd15-12-techno-17",
+      "condition": "sd15-12-techno",
+      "p": 0.2095,
+      "pass": false
+    },
+    {
+      "id": "sd15-12-techno-19",
+      "condition": "sd15-12-techno",
+      "p": 0.1631,
+      "pass": false
+    },
+    {
+      "id": "sd15-12-techno-21",
+      "condition": "sd15-12-techno",
+      "p": 0.1895,
+      "pass": false
+    },
+    {
+      "id": "sd15-12-techno-23",
+      "condition": "sd15-12-techno",
+      "p": 0.0269,
+      "pass": false
+    },
+    {
+      "id": "xl-12-techno-01",
+      "condition": "xl-12-techno",
+      "p": 0.8207,
+      "pass": true
+    },
+    {
+      "id": "xl-12-techno-03",
+      "condition": "xl-12-techno",
+      "p": 0.1788,
+      "pass": false
+    },
+    {
+      "id": "xl-12-techno-05",
+      "condition": "xl-12-techno",
+      "p": 0.2281,
+      "pass": false
+    },
+    {
+      "id": "xl-12-techno-07",
+      "condition": "xl-12-techno",
+      "p": 0.0558,
+      "pass": false
+    },
+    {
+      "id": "xl-12-techno-09",
+      "condition": "xl-12-techno",
+      "p": 0.3605,
+      "pass": true
+    },
+    {
+      "id": "xl-12-techno-11",
+      "condition": "xl-12-techno",
+      "p": 0.2793,
+      "pass": true
+    },
+    {
+      "id": "xl-12-techno-13",
+      "condition": "xl-12-techno",
+      "p": 0.1766,
+      "pass": false
+    },
+    {
+      "id": "xl-12-techno-15",
+      "condition": "xl-12-techno",
+      "p": 0.5615,
+      "pass": true
+    },
+    {
+      "id": "xl-12-techno-17",
+      "condition": "xl-12-techno",
+      "p": 0.1062,
+      "pass": false
+    },
+    {
+      "id": "xl-12-techno-19",
+      "condition": "xl-12-techno",
+      "p": 0.6232,
+      "pass": true
+    },
+    {
+      "id": "xl-12-techno-21",
+      "condition": "xl-12-techno",
+      "p": 0.1532,
+      "pass": false
+    },
+    {
+      "id": "xl-12-techno-23",
+      "condition": "xl-12-techno",
+      "p": 0.0531,
+      "pass": false
+    }
+  ]
+}

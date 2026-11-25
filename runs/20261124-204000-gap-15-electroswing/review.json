@@ -1,0 +1,10 @@
+{
+  "run_id": "20261124-204000-gap-15-electroswing",
+  "reviewed": true,
+  "reviewed_at": "2026-11-24T12:28:44.990Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は同意",
+  "flags": [
+    "xl-15-electroswing-11",
+    "xl-15-electroswing-17"
+  ]
+}

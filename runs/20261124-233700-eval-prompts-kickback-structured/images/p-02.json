@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, several flat paper panels changing color and scale abruptly from left to right, sunny yellow, pink, black, and dirty cream, playful then unexpectedly severe, crisp cut edges, generous quiet gaps, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 5102
+}

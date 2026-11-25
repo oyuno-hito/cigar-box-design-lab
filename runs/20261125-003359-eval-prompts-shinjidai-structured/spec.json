@@ -1,0 +1,149 @@
+{
+  "brief_type": "music",
+  "brief": "Ado『新時代』（映画『ONE PIECE FILM RED』）",
+  "context_sources": [
+    {
+      "kind": "music",
+      "source": "既知情報（調査なし）",
+      "visual_elements": "圧倒的な高揚、赤と白、ステージ、新しい時代の宣言、海の冒険"
+    }
+  ],
+  "concept": "A hopeful future glow arrives through a clean graphic world, balancing open brightness with one decisive surge of change.",
+  "note": "再発散。未来への明るさ、開いた余白、変化を告げる一撃の3軸で振った。写実的な都市や機械の細部には寄せない。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "基準: 高らかな宣言",
+          "text": "flat graphic decoration, full frame composition, bold red and white flat shapes bursting upward across a wide blue-white sky field, one gold accent, no text, no people, no hands",
+          "seed": 7001
+        },
+        {
+          "id": "02",
+          "label": "direction-red-half-white",
+          "direction": "赤と白の分割",
+          "text": "flat graphic decoration, full frame composition, the frame split diagonally into vivid red and clean white with a thin gold line along the split, no text, no people, no hands",
+          "seed": 7002
+        },
+        {
+          "id": "03",
+          "label": "direction-wave-crest",
+          "direction": "大きな波頭",
+          "text": "flat graphic decoration, full frame composition, big simple wave-crest shapes in red, white and deep blue rolling across the frame, flat, no text, no people, no hands",
+          "seed": 7003
+        },
+        {
+          "id": "04",
+          "label": "direction-sun-rays-wide",
+          "direction": "広い光の帯",
+          "text": "flat graphic decoration, full frame composition, wide bands of light fanning out in red, orange and cream from a point beyond the frame edge, no text, no people, no hands",
+          "seed": 7004
+        },
+        {
+          "id": "05",
+          "label": "direction-flag-folds",
+          "direction": "旗のような面",
+          "text": "flat graphic decoration, full frame composition, large flat flowing cloth-like planes in red and white with soft folds, no emblem, simple, no text, no people, no hands",
+          "seed": 7005
+        },
+        {
+          "id": "06",
+          "label": "direction-star-field-red",
+          "direction": "赤い星の散り",
+          "text": "flat graphic decoration, full frame composition, a scatter of bold five-pointed stars in red and white on a deep navy field, varied sizes, wide gaps, no text, no people, no hands",
+          "seed": 7006
+        },
+        {
+          "id": "07",
+          "label": "direction-paper-cut-red",
+          "direction": "切り紙の波",
+          "text": "flat graphic decoration, full frame composition, hand-cut paper waves in vermilion, white and navy layered with rough edges, no text, no people, no hands",
+          "seed": 7007
+        },
+        {
+          "id": "08",
+          "label": "direction-ribbon-whirl",
+          "direction": "風に流れる帯",
+          "text": "flat graphic decoration, full frame composition, long wide ribbons in red and white sweeping across a pale sky blue field, no text, no people, no hands",
+          "seed": 7008
+        },
+        {
+          "id": "09",
+          "label": "direction-crown-burst",
+          "direction": "放射の爆発",
+          "text": "flat graphic decoration, full frame composition, a single burst of sharp triangular rays in red and gold from the lower left on a cream field, no text, no people, no hands",
+          "seed": 7009
+        },
+        {
+          "id": "10",
+          "label": "direction-confetti-red",
+          "direction": "紅白の紙吹雪",
+          "text": "flat graphic decoration, full frame composition, red and white confetti shapes in many sizes scattered across a deep blue ground, calm spacing, no text, no people, no hands",
+          "seed": 7010
+        },
+        {
+          "id": "11",
+          "label": "direction-sea-horizon",
+          "direction": "水平線と赤い日",
+          "text": "flat graphic decoration, full frame composition, a flat sea in layered blues with a huge red sun low on the horizon, no text, no people, no hands",
+          "seed": 7011
+        },
+        {
+          "id": "12",
+          "label": "direction-stripes-rise",
+          "direction": "上へ伸びる縞",
+          "text": "flat graphic decoration, full frame composition, vertical stripes in red, white and navy rising in uneven heights like a rising chorus, no text, no people, no hands",
+          "seed": 7012
+        },
+        {
+          "id": "13",
+          "label": "direction-ink-red",
+          "direction": "墨の赤",
+          "text": "flat graphic decoration, full frame composition, bold brush strokes in vivid red on white paper with strong negative space, no text, no people, no hands",
+          "seed": 7013
+        },
+        {
+          "id": "14",
+          "label": "direction-night-stage",
+          "direction": "暗いステージの赤",
+          "text": "flat graphic decoration, full frame composition, a dark deep ground with one huge soft red glow shape at the center-left and a few white points, no text, no people, no hands",
+          "seed": 7014
+        },
+        {
+          "id": "15",
+          "label": "wildcard",
+          "direction": "白の中の赤い円",
+          "text": "flat graphic decoration, full frame composition, a huge white field with one large red circle cut by a thin gold diagonal, no text, no people, no hands",
+          "seed": 7015
+        }
+      ]
+    }
+  ]
+}

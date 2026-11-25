@@ -1,0 +1,70 @@
+{
+  "run_id": "20261125-004523-eval-prompts-autumn-dusk-structured",
+  "reviewed": false,
+  "reviewed_conditions": [],
+  "reviewed_at": "2026-11-24T16:10:20.231Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。ratings.preference = 好み、ratings.concept = 共通の核と direction の一致度。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+  "flags": [],
+  "ratings": {
+    "p-02": {
+      "concept": "high",
+      "preference": "like"
+    },
+    "p-13": {
+      "concept": "mid",
+      "preference": "hold"
+    },
+    "p-05": {
+      "concept": "high",
+      "preference": "like"
+    },
+    "p-11": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-14": {
+      "concept": "low",
+      "preference": "hold"
+    },
+    "p-08": {
+      "concept": "mid",
+      "preference": "like"
+    },
+    "p-07": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-10": {
+      "concept": "low",
+      "preference": "hold"
+    },
+    "p-01": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-09": {
+      "concept": "mid",
+      "preference": "dislike"
+    },
+    "p-12": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-06": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-15": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-03": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-04": {
+      "concept": "low",
+      "preference": "dislike"
+    }
+  }
+}

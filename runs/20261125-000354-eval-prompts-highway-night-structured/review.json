@@ -1,0 +1,70 @@
+{
+  "run_id": "20261125-000354-eval-prompts-highway-night-structured",
+  "reviewed": false,
+  "reviewed_conditions": [],
+  "reviewed_at": "2026-11-24T15:55:21.665Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。ratings.preference = 好み、ratings.concept = 共通の核と direction の一致度。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+  "flags": [],
+  "ratings": {
+    "p-06": {
+      "preference": "like",
+      "concept": "high"
+    },
+    "p-11": {
+      "concept": "high",
+      "preference": "like"
+    },
+    "p-03": {
+      "concept": "high",
+      "preference": "like"
+    },
+    "p-10": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-05": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-02": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-13": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-12": {
+      "preference": "hold",
+      "concept": "mid"
+    },
+    "p-01": {
+      "preference": "like",
+      "concept": "mid"
+    },
+    "p-08": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-07": {
+      "preference": "like",
+      "concept": "high"
+    },
+    "p-09": {
+      "preference": "like",
+      "concept": "low"
+    },
+    "p-04": {
+      "preference": "hold",
+      "concept": "mid"
+    },
+    "p-14": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-15": {
+      "preference": "dislike",
+      "concept": "high"
+    }
+  }
+}

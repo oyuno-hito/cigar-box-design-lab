@@ -11,4 +11,5 @@ uv run tools/run_generate.py "$RUN"
 uv run tools/score_run.py "$RUN"
 uv run tools/make_report.py "$RUN"
 uv run tools/montage.py "$RUN" --sort id
+uv run tools/montage.py "$RUN" --contact   # コミットする一覧画像。レビューで印が付いたら作り直す
 echo "PIPELINE_DONE $RUN"

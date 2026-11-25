@@ -4,22 +4,25 @@
 
 ```text
 runs/<日時>-<名前>/
-  spec.json      コンセプト、モデル・サンプラー、条件ごとのプロンプトと seed
-  images/        生成画像と同名の .json
-  scores.json    分類器の採点結果
-  report.html    比較レポート（毎回作り直せる）
-  review.json    人間レビューの結果
+  spec.json         コンセプト、モデル・サンプラー、条件ごとのプロンプトと seed             [Git 管理]
+  images/*.json     生成画像と同名のメタデータ（プロンプト・seed・生成元）                    [Git 管理]
+  images/*.png      生成画像（再生成できる）                                                  [管理外]
+  scores.json       分類器の採点結果                                                          [Git 管理]
+  review.json       人間レビューの結果                                                        [Git 管理]
+  contact.webp      全画像の一覧（機械の判定・印つき。約 70〜450KB）                          [Git 管理]
+  report.html       比較レポート（毎回作り直せる）                                            [管理外]
 ```
 
 ## 流し方
 
-ComfyUI を起動した状態で実行する（既定は `http://127.0.0.1:8188`。起動方法は問わない）。分類器の採点は `.venv`（`tools/requirements.txt`）を有効化して実行する。
+ComfyUI を起動した状態で実行する（既定は `http://127.0.0.1:8188`。起動は `generator/start_comfy.sh`）。ツールはすべて `uv run` で動かす（README の「開発環境」）。
 
 ```bash
-python3 tools/run_generate.py runs/<run-id>             # 生成（途中から再開できる。--limit 3 で動作確認）
-python3 tools/score_run.py runs/<run-id>                # scorers/ の分類器で採点
-python3 tools/make_report.py runs/<run-id>              # report.html を作る
-python3 tools/serve_runs.py                             # runs/ の一覧を開く。未検査の run が上に出る。保存は各 run の review.json
+uv run tools/run_generate.py runs/<run-id>             # 生成（途中から再開できる。--limit 3 で動作確認）
+uv run tools/score_run.py runs/<run-id>                # scorers/ の分類器で採点
+uv run tools/make_report.py runs/<run-id>              # report.html を作る
+uv run tools/montage.py runs/<run-id> --contact        # contact.webp を作る（コミットする一覧画像。レビュー後に作り直す）
+uv run tools/serve_runs.py                             # runs/ の一覧を開く。未検査の run が上に出る。保存は各 run の review.json
 ```
 
 ## spec.json
@@ -44,9 +47,9 @@ python3 tools/serve_runs.py                             # runs/ の一覧を開�
 ## 集計と補助ツール
 
 ```bash
-python3 tools/summarize_runs.py                 # 全 run の条件ごとの一覧（機械の通過率、人間 OK 率（打率）、類似度）
-python3 tools/compare_review.py runs/<run-id>   # 1 つの run で、スコアの並びが人間の判定と合うか（AUC、閾値、上位 N 枚の適合率）
-.venv/bin/python tools/montage.py runs/<run-id> # 条件ごとのコンタクトシート（generator/temp/montage/）
+uv run tools/summarize_runs.py                 # 全 run の条件ごとの一覧（機械の通過率、人間 OK 率（打率）、類似度）
+uv run tools/compare_review.py runs/<run-id>   # 1 つの run で、スコアの並びが人間の判定と合うか（AUC、閾値、上位 N 枚の適合率）
+uv run tools/montage.py runs/<run-id>          # 条件ごとのコンタクトシート（generator/temp/montage/。Git 管理外の作業用）
 ```
 
 - 類似度は、条件内の画像どうしの CLIP 類似度の平均。高いほど似た絵が並んでいる。
@@ -54,12 +57,28 @@ python3 tools/compare_review.py runs/<run-id>   # 1 つの run で、スコア�
 
 ## Git での扱い
 
-- `runs/<run>/` は、画像が大きく（1 run で 20〜40MB）、環境が違えば再現しないので、**通常は Git 管理外**（`.gitignore`）。
-- ただし「どう作業したか」は残す価値があるので、**見本を 2 件だけ丸ごとコミット**している。spec・生成画像（容量のため 768x512 に縮小）・採点・人間のレビュー・レポートが入っている。
-  - [20261124-204000-gap-09-scifi/](20261124-204000-gap-09-scifi/README.md): 1 つの題材を、LLM 側の画像と同じ指定で作って、品質ギャップを測った run。run の作り方と読み方は、まずこれを見る。
-  - [20261124-234236-eval-prompts-idol-structured/](20261124-234236-eval-prompts-idol-structured/README.md): 曲の核を分解し、1 プロンプト 1 枚で 15 方向を試した `/eval-prompts` の run。`好み` と `一致` の評価（`review.json` の `ratings`）が入っている。
-- 見本を差し替える・増やすときは、`.gitignore` の `!runs/…/` を足す。画像は 768x512 に縮小して入れる（`Image.resize((768, 512))`）。
-- 同じ spec と seed でも、実行環境（MPS・CUDA・ComfyUI のバージョンなど）が違うと同じ画像にはならない。`review.json` は「その環境で生成した画像を見た結果」であり、別のマシンで再生成した画像には当てはまらない。
+方針は「**テキストと一覧画像だけコミットし、画像本体（PNG）はコミットしない**」。目的は、複数の環境や時間が経ったあとでも、「どの題材に、どんなプロンプトで、何枚作り、どう判定・評価したか」を時系列で追えるようにすること。PNG は 1 run で 20〜40MB あり、足し続けるとリポジトリが膨らむため残さない。
+
+| 置くもの | Git |
+| --- | --- |
+| `spec.json` / `scores.json` / `review.json` / `self_review.json` / `comparison.json` / `images/*.json` | 管理する（run 全体で数十〜数百 KB） |
+| `contact.webp`（run ごとに 1 枚、全画像の一覧） | 管理する（約 70〜450KB。全 run で約 4.5MB） |
+| `images/*.png`、`report.html` | 管理しない（`.gitignore`）。再生成できる |
+
+- 別の環境で画像が要るときは、ComfyUI を起動して `uv run tools/run_generate.py runs/<run-id>`（PNG が無いものだけ作る）→ 必要なら `uv run tools/make_report.py runs/<run-id>`。1 枚あたり約 20 秒。
+- 再現性: 同じ spec・seed・チェックポイント・サンプラーで、この Mac（Apple Silicon・MPS）では PNG のバイト列まで同じになることを確認している。**別のハードウェア（NVIDIA / CUDA など）や、torch・ComfyUI のバージョンが違う環境では同じにならないことがある**。`review.json` は「その環境で生成した画像を見た結果」であり、再生成した画像には厳密には当てはまらない。画像そのものの記録は `contact.webp` を見る。
+- 新しい run を作ったら、レビューまで終えたあとに `uv run tools/montage.py runs/<run-id> --contact` で `contact.webp` を作り直す（印・好みの枠が入る）。
+- 画像を置いてよいのは `generated/` `artifacts/` `site/` と `runs/*/contact.webp` だけ。それ以外の場所の画像（`runs/*/images/*.png` を `git add -f` した場合など）や、1MB を超えるファイルをコミットしようとすると、pre-commit（`tools/check_staged.py`）が止める。意図して入れるときだけ `ALLOW_STAGED=1 git commit`。
+- 圧縮した画像でも残したいものは、`generated/`（ラベル付け）か `artifacts/`（公開用）に移す。`generated/` の PNG は、`scorers/` のマニフェストにハッシュで参照されていて、画像を変換すると分類器の入力が変わるため、WebP には変換しない。
+
+### チュートリアル用の例外
+
+手順の見本として、次の 2 件だけは**画像も含めて丸ごとコミット**している（上の方針の例外。今後増やさない）。spec・生成画像（容量のため 768x512 に縮小）・採点・人間のレビュー・レポートが入っている。run の作り方と読み方は、まず 1 件目を見る。
+
+- [20261124-204000-gap-09-scifi/](20261124-204000-gap-09-scifi/README.md): 1 つの題材を、LLM 側の画像と同じ指定で作って、品質ギャップを測った run。
+- [20261124-234236-eval-prompts-idol-structured/](20261124-234236-eval-prompts-idol-structured/README.md): 曲の核を分解し、1 プロンプト 1 枚で 15 方向を試した `/eval-prompts` の run。`好み` と `一致` の評価（`review.json` の `ratings`）が入っている。
+
+この 2 件の `images/` と `report.html` は追跡済みなので、`.gitignore` の対象外のまま更新できる。`tools/check_staged.py` も、この 2 件の `images/` だけは止めない。
 
 ## 注意
 

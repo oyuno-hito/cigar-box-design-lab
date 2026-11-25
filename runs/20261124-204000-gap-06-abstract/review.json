@@ -1,0 +1,9 @@
+{
+  "run_id": "20261124-204000-gap-06-abstract",
+  "reviewed": true,
+  "reviewed_at": "2026-11-24T12:08:16.056Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は同意",
+  "flags": [
+    "xl-06-abstract-13"
+  ]
+}

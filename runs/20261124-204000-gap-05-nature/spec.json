@@ -1,0 +1,175 @@
+{
+  "concept": "ネオン以外を含む複数の方向性で、ComfyUI の出力品質が LLM 側（GenerateImage）に対してどれだけ落ちるかを見る",
+  "note": "品質ギャップの検証（nature）。LLM 側の探索セット 05 と同じセル指定の偶数番 12 件を ComfyUI で生成。参考列は LLM 側 24 枚全体の仕分け結果。SD1.5 は XL との比較用。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "xl-05-nature",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "non-geometric organic flat graphic decoration, plants, animals, water, clouds, hand-drawn ink and screen-print texture, warm ivory and dusty indigo palette, edge to edge, full frame composition",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "reference": "like 14 / dislike 7 / maybe 3（24 枚中 like 58%）",
+      "items": [
+        {
+          "id": "01",
+          "text": "loose botanical stems with wild meadow flowers",
+          "seed": 2000
+        },
+        {
+          "id": "03",
+          "text": "hand-drawn moths among delicate fern fronds",
+          "seed": 2002
+        },
+        {
+          "id": "05",
+          "text": "expressive koi fish swimming through loose water ripples",
+          "seed": 2004
+        },
+        {
+          "id": "07",
+          "text": "foxes and tall grasses in a folk-art landscape",
+          "seed": 2006
+        },
+        {
+          "id": "09",
+          "text": "tropical leaves and hanging vines with varied organic silhouettes",
+          "seed": 2008
+        },
+        {
+          "id": "11",
+          "text": "whales and small waves in an illustrated ocean scene",
+          "seed": 2010
+        },
+        {
+          "id": "13",
+          "text": "woodblock-like storm waves with irregular foam",
+          "seed": 2012
+        },
+        {
+          "id": "15",
+          "text": "cranes flying through wispy clouds",
+          "seed": 2014
+        },
+        {
+          "id": "17",
+          "text": "peacock feathers with flowing eyes and barbs",
+          "seed": 2016
+        },
+        {
+          "id": "19",
+          "text": "cats hidden in dense leafy foliage",
+          "seed": 2018
+        },
+        {
+          "id": "21",
+          "text": "drifting maple leaves and curling wind lines",
+          "seed": 2020
+        },
+        {
+          "id": "23",
+          "text": "hand-drawn seashells, coral and kelp",
+          "seed": 2022
+        }
+      ]
+    },
+    {
+      "name": "sd15-05-nature",
+      "checkpoint": "DreamShaper8_pruned.safetensors",
+      "width": 768,
+      "height": 512,
+      "sampler": {
+        "steps": 25,
+        "cfg": 6.5,
+        "sampler_name": "dpmpp_2m",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "non-geometric organic flat graphic decoration, plants, animals, water, clouds, hand-drawn ink and screen-print texture, warm ivory and dusty indigo palette, edge to edge, full frame composition",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "reference": "like 14 / dislike 7 / maybe 3（24 枚中 like 58%）",
+      "items": [
+        {
+          "id": "01",
+          "text": "loose botanical stems with wild meadow flowers",
+          "seed": 2000
+        },
+        {
+          "id": "03",
+          "text": "hand-drawn moths among delicate fern fronds",
+          "seed": 2002
+        },
+        {
+          "id": "05",
+          "text": "expressive koi fish swimming through loose water ripples",
+          "seed": 2004
+        },
+        {
+          "id": "07",
+          "text": "foxes and tall grasses in a folk-art landscape",
+          "seed": 2006
+        },
+        {
+          "id": "09",
+          "text": "tropical leaves and hanging vines with varied organic silhouettes",
+          "seed": 2008
+        },
+        {
+          "id": "11",
+          "text": "whales and small waves in an illustrated ocean scene",
+          "seed": 2010
+        },
+        {
+          "id": "13",
+          "text": "woodblock-like storm waves with irregular foam",
+          "seed": 2012
+        },
+        {
+          "id": "15",
+          "text": "cranes flying through wispy clouds",
+          "seed": 2014
+        },
+        {
+          "id": "17",
+          "text": "peacock feathers with flowing eyes and barbs",
+          "seed": 2016
+        },
+        {
+          "id": "19",
+          "text": "cats hidden in dense leafy foliage",
+          "seed": 2018
+        },
+        {
+          "id": "21",
+          "text": "drifting maple leaves and curling wind lines",
+          "seed": 2020
+        },
+        {
+          "id": "23",
+          "text": "hand-drawn seashells, coral and kelp",
+          "seed": 2022
+        }
+      ]
+    }
+  ]
+}

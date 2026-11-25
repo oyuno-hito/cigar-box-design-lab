@@ -1,0 +1,149 @@
+{
+  "brief_type": "music",
+  "brief": "Vaundy『怪獣の花唄』",
+  "context_sources": [
+    {
+      "kind": "music",
+      "source": "既知情報（調査なし）",
+      "visual_elements": "大きな存在と小さな花の対比、力強さと切なさ、素直な高揚"
+    }
+  ],
+  "concept": "A huge playful force keeps interrupting a calm graphic world, mixing comic impact with a slightly unruly aftershock.",
+  "note": "再発散。大きな遊び心、穏やかな面を破る衝撃、衝撃後に残る不規則な余韻の3軸で振った。写実の生物・怪物には寄せない。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "基準: 大きさと花の対比",
+          "text": "flat graphic decoration, full frame composition, one huge soft rounded form beside small blooming flower shapes, flat colors, warm sky tones, no text, no people, no hands",
+          "seed": 6301
+        },
+        {
+          "id": "02",
+          "label": "direction-giant-silhouette",
+          "direction": "巨大な輪郭と小さな花",
+          "text": "flat graphic decoration, full frame composition, a vast dark rounded silhouette filling one side, tiny bright flowers scattered along its edge, no text, no people, no hands",
+          "seed": 6302
+        },
+        {
+          "id": "03",
+          "label": "direction-petal-field",
+          "direction": "花びらの面",
+          "text": "flat graphic decoration, full frame composition, hundreds of simple rounded petals in coral, yellow and cream scattered evenly with calm spacing, no text, no people, no hands",
+          "seed": 6303
+        },
+        {
+          "id": "04",
+          "label": "direction-hill-wave",
+          "direction": "丘の波",
+          "text": "flat graphic decoration, full frame composition, broad overlapping hill shapes in layered warm colors, one small flower cluster, no text, no people, no hands",
+          "seed": 6304
+        },
+        {
+          "id": "05",
+          "label": "direction-sun-flower",
+          "direction": "大きな太陽と花",
+          "text": "flat graphic decoration, full frame composition, one very large sun disc behind a few bold flat flower shapes, orange and teal, no text, no people, no hands",
+          "seed": 6305
+        },
+        {
+          "id": "06",
+          "label": "direction-paper-cut",
+          "direction": "切り紙の大きな形",
+          "text": "flat graphic decoration, full frame composition, big hand-cut paper shapes in mustard, rust and teal, rough edges, large negative space, no text, no people, no hands",
+          "seed": 6306
+        },
+        {
+          "id": "07",
+          "label": "direction-night-bloom",
+          "direction": "夜に咲く花",
+          "text": "flat graphic decoration, full frame composition, dark navy field with a few glowing flat flowers in pink and pale yellow, no text, no people, no hands",
+          "seed": 6307
+        },
+        {
+          "id": "08",
+          "label": "direction-stamp-dots",
+          "direction": "スタンプの円",
+          "text": "flat graphic decoration, full frame composition, rows of round stamp-like dots in several sizes, warm pastel colors, slightly irregular, no text, no people, no hands",
+          "seed": 6308
+        },
+        {
+          "id": "09",
+          "label": "direction-roar-waves",
+          "direction": "大きな音の波",
+          "text": "flat graphic decoration, full frame composition, wide concentric-free sweeping bands of color radiating from the left edge like a deep roar, orange and plum, no text, no people, no hands",
+          "seed": 6309
+        },
+        {
+          "id": "10",
+          "label": "direction-vine-lines",
+          "direction": "蔦の細い線",
+          "text": "flat graphic decoration, full frame composition, thin looping vine lines with a few flat leaves on a muted green ground, airy, no text, no people, no hands",
+          "seed": 6310
+        },
+        {
+          "id": "11",
+          "label": "direction-mountain-flower",
+          "direction": "山と小さな花",
+          "text": "flat graphic decoration, full frame composition, two huge blocky mountain-like masses in plum and charcoal, tiny yellow flowers at their feet, no text, no people, no hands",
+          "seed": 6311
+        },
+        {
+          "id": "12",
+          "label": "direction-crayon-bloom",
+          "direction": "クレヨンの花",
+          "text": "flat graphic decoration, full frame composition, chunky crayon-like flower marks in bright colors on dark paper, childlike and bold, no text, no people, no hands",
+          "seed": 6312
+        },
+        {
+          "id": "13",
+          "label": "direction-pressed-flower",
+          "direction": "押し花の薄い色",
+          "text": "flat graphic decoration, full frame composition, pale pressed-flower shapes in faded pink and sage on cream, delicate and quiet, no text, no people, no hands",
+          "seed": 6313
+        },
+        {
+          "id": "14",
+          "label": "direction-bold-seeds",
+          "direction": "種と芽",
+          "text": "flat graphic decoration, full frame composition, big round seed shapes with small green sprouts, flat earth tones, simple, no text, no people, no hands",
+          "seed": 6314
+        },
+        {
+          "id": "15",
+          "label": "wildcard",
+          "direction": "空に広がる花びら",
+          "text": "flat graphic decoration, full frame composition, a huge flower petal shape rising across a pale sky field, cut off by the frame, one small dot, no text, no people, no hands",
+          "seed": 6315
+        }
+      ]
+    }
+  ]
+}

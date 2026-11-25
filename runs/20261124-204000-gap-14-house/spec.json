@@ -1,0 +1,96 @@
+{
+  "concept": "ネオン以外を含む複数の方向性で、ComfyUI の出力品質が LLM 側（GenerateImage）に対してどれだけ落ちるかを見る",
+  "note": "品質ギャップの検証（house）。LLM 側の探索セット 14 と同じセル指定の偶数番 12 件を ComfyUI で生成。参考列は LLM 側 24 枚全体の仕分け結果。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "xl-14-house",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "flat graphic decoration inspired by House music and a warm warehouse dance floor, four-beat pulse, warm amber and red light, deep navy shadows, neon highlights, bold readable shapes, screen print and club poster texture, full frame composition",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "reference": "like 3 / dislike 18 / maybe 3（24 枚中 like 12%）",
+      "items": [
+        {
+          "id": "01",
+          "text": "four large amber spotlights as soft-edged pools on deep burgundy",
+          "seed": 2000
+        },
+        {
+          "id": "03",
+          "text": "warm orange horizontal filter-sweep bands opening from left to right",
+          "seed": 2002
+        },
+        {
+          "id": "05",
+          "text": "disco light reflections as irregular gold and magenta shards on black, no disco ball",
+          "seed": 2004
+        },
+        {
+          "id": "07",
+          "text": "deep house bass wave as four thick warm ribbons in red, orange and pink",
+          "seed": 2006
+        },
+        {
+          "id": "09",
+          "text": "piano-stab inspired bold cream and gold vertical color blocks on dark brown, no keys",
+          "seed": 2008
+        },
+        {
+          "id": "11",
+          "text": "sunset orange and purple translucent panels overlapping like club lighting",
+          "seed": 2010
+        },
+        {
+          "id": "13",
+          "text": "glowing red curtains of light opening from the center",
+          "seed": 2012
+        },
+        {
+          "id": "15",
+          "text": "vintage dance-floor reflections in copper and hot pink without a floor grid",
+          "seed": 2014
+        },
+        {
+          "id": "17",
+          "text": "golden haze with four dark gaps and thin red beams",
+          "seed": 2016
+        },
+        {
+          "id": "19",
+          "text": "four neon orange arcs with soft bloom on black",
+          "seed": 2018
+        },
+        {
+          "id": "21",
+          "text": "amber and fuchsia smoke plumes in four beat-like clusters",
+          "seed": 2020
+        },
+        {
+          "id": "23",
+          "text": "warm cream cut-paper shapes floating over burgundy with a subtle pulse",
+          "seed": 2022
+        }
+      ]
+    }
+  ]
+}

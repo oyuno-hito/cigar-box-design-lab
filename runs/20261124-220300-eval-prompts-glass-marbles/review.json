@@ -1,0 +1,14 @@
+{
+  "run_id": "20261124-220300-eval-prompts-glass-marbles",
+  "reviewed": true,
+  "reviewed_conditions": [
+    "p"
+  ],
+  "reviewed_at": "2026-11-24T13:18:08.367Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+  "flags": [
+    "p-01",
+    "p-05",
+    "p-06"
+  ]
+}

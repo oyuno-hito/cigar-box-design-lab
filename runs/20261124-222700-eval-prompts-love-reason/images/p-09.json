@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, restrained three-color palette, one dominant deep plum ground color, one main coral-pink form, electric cyan used only as a small accent, large quiet color fields, clear foreground and background hierarchy, thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm, flat solid color fills only, no highlights, no cast shadows, no metallic shine, everything sits on one flat plane, no perspective, no interior space, the concept reduced to bold looping symbols and a few flat shapes, symbolic rather than literal, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+  "negative_prompt": "",
+  "seed": 2700
+}

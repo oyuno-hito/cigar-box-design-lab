@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, large ink-brush swirls with dry-brush edges, black on warm off-white paper, one vermilion stroke, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 6202
+}

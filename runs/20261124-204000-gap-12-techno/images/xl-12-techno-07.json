@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "bold flat graphic inspired by Techno music, black or very dark background with one or two fluorescent light colors, large simple sharp forms, high contrast, glowing neon light as the main subject filling the frame, a single huge glowing neon magenta circle with a hard edge on black",
+  "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+  "seed": 2006
+}

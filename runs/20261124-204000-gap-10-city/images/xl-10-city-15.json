@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration exploring cities, architecture and industry, blueprint ink, screen print, enamel sign, concrete texture, technical drawing, bold, full frame composition, aerial city blocks as an abstract street-map composition with irregular roads, no labels",
+  "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+  "seed": 2014
+}

@@ -1,0 +1,26 @@
+{
+  "(全体)": {
+    "n": 12,
+    "human_ok": 0,
+    "auc": null,
+    "at_cutoff": {
+      "pass": 1,
+      "precision": 0.0,
+      "recall": null
+    },
+    "top25%_precision": 0.0,
+    "top50%_precision": 0.0
+  },
+  "xl-10-city": {
+    "n": 12,
+    "human_ok": 0,
+    "auc": null,
+    "at_cutoff": {
+      "pass": 1,
+      "precision": 0.0,
+      "recall": null
+    },
+    "top25%_precision": 0.0,
+    "top50%_precision": 0.0
+  }
+}

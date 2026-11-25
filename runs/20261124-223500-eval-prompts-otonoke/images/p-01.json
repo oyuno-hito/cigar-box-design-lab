@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, a charged graphic world where rhythm, strange presences, and sudden changes of scenery break into ordinary space, bold flat shapes, deep black ground, vivid red and electric blue accents, symbolic rather than literal, no recognizable person or face",
+  "negative_prompt": "",
+  "seed": 3500
+}

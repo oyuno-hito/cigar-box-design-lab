@@ -1,0 +1,145 @@
+{
+  "concept": "Future Bass の曲で演技する。ネオンと柔らかい光のグラデーションに、鋭いエッジを組み合わせたフラットなグラフィック",
+  "note": "パイプライン動作確認用のベースライン。LLM 側生成（セット8）のセル指定を流用し、ComfyUI 側の出力と比較する。ガードなしの 1 条件のみ",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "base",
+      "prompt_prefix": "bold flat graphic design for Future Bass music, full frame composition, dark or pastel background, neon color accents, soft glowing gradients combined with sharp edges, large simple readable shapes, glowing light as the main subject",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "items": [
+        {
+          "id": "01",
+          "text": "overlapping translucent supersaw wave shapes in pink, violet and cyan on deep navy",
+          "seed": 1000
+        },
+        {
+          "id": "02",
+          "text": "large chord-hit color blocks in pastel pink, mint and lavender with a neon outline",
+          "seed": 1001
+        },
+        {
+          "id": "03",
+          "text": "rising glowing arcs in cyan and magenta lifting upward across dark purple",
+          "seed": 1002
+        },
+        {
+          "id": "04",
+          "text": "sparkling grain of neon particles forming a soft burst on dark indigo",
+          "seed": 1003
+        },
+        {
+          "id": "05",
+          "text": "pastel peach background with sharp neon pink and electric blue outlined shards",
+          "seed": 1004
+        },
+        {
+          "id": "06",
+          "text": "huge soft glowing orb with a hard-edged ring around it in coral and lilac on dark blue",
+          "seed": 1005
+        },
+        {
+          "id": "07",
+          "text": "layered sweeping ribbons in turquoise and violet that open like a filter sweep",
+          "seed": 1006
+        },
+        {
+          "id": "08",
+          "text": "angular crystal petals in neon aqua and magenta on near-black",
+          "seed": 1007
+        },
+        {
+          "id": "09",
+          "text": "dreamy gradient sunrise bands in orange, pink and purple with a sharp bright slash",
+          "seed": 1008
+        },
+        {
+          "id": "10",
+          "text": "fractured glass pieces in pastel blue and pink with glowing edges",
+          "seed": 1009
+        },
+        {
+          "id": "11",
+          "text": "stacked rounded wave bars in vivid cyan and purple like pulsing chords",
+          "seed": 1010
+        },
+        {
+          "id": "12",
+          "text": "overlapping soft circles in sunset colors with one neon-outlined circle",
+          "seed": 1011
+        },
+        {
+          "id": "13",
+          "text": "swirling candy-colored ribbons with sharp neon cut lines on dark teal",
+          "seed": 1012
+        },
+        {
+          "id": "14",
+          "text": "big glowing abstract shape formed from soft light and angular edges in magenta and cyan on dark plum",
+          "seed": 1013
+        },
+        {
+          "id": "15",
+          "text": "upward spark trails with large burst rings in lime and pink on deep blue",
+          "seed": 1014
+        },
+        {
+          "id": "16",
+          "text": "vivid sawtooth wave stack in neon yellow, pink and blue on black",
+          "seed": 1015
+        },
+        {
+          "id": "17",
+          "text": "pastel lavender sky with huge glowing neon rings and sharp white lightning accents",
+          "seed": 1016
+        },
+        {
+          "id": "18",
+          "text": "wide drifting clouds of glowing violet and cyan fog with a bright horizontal beam",
+          "seed": 1017
+        },
+        {
+          "id": "19",
+          "text": "crystal shards floating in a soft pink glow with neon blue edges",
+          "seed": 1018
+        },
+        {
+          "id": "20",
+          "text": "vivid layered dune shapes of light in coral, magenta and indigo",
+          "seed": 1019
+        },
+        {
+          "id": "21",
+          "text": "neon aqua and hot pink lens-flare streaks with stylized sparkles on dark violet",
+          "seed": 1020
+        },
+        {
+          "id": "22",
+          "text": "stacked translucent triangles in mint, pink and blue with glowing outlines",
+          "seed": 1021
+        },
+        {
+          "id": "23",
+          "text": "fluid liquid light swirls in orange, magenta and electric blue on dark navy",
+          "seed": 1022
+        },
+        {
+          "id": "24",
+          "text": "overlapping sharp-edged petals in pastel yellow, pink and cyan with neon contour lines",
+          "seed": 1023
+        }
+      ]
+    }
+  ]
+}

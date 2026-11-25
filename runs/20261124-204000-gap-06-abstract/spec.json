@@ -1,0 +1,96 @@
+{
+  "concept": "ネオン以外を含む複数の方向性で、ComfyUI の出力品質が LLM 側（GenerateImage）に対してどれだけ落ちるかを見る",
+  "note": "品質ギャップの検証（abstract）。LLM 側の探索セット 06 と同じセル指定の偶数番 12 件を ComfyUI で生成。参考列は LLM 側 24 枚全体の仕分け結果。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "xl-06-abstract",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "abstract art decoration, non-nature, own palette medium and texture, flat graphic, edge to edge, full frame composition",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "reference": "like 8 / dislike 16 / maybe 0（24 枚中 like 33%）",
+      "items": [
+        {
+          "id": "01",
+          "text": "Cubist fragmented overlapping planes in ochre, teal and cream",
+          "seed": 2000
+        },
+        {
+          "id": "03",
+          "text": "torn paper collage of layered scraps in red, cream and black",
+          "seed": 2002
+        },
+        {
+          "id": "05",
+          "text": "abstract expressionist gestural black splatter and drips on bright yellow",
+          "seed": 2004
+        },
+        {
+          "id": "07",
+          "text": "Suprematist floating bars and discs in red and black on warm white",
+          "seed": 2006
+        },
+        {
+          "id": "09",
+          "text": "pointillist dots building soft color fields in orange and green",
+          "seed": 2008
+        },
+        {
+          "id": "11",
+          "text": "brutalist poster with huge halftone shapes in neon green and black",
+          "seed": 2010
+        },
+        {
+          "id": "13",
+          "text": "stained glass fragments in saturated jewel tones separated by thick black leading",
+          "seed": 2012
+        },
+        {
+          "id": "15",
+          "text": "overlapping translucent watercolor washes in peach, sage and pale blue",
+          "seed": 2014
+        },
+        {
+          "id": "17",
+          "text": "mid-century atomic age scribbles and starburst shapes in turquoise, mustard and charcoal",
+          "seed": 2016
+        },
+        {
+          "id": "19",
+          "text": "sepia pen-and-ink cross-hatched abstract forms on cream paper",
+          "seed": 2018
+        },
+        {
+          "id": "21",
+          "text": "layered oil pastel crayon scribble textures in many bright colors",
+          "seed": 2020
+        },
+        {
+          "id": "23",
+          "text": "smudged charcoal gestures in monochrome gray",
+          "seed": 2022
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, one long wavy line in teal crossing a pale yellow field with small coral dots, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 7105
+}

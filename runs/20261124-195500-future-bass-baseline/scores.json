@@ -1,0 +1,167 @@
+{
+  "scored_at": "2026-11-24T20:01:09+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "308a40655423ef47a6d54f49a40684fa5eb996fb",
+      "dirty": true
+    }
+  },
+  "items": [
+    {
+      "id": "base-01",
+      "condition": "base",
+      "p": 0.6158,
+      "pass": true
+    },
+    {
+      "id": "base-02",
+      "condition": "base",
+      "p": 0.1102,
+      "pass": false
+    },
+    {
+      "id": "base-03",
+      "condition": "base",
+      "p": 0.3569,
+      "pass": true
+    },
+    {
+      "id": "base-04",
+      "condition": "base",
+      "p": 0.1355,
+      "pass": false
+    },
+    {
+      "id": "base-05",
+      "condition": "base",
+      "p": 0.117,
+      "pass": false
+    },
+    {
+      "id": "base-06",
+      "condition": "base",
+      "p": 0.1315,
+      "pass": false
+    },
+    {
+      "id": "base-07",
+      "condition": "base",
+      "p": 0.1021,
+      "pass": false
+    },
+    {
+      "id": "base-08",
+      "condition": "base",
+      "p": 0.1871,
+      "pass": false
+    },
+    {
+      "id": "base-09",
+      "condition": "base",
+      "p": 0.3546,
+      "pass": true
+    },
+    {
+      "id": "base-10",
+      "condition": "base",
+      "p": 0.1513,
+      "pass": false
+    },
+    {
+      "id": "base-11",
+      "condition": "base",
+      "p": 0.4755,
+      "pass": true
+    },
+    {
+      "id": "base-12",
+      "condition": "base",
+      "p": 0.3043,
+      "pass": true
+    },
+    {
+      "id": "base-13",
+      "condition": "base",
+      "p": 0.5372,
+      "pass": true
+    },
+    {
+      "id": "base-14",
+      "condition": "base",
+      "p": 0.1327,
+      "pass": false
+    },
+    {
+      "id": "base-15",
+      "condition": "base",
+      "p": 0.1136,
+      "pass": false
+    },
+    {
+      "id": "base-16",
+      "condition": "base",
+      "p": 0.4141,
+      "pass": true
+    },
+    {
+      "id": "base-17",
+      "condition": "base",
+      "p": 0.2204,
+      "pass": false
+    },
+    {
+      "id": "base-18",
+      "condition": "base",
+      "p": 0.3142,
+      "pass": true
+    },
+    {
+      "id": "base-19",
+      "condition": "base",
+      "p": 0.5032,
+      "pass": true
+    },
+    {
+      "id": "base-20",
+      "condition": "base",
+      "p": 0.2323,
+      "pass": false
+    },
+    {
+      "id": "base-21",
+      "condition": "base",
+      "p": 0.1679,
+      "pass": false
+    },
+    {
+      "id": "base-22",
+      "condition": "base",
+      "p": 0.6088,
+      "pass": true
+    },
+    {
+      "id": "base-23",
+      "condition": "base",
+      "p": 0.435,
+      "pass": true
+    },
+    {
+      "id": "base-24",
+      "condition": "base",
+      "p": 0.4669,
+      "pass": true
+    }
+  ]
+}

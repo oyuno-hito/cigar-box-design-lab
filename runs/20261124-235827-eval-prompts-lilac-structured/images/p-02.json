@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, dense small blossom clusters as flat rounded shapes in lilac and violet, placed in a loose diagonal on pale cream, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 6402
+}

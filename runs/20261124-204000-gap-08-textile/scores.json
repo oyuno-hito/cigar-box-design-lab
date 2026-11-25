@@ -1,0 +1,177 @@
+{
+  "conditions": {
+    "sd15-08-textile": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.8003
+    },
+    "xl-08-textile": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.7771
+    }
+  },
+  "scored_at": "2026-11-24T21:34:21+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "d026a08fbcc260f2a0da8b844f25406712895cca",
+      "dirty": true
+    }
+  },
+  "items": [
+    {
+      "id": "sd15-08-textile-01",
+      "condition": "sd15-08-textile",
+      "p": 0.0806,
+      "pass": false
+    },
+    {
+      "id": "sd15-08-textile-03",
+      "condition": "sd15-08-textile",
+      "p": 0.2957,
+      "pass": true
+    },
+    {
+      "id": "sd15-08-textile-05",
+      "condition": "sd15-08-textile",
+      "p": 0.6263,
+      "pass": true
+    },
+    {
+      "id": "sd15-08-textile-07",
+      "condition": "sd15-08-textile",
+      "p": 0.0594,
+      "pass": false
+    },
+    {
+      "id": "sd15-08-textile-09",
+      "condition": "sd15-08-textile",
+      "p": 0.038,
+      "pass": false
+    },
+    {
+      "id": "sd15-08-textile-11",
+      "condition": "sd15-08-textile",
+      "p": 0.0042,
+      "pass": false
+    },
+    {
+      "id": "sd15-08-textile-13",
+      "condition": "sd15-08-textile",
+      "p": 0.1108,
+      "pass": false
+    },
+    {
+      "id": "sd15-08-textile-15",
+      "condition": "sd15-08-textile",
+      "p": 0.044,
+      "pass": false
+    },
+    {
+      "id": "sd15-08-textile-17",
+      "condition": "sd15-08-textile",
+      "p": 0.0498,
+      "pass": false
+    },
+    {
+      "id": "sd15-08-textile-19",
+      "condition": "sd15-08-textile",
+      "p": 0.03,
+      "pass": false
+    },
+    {
+      "id": "sd15-08-textile-21",
+      "condition": "sd15-08-textile",
+      "p": 0.278,
+      "pass": true
+    },
+    {
+      "id": "sd15-08-textile-23",
+      "condition": "sd15-08-textile",
+      "p": 0.041,
+      "pass": false
+    },
+    {
+      "id": "xl-08-textile-01",
+      "condition": "xl-08-textile",
+      "p": 0.3242,
+      "pass": true
+    },
+    {
+      "id": "xl-08-textile-03",
+      "condition": "xl-08-textile",
+      "p": 0.7139,
+      "pass": true
+    },
+    {
+      "id": "xl-08-textile-05",
+      "condition": "xl-08-textile",
+      "p": 0.8634,
+      "pass": true
+    },
+    {
+      "id": "xl-08-textile-07",
+      "condition": "xl-08-textile",
+      "p": 0.1388,
+      "pass": false
+    },
+    {
+      "id": "xl-08-textile-09",
+      "condition": "xl-08-textile",
+      "p": 0.7665,
+      "pass": true
+    },
+    {
+      "id": "xl-08-textile-11",
+      "condition": "xl-08-textile",
+      "p": 0.0205,
+      "pass": false
+    },
+    {
+      "id": "xl-08-textile-13",
+      "condition": "xl-08-textile",
+      "p": 0.9643,
+      "pass": true
+    },
+    {
+      "id": "xl-08-textile-15",
+      "condition": "xl-08-textile",
+      "p": 0.4082,
+      "pass": true
+    },
+    {
+      "id": "xl-08-textile-17",
+      "condition": "xl-08-textile",
+      "p": 0.0389,
+      "pass": false
+    },
+    {
+      "id": "xl-08-textile-19",
+      "condition": "xl-08-textile",
+      "p": 0.1075,
+      "pass": false
+    },
+    {
+      "id": "xl-08-textile-21",
+      "condition": "xl-08-textile",
+      "p": 0.4471,
+      "pass": true
+    },
+    {
+      "id": "xl-08-textile-23",
+      "condition": "xl-08-textile",
+      "p": 0.8167,
+      "pass": true
+    }
+  ]
+}

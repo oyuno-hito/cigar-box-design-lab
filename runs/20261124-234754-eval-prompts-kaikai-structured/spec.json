@@ -1,0 +1,154 @@
+{
+  "brief_type": "music",
+  "brief": "Eve『廻廻奇譚』（TVアニメ『呪術廻戦』オープニング）",
+  "context_sources": [
+    {
+      "kind": "anime",
+      "source": "既知情報（調査なし）",
+      "visual_elements": "呪い、結界、渦巻く力、墨のような黒と赤、廻る（循環）"
+    },
+    {
+      "kind": "music",
+      "source": "既知情報（調査なし）",
+      "visual_elements": "疾走する反復、ひねった展開、不穏と高揚"
+    }
+  ],
+  "concept": "A playful, uncanny pop world keeps changing its emotional temperature while a recognizable beat holds the fragments together.",
+  "note": "再発散。明るい遊び心、少し不穏な転換、反復するリズムの3軸を保ち、平面表現を中心に振った。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "基準: 廻り続ける不穏な力",
+          "text": "flat graphic decoration, full frame composition, interlocking curved bands circulating around the frame, black ground with vermilion and bone white, bold flat shapes, no text, no people, no hands",
+          "seed": 6201
+        },
+        {
+          "id": "02",
+          "label": "direction-ink-swirl",
+          "direction": "墨の渦",
+          "text": "flat graphic decoration, full frame composition, large ink-brush swirls with dry-brush edges, black on warm off-white paper, one vermilion stroke, no text, no people, no hands",
+          "seed": 6202
+        },
+        {
+          "id": "03",
+          "label": "direction-seal-pattern",
+          "direction": "結界の幾何学",
+          "text": "flat graphic decoration, full frame composition, symmetrical ritual-like pattern of straight lines and small circles, no letters, vermilion on deep black, no text, no people, no hands",
+          "seed": 6203
+        },
+        {
+          "id": "04",
+          "label": "direction-paper-charm",
+          "direction": "札の形の反復",
+          "text": "flat graphic decoration, full frame composition, rows of narrow paper-strip shapes in off-white with crimson marks, slightly uneven, on dark ground, no letters, no text, no people, no hands",
+          "seed": 6204
+        },
+        {
+          "id": "05",
+          "label": "direction-red-moon",
+          "direction": "大きな赤い円盤",
+          "text": "flat graphic decoration, full frame composition, one huge vermilion disc partly hidden by black angular shapes, calm and heavy, no text, no people, no hands",
+          "seed": 6205
+        },
+        {
+          "id": "06",
+          "label": "direction-chain-links",
+          "direction": "連なる輪",
+          "text": "flat graphic decoration, full frame composition, a chain of simple oval links crossing the frame diagonally, flat charcoal and red, wide empty ground, no text, no people, no hands",
+          "seed": 6206
+        },
+        {
+          "id": "07",
+          "label": "direction-ash-field",
+          "direction": "灰のような粒の面",
+          "text": "flat graphic decoration, full frame composition, soft ash-like grain over a dark gray field, a few pale streaks, quiet and sparse, no text, no people, no hands",
+          "seed": 6207
+        },
+        {
+          "id": "08",
+          "label": "direction-torn-ribbon",
+          "direction": "裂けた帯",
+          "text": "flat graphic decoration, full frame composition, long torn bands of red and black layered with rough edges, asymmetrical, no text, no people, no hands",
+          "seed": 6208
+        },
+        {
+          "id": "09",
+          "label": "direction-eye-less-omen",
+          "direction": "目のない不吉な形",
+          "text": "flat graphic decoration, full frame composition, abstract omen shape made of overlapping crescents, deep indigo and bone white, no eyes, no faces, no text, no people, no hands",
+          "seed": 6209
+        },
+        {
+          "id": "10",
+          "label": "direction-cyclone",
+          "direction": "螺旋でない渦の流れ",
+          "text": "flat graphic decoration, full frame composition, flowing parallel curved lines bending around an empty point on one side, black and crimson, no text, no people, no hands",
+          "seed": 6210
+        },
+        {
+          "id": "11",
+          "label": "direction-pale-ritual",
+          "direction": "淡い儀式の面",
+          "text": "flat graphic decoration, full frame composition, pale grey and cream flat shapes arranged in a calm ritual pattern, one small red accent, no text, no people, no hands",
+          "seed": 6211
+        },
+        {
+          "id": "12",
+          "label": "direction-broken-glass",
+          "direction": "割れた面",
+          "text": "flat graphic decoration, full frame composition, flat shards of dark blue and black splitting the frame with sharp angles, thin white fracture lines, no text, no people, no hands",
+          "seed": 6212
+        },
+        {
+          "id": "13",
+          "label": "direction-lantern-glow",
+          "direction": "灯りのにじみ",
+          "text": "flat graphic decoration, full frame composition, a few warm orange glows bleeding softly on a very dark ground, large empty areas, no text, no people, no hands",
+          "seed": 6213
+        },
+        {
+          "id": "14",
+          "label": "direction-woven-red",
+          "direction": "赤い織りの目",
+          "text": "flat graphic decoration, full frame composition, flat woven texture in crimson and black thread, large simple weave, no figures, no text, no people, no hands",
+          "seed": 6214
+        },
+        {
+          "id": "15",
+          "label": "wildcard",
+          "direction": "白い余白に落ちた一滴",
+          "text": "flat graphic decoration, full frame composition, a mostly empty off-white field with one heavy black ink drop shape and a thin red line, no text, no people, no hands",
+          "seed": 6215
+        }
+      ]
+    }
+  ]
+}

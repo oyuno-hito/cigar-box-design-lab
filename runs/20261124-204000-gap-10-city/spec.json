@@ -1,0 +1,96 @@
+{
+  "concept": "ネオン以外を含む複数の方向性で、ComfyUI の出力品質が LLM 側（GenerateImage）に対してどれだけ落ちるかを見る",
+  "note": "品質ギャップの検証（city）。LLM 側の探索セット 10 と同じセル指定の偶数番 12 件を ComfyUI で生成。参考列は LLM 側 24 枚全体の仕分け結果。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "xl-10-city",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "flat graphic decoration exploring cities, architecture and industry, blueprint ink, screen print, enamel sign, concrete texture, technical drawing, bold, full frame composition",
+      "prompt_suffix": "",
+      "negative_prompt": "text, letters, numbers, logo, watermark, people, face, photo, mockup, perspective grid floor, frame, border",
+      "reference": "like 0 / dislike 22 / maybe 2（24 枚中 like 0%）",
+      "items": [
+        {
+          "id": "01",
+          "text": "Art Deco skyscraper facades with stepped towers and sunburst ornament",
+          "seed": 2000
+        },
+        {
+          "id": "03",
+          "text": "brutalist concrete megastructure with deep shadows",
+          "seed": 2002
+        },
+        {
+          "id": "05",
+          "text": "industrial factory pipes and pressure tanks as a dense ornamental composition",
+          "seed": 2004
+        },
+        {
+          "id": "07",
+          "text": "vintage blueprint-style suspension bridge with technical lines, no numbers",
+          "seed": 2006
+        },
+        {
+          "id": "09",
+          "text": "close-up of riveted steel plates and a large industrial gear",
+          "seed": 2008
+        },
+        {
+          "id": "11",
+          "text": "modernist glass tower reflections in cobalt and coral",
+          "seed": 2010
+        },
+        {
+          "id": "13",
+          "text": "ornate Art Nouveau metro entrance with curved ironwork",
+          "seed": 2012
+        },
+        {
+          "id": "15",
+          "text": "aerial city blocks as an abstract street-map composition with irregular roads, no labels",
+          "seed": 2014
+        },
+        {
+          "id": "17",
+          "text": "futuristic monorail station with glowing platforms",
+          "seed": 2016
+        },
+        {
+          "id": "19",
+          "text": "close-up of mechanical clockwork gears and springs, no numbers",
+          "seed": 2018
+        },
+        {
+          "id": "21",
+          "text": "colorful row of shopfront awnings and doors without signs or text",
+          "seed": 2020
+        },
+        {
+          "id": "23",
+          "text": "steel truss roof and skylights viewed from below",
+          "seed": 2022
+        }
+      ]
+    }
+  ]
+}

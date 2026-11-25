@@ -11,11 +11,11 @@ LLM 側（Cursor の `GenerateImage`）で作った探索セット「宇宙・SF
 | 段階 | 誰が | 何を | コマンド・成果物 |
 | --- | --- | --- | --- |
 | 1. 指定を作る | 私（エージェント）+ 人間の方針 | セットの指定文を SD 向けのタグ寄りに書き直し、セル指定の偶数番 12 件を使う。seed は 2000 + (番号 − 1) | `spec.json` |
-| 2. 生成 | プログラム | ComfyUI の API で 12 枚 | `python3 tools/run_generate.py runs/20261124-204000-gap-09-scifi` → `images/` |
-| 3. 機械の採点 | プログラム | 分類器（`scorers/`）で like らしさ p を付ける。足切りは p ≥ 0.2517 | `.venv/bin/python tools/score_run.py …` → `scores.json` |
-| 4. レポート | プログラム | スコア順のグリッド、条件別の表 | `python3 tools/make_report.py …` → `report.html` |
+| 2. 生成 | プログラム | ComfyUI の API で 12 枚 | `uv run tools/run_generate.py runs/20261124-204000-gap-09-scifi` → `images/` |
+| 3. 機械の採点 | プログラム | 分類器（`scorers/`）で like らしさ p を付ける。足切りは p ≥ 0.2517 | `uv run tools/score_run.py …` → `scores.json` |
+| 4. レポート | プログラム | スコア順のグリッド、条件別の表 | `uv run tools/make_report.py …` → `report.html` |
 | 5. 人間のレビュー | **人間** | レポートを見て、機械の判定に**明確に同意できない画像だけ**クリック。最後まで見たらチェックして書き出す | `review.json` |
-| 6. 突き合わせ | プログラム | 印のない画像は「同意」として人間の判定を導き、並びが合っているかを見る | `python3 tools/compare_review.py …` → `comparison.json` |
+| 6. 突き合わせ | プログラム | 印のない画像は「同意」として人間の判定を導き、並びが合っているかを見る | `uv run tools/compare_review.py …` → `comparison.json` |
 | 7. 所感と記録 | 人間 + 私 | 画像を見て気づいたことを、抽象的な軸に言い換えて `docs/style-spec.md` に残す | 下の「所感」、`docs/style-spec.md` |
 
 ## 結果

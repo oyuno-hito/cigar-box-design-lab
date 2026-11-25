@@ -1,0 +1,67 @@
+{
+  "run_id": "20261124-233700-eval-prompts-kickback-structured",
+  "reviewed": false,
+  "reviewed_conditions": [],
+  "reviewed_at": "2026-11-24T15:46:37.186Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。ratings.preference = 好み、ratings.concept = 共通の核と direction の一致度。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+  "flags": [],
+  "ratings": {
+    "p-08": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-06": {
+      "preference": "like",
+      "concept": "mid"
+    },
+    "p-02": {
+      "preference": "like",
+      "concept": "low"
+    },
+    "p-04": {
+      "preference": "like",
+      "concept": "high"
+    },
+    "p-03": {
+      "preference": "like",
+      "concept": "high"
+    },
+    "p-07": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-01": {
+      "preference": "dislike"
+    },
+    "p-14": {
+      "concept": "high",
+      "preference": "like"
+    },
+    "p-10": {
+      "preference": "dislike"
+    },
+    "p-09": {
+      "preference": "hold",
+      "concept": "low"
+    },
+    "p-11": {
+      "concept": "mid"
+    },
+    "p-15": {
+      "concept": "mid",
+      "preference": "dislike"
+    },
+    "p-05": {
+      "concept": "low",
+      "preference": "dislike"
+    },
+    "p-13": {
+      "concept": "mid",
+      "preference": "dislike"
+    },
+    "p-12": {
+      "concept": "mid",
+      "preference": "hold"
+    }
+  }
+}

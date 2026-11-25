@@ -1,0 +1,149 @@
+{
+  "brief_type": "mood",
+  "brief": "夕立の前の、湿った風と空気が重くなる感じ",
+  "context_sources": [
+    {
+      "kind": "mood",
+      "source": "ユーザー入力型の世界観（調査なし）",
+      "visual_elements": "低い雲、緑の濃さ、風の筋、鈍い光、緊張した静けさ"
+    }
+  ],
+  "concept": "Still, heavy air gathers in broad muted bands, with one pale signal of coming motion.",
+  "note": "再発散。重い静けさ、湿った鈍い色、動き始める前の一本の兆しの3軸で振った。雨粒・石・苔の写実密集は避ける。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "基準: 重い空気",
+          "text": "flat graphic decoration, full frame composition, heavy slate and green-gray flat bands pressing low across the frame, one thin pale streak of light, no text, no people, no hands",
+          "seed": 6701
+        },
+        {
+          "id": "02",
+          "label": "direction-cloud-masses",
+          "direction": "低い雲の塊",
+          "text": "flat graphic decoration, full frame composition, big rounded flat cloud masses in slate blue and gray layered across the upper frame, a bright yellow-green strip below, no text, no people, no hands",
+          "seed": 6702
+        },
+        {
+          "id": "03",
+          "label": "direction-wind-lines",
+          "direction": "風の筋",
+          "text": "flat graphic decoration, full frame composition, long thin wind lines bending the same way across a gray-green field, sparse, calm, no text, no people, no hands",
+          "seed": 6703
+        },
+        {
+          "id": "04",
+          "label": "direction-leaf-turn",
+          "direction": "葉裏の翻り",
+          "text": "flat graphic decoration, full frame composition, big simple flat leaf shapes flipped to their pale side in silver-green over a dark green ground, no text, no people, no hands",
+          "seed": 6704
+        },
+        {
+          "id": "05",
+          "label": "direction-first-drops",
+          "direction": "最初の雫",
+          "text": "flat graphic decoration, full frame composition, a few large round drops of different sizes on a gray field, scattered apart, flat, one bluer, no text, no people, no hands",
+          "seed": 6705
+        },
+        {
+          "id": "06",
+          "label": "direction-ink-cloud",
+          "direction": "墨雲",
+          "text": "flat graphic decoration, full frame composition, soft ink-like clouds in black and gray bleeding across white paper, strong asymmetry, no text, no people, no hands",
+          "seed": 6706
+        },
+        {
+          "id": "07",
+          "label": "direction-green-glow",
+          "direction": "緑の光",
+          "text": "flat graphic decoration, full frame composition, an eerie yellow-green glow rising along a dark slate horizon band, otherwise empty, no text, no people, no hands",
+          "seed": 6707
+        },
+        {
+          "id": "08",
+          "label": "direction-woven-gray",
+          "direction": "灰色の織り",
+          "text": "flat graphic decoration, full frame composition, flat woven texture in gray, slate and moss threads, calm repeating rhythm, no text, no people, no hands",
+          "seed": 6708
+        },
+        {
+          "id": "09",
+          "label": "direction-stripes-fade",
+          "direction": "縞の濃淡",
+          "text": "flat graphic decoration, full frame composition, wide diagonal stripes in slate, green-gray and cream that darken toward one corner, no text, no people, no hands",
+          "seed": 6709
+        },
+        {
+          "id": "10",
+          "label": "direction-stone-dots",
+          "direction": "濡れる前の石",
+          "text": "flat graphic decoration, full frame composition, scattered round stone shapes in several grays with a few darker spots on a pale ground, calm, no text, no people, no hands",
+          "seed": 6710
+        },
+        {
+          "id": "11",
+          "label": "direction-paper-layers",
+          "direction": "切り紙の層",
+          "text": "flat graphic decoration, full frame composition, hand-cut paper layers in slate, moss and pale yellow stacked like heavy sky and ground, rough edges, no text, no people, no hands",
+          "seed": 6711
+        },
+        {
+          "id": "12",
+          "label": "direction-lightning-hint",
+          "direction": "遠い稲光の細い線",
+          "text": "flat graphic decoration, full frame composition, one thin pale jagged line far off at the right edge of a dark gray-blue field, nothing else, no text, no people, no hands",
+          "seed": 6712
+        },
+        {
+          "id": "13",
+          "label": "direction-umbrella-dots",
+          "direction": "傘のような丸",
+          "text": "flat graphic decoration, full frame composition, a few flat half-round shapes in muted red and navy scattered on a gray field, simple, sparse, no text, no people, no hands",
+          "seed": 6713
+        },
+        {
+          "id": "14",
+          "label": "direction-pressure",
+          "direction": "押し寄せる面",
+          "text": "flat graphic decoration, full frame composition, large flat color planes of slate, green and plum sliding diagonally toward one side, high tension, calm colors, no text, no people, no hands",
+          "seed": 6714
+        },
+        {
+          "id": "15",
+          "label": "wildcard",
+          "direction": "一粒の光",
+          "text": "flat graphic decoration, full frame composition, a vast dark gray-green field with a single small pale yellow dot, no text, no people, no hands",
+          "seed": 6715
+        }
+      ]
+    }
+  ]
+}

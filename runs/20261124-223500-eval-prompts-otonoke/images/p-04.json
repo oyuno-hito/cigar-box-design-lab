@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, hard rhythmic blocks and syncopated bouncing arcs, compact marks colliding and leaving gaps like a fast beat, asymmetric layout, black and crimson with small electric blue accents, graphic and forceful, no text, no recognizable person or face",
+  "negative_prompt": "",
+  "seed": 3500
+}

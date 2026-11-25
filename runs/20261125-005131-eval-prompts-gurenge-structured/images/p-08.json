@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, one huge red moon disc with a few thin black cloud bands, deep dark sky, calm and heavy, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 7308
+}

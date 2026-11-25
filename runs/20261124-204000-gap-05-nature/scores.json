@@ -1,0 +1,177 @@
+{
+  "conditions": {
+    "sd15-05-nature": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.7473
+    },
+    "xl-05-nature": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.8344
+    }
+  },
+  "scored_at": "2026-11-24T21:33:53+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "d026a08fbcc260f2a0da8b844f25406712895cca",
+      "dirty": true
+    }
+  },
+  "items": [
+    {
+      "id": "sd15-05-nature-01",
+      "condition": "sd15-05-nature",
+      "p": 0.7871,
+      "pass": true
+    },
+    {
+      "id": "sd15-05-nature-03",
+      "condition": "sd15-05-nature",
+      "p": 0.6012,
+      "pass": true
+    },
+    {
+      "id": "sd15-05-nature-05",
+      "condition": "sd15-05-nature",
+      "p": 0.3694,
+      "pass": true
+    },
+    {
+      "id": "sd15-05-nature-07",
+      "condition": "sd15-05-nature",
+      "p": 0.0513,
+      "pass": false
+    },
+    {
+      "id": "sd15-05-nature-09",
+      "condition": "sd15-05-nature",
+      "p": 0.7801,
+      "pass": true
+    },
+    {
+      "id": "sd15-05-nature-11",
+      "condition": "sd15-05-nature",
+      "p": 0.5244,
+      "pass": true
+    },
+    {
+      "id": "sd15-05-nature-13",
+      "condition": "sd15-05-nature",
+      "p": 0.5107,
+      "pass": true
+    },
+    {
+      "id": "sd15-05-nature-15",
+      "condition": "sd15-05-nature",
+      "p": 0.6061,
+      "pass": true
+    },
+    {
+      "id": "sd15-05-nature-17",
+      "condition": "sd15-05-nature",
+      "p": 0.0154,
+      "pass": false
+    },
+    {
+      "id": "sd15-05-nature-19",
+      "condition": "sd15-05-nature",
+      "p": 0.1881,
+      "pass": false
+    },
+    {
+      "id": "sd15-05-nature-21",
+      "condition": "sd15-05-nature",
+      "p": 0.3993,
+      "pass": true
+    },
+    {
+      "id": "sd15-05-nature-23",
+      "condition": "sd15-05-nature",
+      "p": 0.3068,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-01",
+      "condition": "xl-05-nature",
+      "p": 0.2253,
+      "pass": false
+    },
+    {
+      "id": "xl-05-nature-03",
+      "condition": "xl-05-nature",
+      "p": 0.7187,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-05",
+      "condition": "xl-05-nature",
+      "p": 0.5789,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-07",
+      "condition": "xl-05-nature",
+      "p": 0.0317,
+      "pass": false
+    },
+    {
+      "id": "xl-05-nature-09",
+      "condition": "xl-05-nature",
+      "p": 0.9285,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-11",
+      "condition": "xl-05-nature",
+      "p": 0.2693,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-13",
+      "condition": "xl-05-nature",
+      "p": 0.412,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-15",
+      "condition": "xl-05-nature",
+      "p": 0.6145,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-17",
+      "condition": "xl-05-nature",
+      "p": 0.8674,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-19",
+      "condition": "xl-05-nature",
+      "p": 0.1716,
+      "pass": false
+    },
+    {
+      "id": "xl-05-nature-21",
+      "condition": "xl-05-nature",
+      "p": 0.8908,
+      "pass": true
+    },
+    {
+      "id": "xl-05-nature-23",
+      "condition": "xl-05-nature",
+      "p": 0.4209,
+      "pass": true
+    }
+  ]
+}

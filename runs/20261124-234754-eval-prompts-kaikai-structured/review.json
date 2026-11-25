@@ -1,0 +1,63 @@
+{
+  "run_id": "20261124-234754-eval-prompts-kaikai-structured",
+  "reviewed": false,
+  "reviewed_conditions": [],
+  "reviewed_at": "2026-11-24T15:51:09.982Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。ratings.preference = 好み、ratings.concept = 共通の核と direction の一致度。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+  "flags": [],
+  "ratings": {
+    "p-10": {
+      "preference": "like",
+      "concept": "high"
+    },
+    "p-06": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-02": {
+      "preference": "like",
+      "concept": "high"
+    },
+    "p-14": {
+      "preference": "dislike"
+    },
+    "p-08": {
+      "preference": "dislike"
+    },
+    "p-15": {
+      "preference": "dislike",
+      "concept": "mid"
+    },
+    "p-03": {
+      "preference": "dislike",
+      "concept": "high"
+    },
+    "p-04": {
+      "preference": "hold",
+      "concept": "mid"
+    },
+    "p-05": {
+      "preference": "hold"
+    },
+    "p-11": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-09": {
+      "preference": "dislike",
+      "concept": "mid"
+    },
+    "p-13": {
+      "preference": "hold",
+      "concept": "mid"
+    },
+    "p-07": {
+      "preference": "hold",
+      "concept": "low"
+    },
+    "p-12": {
+      "preference": "hold",
+      "concept": "mid"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, bright yellow and hot pink bursts interrupted by blunt black and off-white slabs, cheerful pop surface with a dry unstable underside, abrupt visual changes, clean matte paper-like surfaces, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 5101
+}

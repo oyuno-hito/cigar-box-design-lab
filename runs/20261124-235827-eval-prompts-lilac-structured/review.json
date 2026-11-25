@@ -1,0 +1,69 @@
+{
+  "run_id": "20261124-235827-eval-prompts-lilac-structured",
+  "reviewed": false,
+  "reviewed_conditions": [],
+  "reviewed_at": "2026-11-24T15:58:29.974Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。ratings.preference = 好み、ratings.concept = 共通の核と direction の一致度。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+  "flags": [],
+  "ratings": {
+    "p-11": {
+      "preference": "like",
+      "concept": "high"
+    },
+    "p-07": {
+      "preference": "like",
+      "concept": "high"
+    },
+    "p-14": {
+      "preference": "like",
+      "concept": "low"
+    },
+    "p-13": {
+      "preference": "like",
+      "concept": "mid"
+    },
+    "p-12": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-02": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-01": {
+      "preference": "like",
+      "concept": "mid"
+    },
+    "p-06": {
+      "preference": "dislike",
+      "concept": "mid"
+    },
+    "p-10": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-08": {
+      "preference": "dislike",
+      "concept": "mid"
+    },
+    "p-04": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-03": {
+      "preference": "dislike"
+    },
+    "p-09": {
+      "preference": "like",
+      "concept": "low"
+    },
+    "p-05": {
+      "preference": "dislike",
+      "concept": "low"
+    },
+    "p-15": {
+      "preference": "dislike",
+      "concept": "low"
+    }
+  }
+}

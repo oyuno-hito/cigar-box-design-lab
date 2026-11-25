@@ -1,0 +1,97 @@
+{
+  "brief_type": "music",
+  "brief": "原因は自分にある。『ラブリーズン』（2026年11月23日付 Billboard JAPAN Hot 100 1位）",
+  "concept": "an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+  "note": "プロンプト10本ノック。具体的な曲名を、曲の説明や歌詞の引用ではなく、甘さと不穏さが同居する視覚コンセプトへ翻訳した。10本ではこのコンセプト文を固定し、描き方の軸だけを変える。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "base",
+          "text": "flat graphic decoration, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "02",
+          "label": "+color",
+          "text": "flat graphic decoration, restrained three-color palette, one dominant deep plum ground color, one main coral-pink form, electric cyan used only as a small accent, large quiet color fields, clear foreground and background hierarchy, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "03",
+          "label": "+fine",
+          "text": "flat graphic decoration, thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "04",
+          "label": "+flat",
+          "text": "flat graphic decoration, flat solid color fills only, no highlights, no cast shadows, no metallic shine, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "05",
+          "label": "+depth",
+          "text": "flat graphic decoration, everything sits on one flat plane, no perspective, no interior space, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "06",
+          "label": "+abstract",
+          "text": "flat graphic decoration, the concept reduced to bold looping symbols and a few flat shapes, symbolic rather than literal, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "07",
+          "label": "combo-color+fine",
+          "text": "flat graphic decoration, restrained three-color palette, one dominant deep plum ground color, one main coral-pink form, electric cyan used only as a small accent, large quiet color fields, clear foreground and background hierarchy, thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "08",
+          "label": "combo-flat+depth+abstract",
+          "text": "flat graphic decoration, flat solid color fills only, no highlights, no cast shadows, no metallic shine, everything sits on one flat plane, no perspective, no interior space, the concept reduced to bold looping symbols and a few flat shapes, symbolic rather than literal, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "09",
+          "label": "combo-all",
+          "text": "flat graphic decoration, restrained three-color palette, one dominant deep plum ground color, one main coral-pink form, electric cyan used only as a small accent, large quiet color fields, clear foreground and background hierarchy, thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm, flat solid color fills only, no highlights, no cast shadows, no metallic shine, everything sits on one flat plane, no perspective, no interior space, the concept reduced to bold looping symbols and a few flat shapes, symbolic rather than literal, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        },
+        {
+          "id": "10",
+          "label": "control",
+          "text": "flat graphic decoration, multiple saturated colors at equal intensity across the whole frame, dense fine lines and tiny highlights everywhere, strong cast shadows, metallic reflections, deep perspective and photorealistic rendering, full frame composition, an uncanny candy-colored world where looping ribbons circle a quiet dark center, playful at first glance and quietly unsettling underneath",
+          "seed": 2700
+        }
+      ]
+    }
+  ]
+}

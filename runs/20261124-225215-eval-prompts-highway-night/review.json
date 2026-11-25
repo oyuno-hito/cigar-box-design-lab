@@ -1,0 +1,55 @@
+{
+  "run_id": "20261124-225215-eval-prompts-highway-night",
+  "reviewed": false,
+  "reviewed_conditions": [],
+  "reviewed_at": "2026-11-24T15:39:27.304Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。ratings.preference = 好み、ratings.concept = 共通の核と direction の一致度。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+  "flags": [],
+  "ratings": {
+    "p-13": {
+      "preference": "dislike"
+    },
+    "p-14": {
+      "preference": "dislike"
+    },
+    "p-01": {
+      "preference": "like"
+    },
+    "p-11": {
+      "preference": "like"
+    },
+    "p-07": {
+      "preference": "like"
+    },
+    "p-06": {
+      "preference": "like"
+    },
+    "p-12": {
+      "preference": "like"
+    },
+    "p-08": {
+      "preference": "like"
+    },
+    "p-03": {
+      "preference": "like"
+    },
+    "p-10": {
+      "preference": "dislike"
+    },
+    "p-15": {
+      "preference": "dislike"
+    },
+    "p-05": {
+      "preference": "dislike"
+    },
+    "p-09": {
+      "preference": "dislike"
+    },
+    "p-04": {
+      "preference": "dislike"
+    },
+    "p-02": {
+      "preference": "dislike"
+    }
+  }
+}

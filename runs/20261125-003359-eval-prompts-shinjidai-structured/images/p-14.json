@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, a dark deep ground with one huge soft red glow shape at the center-left and a few white points, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 7014
+}

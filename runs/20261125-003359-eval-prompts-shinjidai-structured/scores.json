@@ -1,0 +1,119 @@
+{
+  "conditions": {
+    "p": {
+      "n": 15,
+      "mean_pairwise_cosine": 0.7401
+    }
+  },
+  "scored_at": "2026-11-25T00:39:12+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "b28869088645ca12882a7514af58ba9c0472fd5f",
+      "dirty": false
+    }
+  },
+  "items": [
+    {
+      "id": "p-01",
+      "condition": "p",
+      "p": 0.4736,
+      "pass": true
+    },
+    {
+      "id": "p-02",
+      "condition": "p",
+      "p": 0.7032,
+      "pass": true
+    },
+    {
+      "id": "p-03",
+      "condition": "p",
+      "p": 0.7099,
+      "pass": true
+    },
+    {
+      "id": "p-04",
+      "condition": "p",
+      "p": 0.8234,
+      "pass": true
+    },
+    {
+      "id": "p-05",
+      "condition": "p",
+      "p": 0.7723,
+      "pass": true
+    },
+    {
+      "id": "p-06",
+      "condition": "p",
+      "p": 0.6833,
+      "pass": true
+    },
+    {
+      "id": "p-07",
+      "condition": "p",
+      "p": 0.3627,
+      "pass": true
+    },
+    {
+      "id": "p-08",
+      "condition": "p",
+      "p": 0.0713,
+      "pass": false
+    },
+    {
+      "id": "p-09",
+      "condition": "p",
+      "p": 0.9534,
+      "pass": true
+    },
+    {
+      "id": "p-10",
+      "condition": "p",
+      "p": 0.792,
+      "pass": true
+    },
+    {
+      "id": "p-11",
+      "condition": "p",
+      "p": 0.6062,
+      "pass": true
+    },
+    {
+      "id": "p-12",
+      "condition": "p",
+      "p": 0.8976,
+      "pass": true
+    },
+    {
+      "id": "p-13",
+      "condition": "p",
+      "p": 0.4894,
+      "pass": true
+    },
+    {
+      "id": "p-14",
+      "condition": "p",
+      "p": 0.2684,
+      "pass": true
+    },
+    {
+      "id": "p-15",
+      "condition": "p",
+      "p": 0.1476,
+      "pass": false
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "conditions": {
+    "p": {
+      "n": 10,
+      "mean_pairwise_cosine": 0.875
+    }
+  },
+  "scored_at": "2026-11-24T22:07:42+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "3bccac5445c27d0cad83d97ef19cd2a9cb8c2111",
+      "dirty": false
+    }
+  },
+  "items": [
+    {
+      "id": "p-01",
+      "condition": "p",
+      "p": 0.649,
+      "pass": true
+    },
+    {
+      "id": "p-02",
+      "condition": "p",
+      "p": 0.0955,
+      "pass": false
+    },
+    {
+      "id": "p-03",
+      "condition": "p",
+      "p": 0.0452,
+      "pass": false
+    },
+    {
+      "id": "p-04",
+      "condition": "p",
+      "p": 0.0852,
+      "pass": false
+    },
+    {
+      "id": "p-05",
+      "condition": "p",
+      "p": 0.3291,
+      "pass": true
+    },
+    {
+      "id": "p-06",
+      "condition": "p",
+      "p": 0.3707,
+      "pass": true
+    },
+    {
+      "id": "p-07",
+      "condition": "p",
+      "p": 0.1083,
+      "pass": false
+    },
+    {
+      "id": "p-08",
+      "condition": "p",
+      "p": 0.0391,
+      "pass": false
+    },
+    {
+      "id": "p-09",
+      "condition": "p",
+      "p": 0.0867,
+      "pass": false
+    },
+    {
+      "id": "p-10",
+      "condition": "p",
+      "p": 0.0929,
+      "pass": false
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, a single burst of sharp triangular rays in red and gold from the lower left on a cream field, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 7009
+}

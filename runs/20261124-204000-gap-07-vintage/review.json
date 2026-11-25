@@ -1,0 +1,12 @@
+{
+  "run_id": "20261124-204000-gap-07-vintage",
+  "reviewed": true,
+  "reviewed_at": "2026-11-24T12:09:18.350Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は同意",
+  "flags": [
+    "xl-07-vintage-01",
+    "xl-07-vintage-03",
+    "xl-07-vintage-17",
+    "xl-07-vintage-23"
+  ]
+}

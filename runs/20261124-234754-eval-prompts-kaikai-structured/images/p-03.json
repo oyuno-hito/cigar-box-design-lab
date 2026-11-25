@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, symmetrical ritual-like pattern of straight lines and small circles, no letters, vermilion on deep black, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 6203
+}

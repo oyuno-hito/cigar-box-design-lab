@@ -1,0 +1,101 @@
+{
+  "conditions": {
+    "xl-14-house": {
+      "n": 12,
+      "mean_pairwise_cosine": 0.7484
+    }
+  },
+  "scored_at": "2026-11-24T21:35:09+09:00",
+  "scorer": {
+    "embedding": {
+      "model_id": "openai/clip-vit-base-patch32",
+      "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+      "preprocess": "RGB -> 224x224 bicubic resize (no crop) -> CLIP mean/std -> image features -> L2 normalize"
+    },
+    "cutoff": {
+      "threshold": 0.2517,
+      "target_like_recall": 0.9,
+      "like_recall": 0.9059,
+      "dislike_rejected": 0.6022,
+      "note": "nested CV の out-of-fold 確率で決めた値。like を 9 割残したときに、dislike を何割落とせるか"
+    },
+    "git": {
+      "commit": "d026a08fbcc260f2a0da8b844f25406712895cca",
+      "dirty": true
+    }
+  },
+  "items": [
+    {
+      "id": "xl-14-house-01",
+      "condition": "xl-14-house",
+      "p": 0.0345,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-03",
+      "condition": "xl-14-house",
+      "p": 0.0314,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-05",
+      "condition": "xl-14-house",
+      "p": 0.1074,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-07",
+      "condition": "xl-14-house",
+      "p": 0.2537,
+      "pass": true
+    },
+    {
+      "id": "xl-14-house-09",
+      "condition": "xl-14-house",
+      "p": 0.1117,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-11",
+      "condition": "xl-14-house",
+      "p": 0.0844,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-13",
+      "condition": "xl-14-house",
+      "p": 0.0446,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-15",
+      "condition": "xl-14-house",
+      "p": 0.0423,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-17",
+      "condition": "xl-14-house",
+      "p": 0.0992,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-19",
+      "condition": "xl-14-house",
+      "p": 0.013,
+      "pass": false
+    },
+    {
+      "id": "xl-14-house-21",
+      "condition": "xl-14-house",
+      "p": 0.3089,
+      "pass": true
+    },
+    {
+      "id": "xl-14-house-23",
+      "condition": "xl-14-house",
+      "p": 0.0408,
+      "pass": false
+    }
+  ]
+}

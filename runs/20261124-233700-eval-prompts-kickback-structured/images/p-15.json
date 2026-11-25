@@ -1,0 +1,6 @@
+{
+  "source": "comfyui 0.46.3 / DreamShaperXL_Turbo-Lightning.safetensors / dpmpp_sde 6steps cfg2.0 / 1152x768",
+  "prompt": "flat graphic decoration, full frame composition, a nearly empty off-white and black field with one compact explosive yellow and pink interruption near the edge, a brief ridiculous flash of hope against dryness, simple flat shapes, no text, no people, no hands",
+  "negative_prompt": "",
+  "seed": 5115
+}

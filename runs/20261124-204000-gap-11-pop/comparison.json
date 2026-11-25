@@ -1,0 +1,36 @@
+{
+  "(全体)": {
+    "n": 12,
+    "human_ok": 1,
+    "auc": 1.0,
+    "at_cutoff": {
+      "pass": 3,
+      "precision": 0.3333333333333333,
+      "recall": 1.0
+    },
+    "top25%_precision": 0.3333333333333333,
+    "top50%_precision": 0.16666666666666666,
+    "recall80": {
+      "threshold": 0.4174,
+      "pass_rate": 0.08333333333333333,
+      "precision": 1.0
+    }
+  },
+  "xl-11-pop": {
+    "n": 12,
+    "human_ok": 1,
+    "auc": 1.0,
+    "at_cutoff": {
+      "pass": 3,
+      "precision": 0.3333333333333333,
+      "recall": 1.0
+    },
+    "top25%_precision": 0.3333333333333333,
+    "top50%_precision": 0.16666666666666666,
+    "recall80": {
+      "threshold": 0.4174,
+      "pass_rate": 0.08333333333333333,
+      "precision": 1.0
+    }
+  }
+}

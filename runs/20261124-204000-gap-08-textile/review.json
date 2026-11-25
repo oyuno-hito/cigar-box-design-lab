@@ -1,0 +1,13 @@
+{
+  "run_id": "20261124-204000-gap-08-textile",
+  "reviewed": true,
+  "reviewed_conditions": [
+    "sd15-08-textile",
+    "xl-08-textile"
+  ],
+  "reviewed_at": "2026-11-24T13:25:30.614Z",
+  "meaning": "flags = 機械の判定（scores.json の pass）に同意しない画像。印のない画像は、reviewed_conditions に入っている条件の中でだけ「同意」とみなす",
+  "flags": [
+    "sd15-08-textile-21"
+  ]
+}

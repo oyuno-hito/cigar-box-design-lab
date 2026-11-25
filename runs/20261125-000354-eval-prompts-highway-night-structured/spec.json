@@ -1,0 +1,149 @@
+{
+  "brief_type": "mood",
+  "brief": "深夜の高速道路を走るような、静かで少し高揚する感じ",
+  "context_sources": [
+    {
+      "kind": "mood",
+      "source": "ユーザー入力型の世界観（調査なし）",
+      "visual_elements": "流れる光、単調なリズム、暗い空気、温かい橙と冷たい青"
+    }
+  ],
+  "concept": "A dark quiet field carries a quick warm signal, leaving long traces of motion without becoming noisy or literal.",
+  "note": "再発散。暗い静けさ、短い暖色の信号、残る長い余韻の3軸で振った。写実風景・細かな粒子・過密な質感は避ける。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "基準: 流れる光と静かな高揚",
+          "text": "flat graphic decoration, full frame composition, long streams of amber and cool blue light flowing across a deep dark ground, calm steady rhythm, no text, no people, no hands",
+          "seed": 6501
+        },
+        {
+          "id": "02",
+          "label": "direction-lane-dashes",
+          "direction": "等間隔の破線",
+          "text": "flat graphic decoration, full frame composition, evenly spaced short dashes in warm white sweeping in a gentle curve across a dark teal field, wide empty space, no text, no people, no hands",
+          "seed": 6502
+        },
+        {
+          "id": "03",
+          "label": "direction-light-trails",
+          "direction": "光の尾",
+          "text": "flat graphic decoration, full frame composition, a few long flowing trails in amber and red passing across a navy field, sparse and smooth, no text, no people, no hands",
+          "seed": 6503
+        },
+        {
+          "id": "04",
+          "label": "direction-stripe-fade",
+          "direction": "帯の濃淡",
+          "text": "flat graphic decoration, full frame composition, wide horizontal bands of deep blue fading to dark teal with thin amber lines, extremely calm, no text, no people, no hands",
+          "seed": 6504
+        },
+        {
+          "id": "05",
+          "label": "direction-dot-rows",
+          "direction": "点の列",
+          "text": "flat graphic decoration, full frame composition, rows of small amber dots receding into rhythm on a charcoal field, regular and meditative, flat, no text, no people, no hands",
+          "seed": 6505
+        },
+        {
+          "id": "06",
+          "label": "direction-moon-road",
+          "direction": "月と一本の筋",
+          "text": "flat graphic decoration, full frame composition, one pale moon disc above a single long horizontal amber line on a deep indigo field, no text, no people, no hands",
+          "seed": 6506
+        },
+        {
+          "id": "07",
+          "label": "direction-rain-reflect",
+          "direction": "にじむ赤と青",
+          "text": "flat graphic decoration, full frame composition, soft blurred vertical streaks of red, blue and amber on a dark ground, abstract and quiet, no text, no people, no hands",
+          "seed": 6507
+        },
+        {
+          "id": "08",
+          "label": "direction-paper-cut-night",
+          "direction": "切り紙の夜",
+          "text": "flat graphic decoration, full frame composition, hand-cut paper layers in navy, teal and mustard overlapping like a night ride, wide quiet areas, no text, no people, no hands",
+          "seed": 6508
+        },
+        {
+          "id": "09",
+          "label": "direction-heartbeat-line",
+          "direction": "一本の波",
+          "text": "flat graphic decoration, full frame composition, one long thin wave line crossing a dark field, with small amber points on it, minimal, no text, no people, no hands",
+          "seed": 6509
+        },
+        {
+          "id": "10",
+          "label": "direction-grid-glow",
+          "direction": "格子の灯り",
+          "text": "flat graphic decoration, full frame composition, a loose grid of small glowing squares in amber on dark blue, some missing, quiet pattern, no text, no people, no hands",
+          "seed": 6510
+        },
+        {
+          "id": "11",
+          "label": "direction-comet-diagonal",
+          "direction": "斜めに走る彗星",
+          "text": "flat graphic decoration, full frame composition, a few bold diagonal comet-like streaks in cream and orange across a deep blue field, no text, no people, no hands",
+          "seed": 6511
+        },
+        {
+          "id": "12",
+          "label": "direction-twilight-edge",
+          "direction": "夜明け前の縁",
+          "text": "flat graphic decoration, full frame composition, dark field with a thin band of dawn pink and orange along the bottom, otherwise empty, no text, no people, no hands",
+          "seed": 6512
+        },
+        {
+          "id": "13",
+          "label": "direction-woven-light",
+          "direction": "織りの光",
+          "text": "flat graphic decoration, full frame composition, flat woven pattern of dark teal and amber threads, calm repeating rhythm, no text, no people, no hands",
+          "seed": 6513
+        },
+        {
+          "id": "14",
+          "label": "direction-color-blocks",
+          "direction": "大きな色面",
+          "text": "flat graphic decoration, full frame composition, large flat color blocks in night blue, plum and teal arranged in a long horizontal sequence, one small orange block, no text, no people, no hands",
+          "seed": 6514
+        },
+        {
+          "id": "15",
+          "label": "wildcard",
+          "direction": "一つだけの灯",
+          "text": "flat graphic decoration, full frame composition, a dark field with one small bright circle and a long faint tail, nothing else, no text, no people, no hands",
+          "seed": 6515
+        }
+      ]
+    }
+  ]
+}

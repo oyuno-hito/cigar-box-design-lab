@@ -18,6 +18,7 @@
 | `docs/` | ワークフロー、設計判断 | する |
 | `generator/` | uv で管理する ComfyUI、ワークフロー、モデル備忘録 | モデル本体は除く |
 | `generated/` | 生成画像の正本。`0_like`（`reference` / `seed`）/ `1_dislike` / `2_maybe` / `99_inbox` に分類 | する |
+| `runs/` | 実験 run（題材ごとの生成・採点・レビューの記録）。テキストと一覧画像（`contact.webp`）だけ管理し、PNG は管理しない（見本 2 件のみ例外）。[runs/README.md](runs/README.md) | 一部 |
 | `scorers/` | 分類器（スコアラー）。係数・マニフェスト・評価結果の JSON。版は Git の履歴で管理 | する |
 | `artifacts/` | 最終採用した成果物のコレクション | する |
 | `site/` | GitHub Pages 用の HTML / JS。公開するのは `artifacts/` のみ | する |

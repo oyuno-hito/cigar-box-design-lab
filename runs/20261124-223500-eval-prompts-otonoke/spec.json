@@ -1,0 +1,134 @@
+{
+  "brief_type": "music",
+  "brief": "Creepy Nuts『オトノケ』。TVアニメ『ダンダダン』のオープニング曲",
+  "context_sources": [
+    {
+      "kind": "music",
+      "source": "Creepy Nuts / Sony Music の公式情報、Billboard JAPAN インタビュー",
+      "visual_elements": "ヒップホップ、ジャージークラブ系の疾走感、同じリズムを保ったまま景色が大きく変わる展開"
+    },
+    {
+      "kind": "anime",
+      "source": "TVアニメ『ダンダダン』、Sony Music のコラボMV告知",
+      "visual_elements": "怪異・幽霊・宇宙からの存在が同居する、怖さと可笑しさがぶつかる世界"
+    },
+    {
+      "kind": "mv",
+      "source": "P.I.C.S. / Masaki Watanabe 制作MV紹介、TOWER RECORDS の記事",
+      "visual_elements": "ビートに同期する無数の反復像、3Dスキャン由来のフェナキストスコープ、カオティックな反復"
+    },
+    {
+      "kind": "dance",
+      "source": "公式MV・パフォーマンス映像と楽曲紹介",
+      "visual_elements": "速い身体の動き、ひらいた布や衣装の軌跡、跳ねるリズム"
+    },
+    {
+      "kind": "theme",
+      "source": "anan の制作秘話、Sony Music の楽曲紹介",
+      "visual_elements": "音に残った念が聴き手へ入り込む、耳から現実へ侵入する感覚"
+    }
+  ],
+  "concept": "a charged graphic world where rhythm, strange presences, and sudden changes of scenery break into ordinary space",
+  "note": "入力ブリーフの周辺情報を調べ、1つのコンセプトを描画句だけで変えるのではなく、10本の視覚的な方向へ発散する。曲名・歌詞・人物の再現はプロンプトに直接入れない。",
+  "workflow": "txt2img-api.json",
+  "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+  "width": 1152,
+  "height": 768,
+  "sampler": {
+    "steps": 6,
+    "cfg": 2.0,
+    "sampler_name": "dpmpp_sde",
+    "scheduler": "karras",
+    "denoise": 1.0
+  },
+  "conditions": [
+    {
+      "name": "p",
+      "checkpoint": "DreamShaperXL_Turbo-Lightning.safetensors",
+      "width": 1152,
+      "height": 768,
+      "sampler": {
+        "steps": 6,
+        "cfg": 2.0,
+        "sampler_name": "dpmpp_sde",
+        "scheduler": "karras",
+        "denoise": 1.0
+      },
+      "prompt_prefix": "",
+      "prompt_suffix": "",
+      "negative_prompt": "",
+      "items": [
+        {
+          "id": "01",
+          "label": "synthesis",
+          "direction": "音・異変・景色の変化をまとめた基準案",
+          "text": "flat graphic decoration, full frame composition, a charged graphic world where rhythm, strange presences, and sudden changes of scenery break into ordinary space, bold flat shapes, deep black ground, vivid red and electric blue accents, symbolic rather than literal, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "02",
+          "label": "direction-anime-occult",
+          "direction": "怪異と宇宙からの存在がぶつかる",
+          "text": "flat graphic decoration, full frame composition, a playful collision between ancient local apparitions and strange visitors from the sky, ghostly curls meeting orbital fragments, dark indigo ground with red and cyan accents, bold silhouettes and flat shapes, eerie but energetic, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "03",
+          "label": "direction-mv-afterimage",
+          "direction": "ビートに同期する反復像と回転する映像",
+          "text": "flat graphic decoration, full frame composition, a circular sequence of offset graphic afterimages, repeated forms frozen at different moments of one rapid movement, rotating rings and broken snapshots, black ground with sharp red and cyan marks, rhythmic and uncanny, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "04",
+          "label": "direction-hiphop-rhythm",
+          "direction": "ヒップホップとジャージークラブの跳ねるリズム",
+          "text": "flat graphic decoration, full frame composition, hard rhythmic blocks and syncopated bouncing arcs, compact marks colliding and leaving gaps like a fast beat, asymmetric layout, black and crimson with small electric blue accents, graphic and forceful, no text, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "05",
+          "label": "direction-dance-trails",
+          "direction": "ダンス衣装や布のひらひらが残す軌跡",
+          "text": "flat graphic decoration, full frame composition, long fluttering fabric-like trails whipping through the frame in several sharp changes of direction, layered ribbons with a lively dance impulse, broad dark negative space, crimson, ivory, and electric blue, expressive but abstract, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "06",
+          "label": "direction-possession",
+          "direction": "音が耳から現実へ入り込む憑依",
+          "text": "flat graphic decoration, full frame composition, visible sound waves entering a hollow symbolic form and spreading through its interior, an unseen presence crossing from sound into physical space, one large quiet dark field, red pulse marks and cyan echoes, mysterious and restrained, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "07",
+          "label": "direction-sudden-transition",
+          "direction": "同じリズムのまま景色が急に開く展開",
+          "text": "flat graphic decoration, full frame composition, a compressed dark pattern abruptly opening into a wide luminous field, a sharp transition from crowded tension to expansive release within one image, diagonal flow, black, warm red, pale cream, and a small cyan accent, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "08",
+          "label": "direction-urban-folklore",
+          "direction": "日常空間に怪異が混ざる違和感",
+          "text": "flat graphic decoration, full frame composition, familiar everyday geometric signs interrupted by playful folklore-like ghost traces and impossible curved marks, ordinary order becoming slightly wrong, flat planes with large quiet areas, charcoal, faded red, and acid yellow, uncanny without realism, no text, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "09",
+          "label": "hybrid-dance-possession",
+          "direction": "布の軌跡と音の憑依を組み合わせる",
+          "text": "flat graphic decoration, full frame composition, fluttering ribbon trails transformed into visible sound waves that enter a dark hollow center, repeated arcs and sudden angular cuts, asymmetrical movement, deep black ground, crimson as the main color and cyan as a small echo, no recognizable person or face",
+          "seed": 3500
+        },
+        {
+          "id": "10",
+          "label": "wildcard",
+          "direction": "音の怪を抽象的な痕跡として残す",
+          "text": "flat graphic decoration, full frame composition, an abstract residue of sound left behind after something unseen has passed through, torn circular traces, playful sparks, one strange empty gap, uneven hand-cut shapes, dark violet, vermilion, and pale blue, surprising and memorable, no text, no recognizable person or face",
+          "seed": 3500
+        }
+      ]
+    }
+  ]
+}
