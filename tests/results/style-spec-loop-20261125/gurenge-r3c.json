@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "LiSAの「紅蓮華」という曲にあうシガーのデコレーションを考えたい。",
+ "context_sources": [
+  {
+   "kind": "song_context",
+   "source": "曲名・アーティスト",
+   "visual_elements": "力強い決意と、燃えるような熱。深い紅と黒、金、白、深い紫。紅と黒を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や風景は描かない。"
+  }
+ ],
+ "concept": "abstract visual for a powerful song about resolve and burning heat: crimson and black, bold flat color shapes with sharp edges",
+ "note": "3:2横長の平面デザイン。抽象的なグラフィックとして展開する。",
+ "slug": "gurenge-r3c",
+ "seed_base": 10600,
+ "items": [
+  {
+   "label": "紅・黒・白の斜め帯",
+   "direction": "鋭い縁の斜め帯が全面を埋める",
+   "idea_id": "idea-01",
+   "reason": "決意の鋭さを、全面の斜め帯で見せる。紅・黒・白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, steep diagonal stripes of uneven widths in crimson, black and white with sharp edges filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "金・黒・紅の縦縞",
+   "direction": "幅の不揃いな縦縞が全面を埋める",
+   "idea_id": "idea-02",
+   "reason": "力強い鼓動を、縦縞で見せる。金・黒・紅。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, bold vertical stripes of uneven widths in gold, black and crimson filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "組み合わさる不定形の面",
+   "direction": "紅・黒・深い紫の面が隙間なく組み合わさる",
+   "idea_id": "idea-03",
+   "reason": "燃える熱の塊を、隙間のない面で見せる。紅・黒・深い紫。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large irregular polygon shapes in crimson, black and deep purple fitted together edge to edge across the whole frame, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "紅と白のジグザグ縞",
+   "direction": "急な角度のジグザグ縞",
+   "idea_id": "idea-04",
+   "reason": "鋭い決意を、ジグザグの縞で見せる。紅・白・黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, steep zigzag diagonal stripes in crimson and white with a few black stripes, filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "紅の地を覆う斜めの墨筆",
+   "direction": "太い黒の筆が斜めに走って紅の地の大半を覆う",
+   "idea_id": "idea-05",
+   "reason": "迷いのない筆を、斜めの太い筆の線で見せる。紅の地に黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, thick black ink strokes all running diagonally in the same direction, covering most of a solid crimson background, no white field, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "角から広がる帯",
+   "direction": "橙・紅・黒の帯が左下の角から広がる",
+   "idea_id": "idea-06",
+   "reason": "燃える勢いの広がりを、角から広がる帯で見せる。橙・紅・黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, wide bands in orange, crimson and black fanning out from the lower left corner and filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  }
+ ]
+}

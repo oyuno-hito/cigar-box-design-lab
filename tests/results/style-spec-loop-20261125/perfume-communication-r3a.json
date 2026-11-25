@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面が重なり、黒の細い縞が横切る。色数は少なく明暗差が強い。この色を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や衣装そのものは再現しない。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: messages passed back and forth, rhythmic electronic movement, bold flat color shapes",
+ "note": "3:2横長の平面デザイン。抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-r3a",
+ "seed_base": 10400,
+ "items": [
+  {
+   "label": "白黒と赤紫の斜め帯",
+   "direction": "幅の不揃いな斜めの帯が全面を埋める",
+   "idea_id": "idea-01",
+   "reason": "呼びかけと返事が重なる勢いを、全面の斜めの帯で見せる。黒・白・赤紫。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, steep diagonal stripes of uneven widths in black, white and magenta filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "深緑・クリーム・えんじの縦縞",
+   "direction": "幅の不揃いな縦縞が全面を埋める",
+   "idea_id": "idea-02",
+   "reason": "声の高さの違いを、幅の違う縦縞で見せる。深緑・クリーム・えんじ。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, wide vertical stripes of uneven widths in deep green, cream and maroon filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "組み合わさる不定形の面",
+   "direction": "青緑・黒・クリームの大きな不定形の面が隙間なく組み合わさる",
+   "idea_id": "idea-03",
+   "reason": "衣装の不定形の色面を、隙間なく組み合わせて見せる。青緑・黒・クリーム。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large irregular polygon shapes in teal, black and cream fitted together edge to edge across the whole frame, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "橙と黒と白のジグザグ縞",
+   "direction": "急な角度のジグザグ縞が全面を埋める",
+   "idea_id": "idea-04",
+   "reason": "電子的な信号の鋭さを、ジグザグの縞で見せる。橙・黒・白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, steep zigzag diagonal stripes in orange, black and white of uneven widths filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "重なる大きな葉形",
+   "direction": "葉の形の大きな色面が、すべての縁で切れて重なる",
+   "idea_id": "idea-05",
+   "reason": "衣装の葉のような色面を拡大し、背景を見せずに全面を埋める。青緑・深緑・赤紫。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, huge leaf-shaped flat blobs in teal, deep green and magenta overlapping and cropped by every edge, filling the frame with no background visible, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "えんじと白の斜め帯に黒の縦帯",
+   "direction": "斜めの帯と縦の帯が交差して全面を埋める",
+   "idea_id": "idea-06",
+   "reason": "異なる声の交差を、斜めと縦の帯で見せる。えんじ・白・黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, wide diagonal bands of maroon and white of uneven widths crossed by a few black vertical bands, filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  }
+ ]
+}

@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "YOASOBIの「夜に駆ける」という曲にあうシガーのデコレーションを考えたい。",
+ "context_sources": [
+  {
+   "kind": "song_context",
+   "source": "曲名・アーティスト",
+   "visual_elements": "夜の街を走り抜ける疾走感。濃い藍と群青、暖かい黄色と白の光、淡いピンクと紫。夜と光の組を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や風景は描かない。"
+  }
+ ],
+ "concept": "abstract visual for a song about running through the night: speed, night blues and warm yellow light, bold flat color shapes",
+ "note": "3:2横長の平面デザイン。抽象的なグラフィックとして展開する。",
+ "slug": "yoasobi-yoru-r3b",
+ "seed_base": 10500,
+ "items": [
+  {
+   "label": "藍・紫・ピンクの斜め帯と黄の一本",
+   "direction": "斜めの帯が全面を走り、黄色の帯が一本",
+   "idea_id": "idea-01",
+   "reason": "駆け抜ける光の一筋を、全面の斜めの帯の中の黄色一本で見せる。藍・紫・淡いピンク。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, steep diagonal stripes of uneven widths in indigo, violet and pale pink filling the entire frame edge to edge, one yellow stripe among them, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "黄・白・藍の縦縞",
+   "direction": "幅の不揃いな縦縞が全面を埋める",
+   "idea_id": "idea-02",
+   "reason": "街の灯の連なりを、幅の違う縦縞で見せる。黄・白・藍。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, bold vertical stripes of uneven widths in yellow, white and navy filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "組み合わさる不定形の面",
+   "direction": "紫・ピンク・藍の不定形の面が隙間なく組み合わさる",
+   "idea_id": "idea-03",
+   "reason": "夜の色が重なる様子を、組み合わさる面で見せる。紫・ピンク・藍に黄の一面。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large irregular polygon shapes in violet, pink and indigo fitted together edge to edge across the whole frame, one yellow shape, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "黄と藍のジグザグ縞",
+   "direction": "急な角度のジグザグ縞が全面を埋める",
+   "idea_id": "idea-04",
+   "reason": "疾走の鋭さを、ジグザグの縞で見せる。黄と藍。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, steep zigzag diagonal stripes in yellow and indigo of uneven widths filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "同じ向きに流れる帯",
+   "direction": "平行な帯が緩やかに曲がって全面を流れる",
+   "idea_id": "idea-05",
+   "reason": "走り続ける流れを、平行な帯のゆるやかな曲がりで見せる。淡いピンク・紫・白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, parallel bands in pale pink, violet and white, all running in the same diagonal direction and bending gently, filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  },
+  {
+   "label": "紫とピンクの縦帯",
+   "direction": "紫とピンクの縦帯に黄の細い隙間",
+   "idea_id": "idea-06",
+   "reason": "夜の街の縦の線を、縦帯で見せる。紫・ピンク・黄。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, wide vertical bands in violet and pink with narrow yellow gaps between them, filling the entire frame edge to edge, flat solid color fills only, no shadows, no gradients, no highlights, no text, no logo, no people"
+  }
+ ]
+}
