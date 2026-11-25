@@ -1,0 +1,82 @@
+{
+  "note": "実 ComfyUI + 実 CLIP の足切り + 偽の AI（tests/fixtures.py の FAKE_AI。最初の返答は不正にして、差し戻しと再依頼を確かめる）。個別の方向=『円を大きく』（p-01）、全体の方針=『もっと暗い地に』、選択=p-01, p-02",
+  "phase": "ready",
+  "round": 3,
+  "size": 6,
+  "shortfall": 2,
+  "cards": [
+    {
+      "id": "p-01",
+      "origin": {
+        "kind": "kept"
+      },
+      "direction": "方針 1",
+      "reason": "アイデア 1 の理由（テスト用）",
+      "card_note": null
+    },
+    {
+      "id": "p-02",
+      "origin": {
+        "kind": "kept"
+      },
+      "direction": "方針 2",
+      "reason": null,
+      "card_note": null
+    },
+    {
+      "id": "p-07",
+      "origin": {
+        "kind": "derived",
+        "parent": "p-01"
+      },
+      "direction": "AI の方針 derive-p-01-1",
+      "reason": "理由 derive-p-01-1",
+      "card_note": "円を大きく"
+    },
+    {
+      "id": "p-08",
+      "origin": {
+        "kind": "derived",
+        "parent": "p-01"
+      },
+      "direction": "AI の方針 derive-p-01-2",
+      "reason": "理由 derive-p-01-2",
+      "card_note": "円を大きく"
+    },
+    {
+      "id": "p-09",
+      "origin": {
+        "kind": "derived",
+        "parent": "p-01"
+      },
+      "direction": "AI の方針 derive-p-01-3",
+      "reason": "理由 derive-p-01-3",
+      "card_note": "円を大きく"
+    },
+    {
+      "id": "p-05",
+      "origin": {
+        "kind": "new"
+      },
+      "direction": "AI の方針 fill-05",
+      "reason": "理由 fill-05",
+      "card_note": null
+    },
+    {
+      "id": "p-06",
+      "origin": {
+        "kind": "new"
+      },
+      "direction": "AI の方針 fill-06",
+      "reason": "理由 fill-06",
+      "card_note": null
+    }
+  ],
+  "compose_logs": [
+    "204030-1-problem.txt",
+    "204030-1-request.txt",
+    "204030-1-response.txt",
+    "204030-2-request.txt",
+    "204030-2-response.txt"
+  ]
+}

@@ -30,3 +30,7 @@ generated/999_sheet/
 # 見本の 2 件（gap-09-scifi / idol-structured）は、PNG と report.html も追跡済み（チュートリアル用の例外）。
 runs/*/images/*.png
 runs/*/report.html
+
+# 実使用の session（画像・選択の履歴）は管理しない。README だけ管理する（sessions/README.md 参照）
+sessions/*
+!sessions/README.md

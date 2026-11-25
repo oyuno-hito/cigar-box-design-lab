@@ -1,0 +1,30 @@
+test_card_reason_and_fallback (test_session.ApiAndServer.test_card_reason_and_fallback) ... ok
+test_http_selection_flow (test_session.ApiAndServer.test_http_selection_flow) ... ok
+test_good_answer_passes_and_keeps_reason (test_session.ComposeChecks.test_good_answer_passes_and_keeps_reason) ... ok
+test_identical_siblings_rejected (test_session.ComposeChecks.test_identical_siblings_rejected) ... ok
+test_missing_weight_rejected (test_session.ComposeChecks.test_missing_weight_rejected) ... ok
+test_repairs_trailing_comma (test_session.ComposeChecks.test_repairs_trailing_comma) ... ok
+test_too_close_to_base_rejected (test_session.ComposeChecks.test_too_close_to_base_rejected) ... ok
+test_unrelated_prompt_rejected (test_session.ComposeChecks.test_unrelated_prompt_rejected) ... ok
+test_compose_logs_and_retries_after_rejection (test_session.ComposerRun.test_compose_logs_and_retries_after_rejection) ... ok
+test_missing_cursor_agent_is_reported (test_session.ComposerRun.test_missing_cursor_agent_is_reported) ... ok
+test_trailing_comma_comment_fence (test_session.JsonRepair.test_trailing_comma_comment_fence) ... ok
+test_unclosed_and_missing_comma (test_session.JsonRepair.test_unclosed_and_missing_comma) ... ok
+test_unfixable_reports_location (test_session.JsonRepair.test_unfixable_reports_location) ... ok
+test_validate_brief (test_session.JsonRepair.test_validate_brief) ... ok
+test_build_plan_ignores_notes_of_unkept_cards (test_session.Plan.test_build_plan_ignores_notes_of_unkept_cards) ... ok
+test_derive_ignores_global_note_and_fill_uses_it (test_session.Plan.test_derive_ignores_global_note_and_fill_uses_it) ... ok
+test_notes_apply_only_to_kept_cards (test_session.Plan.test_notes_apply_only_to_kept_cards) ... ok
+test_regen_never_asks_for_new_ideas_but_add_does (test_session.Plan.test_regen_never_asks_for_new_ideas_but_add_does) ... ok
+test_unselected_card_with_note_is_not_forced (test_session.Plan.test_unselected_card_with_note_is_not_forced) ... ok
+test_kept_stay_kept_derived_are_ungated_and_hidden (test_session.RunRound.test_kept_stay_kept_derived_are_ungated_and_hidden) ... 注意: あと 1 件足りません。追加のアイデアを用意して add してください
+ok
+test_regen_with_empty_reserve_keeps_selection_and_reports_shortfall (test_session.RunRound.test_regen_with_empty_reserve_keeps_selection_and_reports_shortfall) ... 注意: あと 3 件足りません。追加のアイデアを用意して add してください
+ok
+test_unselected_card_with_note_is_discarded (test_session.RunRound.test_unselected_card_with_note_is_discarded) ... 注意: あと 3 件足りません。追加のアイデアを用意して add してください
+ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 3.122s
+
+OK

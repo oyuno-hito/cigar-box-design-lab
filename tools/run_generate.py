@@ -88,24 +88,52 @@ def run_one(host: str, wf: dict) -> bytes:
     raise TimeoutError(f"{TIMEOUT_PER_IMAGE} 秒以内に終わりませんでした")
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("run_dir", type=Path)
-    ap.add_argument("--host", default="http://127.0.0.1:8188")
-    ap.add_argument("--force", action="store_true", help="既にある画像も作り直す")
-    ap.add_argument("--limit", type=int, default=0, help="条件ごとに先頭 N 件だけ生成する")
-    args = ap.parse_args()
+def generate_one(run_dir: Path, item_id: str, host: str = "http://127.0.0.1:8188") -> Path:
+    """spec.json の 1 項目だけを生成し、PNG とメタデータのパスを返す。"""
+    run_dir = run_dir.resolve()
+    spec = json.loads((run_dir / "spec.json").read_text(encoding="utf-8"))
+    template = json.loads((WORKFLOWS / spec["workflow"]).read_text(encoding="utf-8"))
+    cond = next((c for c in spec["conditions"] if any(it["id"] == item_id for it in c["items"])), None)
+    if cond is None:
+        raise KeyError(f"spec.json に項目がありません: {item_id}")
+    it = next(it for it in cond["items"] if it["id"] == item_id)
+    eff = effective(spec, cond)
+    sm = eff["sampler"]
+    source = f"comfyui / {eff['checkpoint']} / {sm['sampler_name']} {sm['steps']}steps cfg{sm['cfg']} / {eff['width']}x{eff['height']}"
+    prompt = join_prompt(cond.get("prompt_prefix", ""), it["text"], cond.get("prompt_suffix", ""))
+    png = run_dir / "images" / f"{cond['name']}-{item_id}.png"
+    png.parent.mkdir(exist_ok=True)
+    stats = http_json(f"{host}/system_stats")
+    source = f"comfyui {stats.get('system', {}).get('comfyui_version', 'unknown')} / {source}"
+    data = run_one(host, build_workflow(template, eff, prompt, cond.get("negative_prompt", ""), int(it["seed"])))
+    png.write_bytes(data)
+    png.with_suffix(".json").write_text(
+        json.dumps(
+            {"source": source, "prompt": prompt, "negative_prompt": cond.get("negative_prompt", ""), "seed": int(it["seed"])},
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return png
 
-    run_dir = args.run_dir.resolve()
+
+def generate(run_dir: Path, host: str = "http://127.0.0.1:8188", force: bool = False, limit: int = 0, on_progress=None) -> int:
+    """run_dir の spec.json にある画像のうち、未生成のものを作る。成功で 0、ComfyUI に接続できないときは 1。
+
+    on_progress(done, total, name) は、1 枚ごと（スキップも含む）に呼ばれる。
+    """
+    run_dir = run_dir.resolve()
     spec = json.loads((run_dir / "spec.json").read_text(encoding="utf-8"))
     template = json.loads((WORKFLOWS / spec["workflow"]).read_text(encoding="utf-8"))
     out = run_dir / "images"
     out.mkdir(exist_ok=True)
 
     try:
-        stats = http_json(f"{args.host}/system_stats")
+        stats = http_json(f"{host}/system_stats")
     except (urllib.error.URLError, OSError) as e:
-        print(f"ComfyUI に接続できません（{args.host}）: {e}", file=sys.stderr)
+        print(f"ComfyUI に接続できません（{host}）: {e}", file=sys.stderr)
         return 1
     version = stats.get("system", {}).get("comfyui_version", "unknown")
 
@@ -114,7 +142,7 @@ def main() -> int:
         eff = effective(spec, cond)
         sm = eff["sampler"]
         source = f"comfyui {version} / {eff['checkpoint']} / {sm['sampler_name']} {sm['steps']}steps cfg{sm['cfg']} / {eff['width']}x{eff['height']}"
-        items = cond["items"][: args.limit] if args.limit else cond["items"]
+        items = cond["items"][:limit] if limit else cond["items"]
         for it in items:
             prompt = join_prompt(cond.get("prompt_prefix", ""), it["text"], cond.get("prompt_suffix", ""))
             jobs.append((f"{cond['name']}-{it['id']}", prompt, cond.get("negative_prompt", ""), int(it["seed"]), eff, source))
@@ -123,18 +151,30 @@ def main() -> int:
     done = 0
     for i, (name, prompt, negative, seed, eff, source) in enumerate(jobs, 1):
         png = out / f"{name}.png"
-        if png.exists() and not args.force:
+        if png.exists() and not force:
             print(f"[{i}/{len(jobs)}] {name}: 既にあるのでスキップ")
-            continue
-        t = time.time()
-        data = run_one(args.host, build_workflow(template, eff, prompt, negative, seed))
-        png.write_bytes(data)
-        meta = {"source": source, "prompt": prompt, "negative_prompt": negative, "seed": seed}
-        png.with_suffix(".json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        done += 1
-        print(f"[{i}/{len(jobs)}] {name}: {time.time() - t:.1f} 秒")
+        else:
+            t = time.time()
+            data = run_one(host, build_workflow(template, eff, prompt, negative, seed))
+            png.write_bytes(data)
+            meta = {"source": source, "prompt": prompt, "negative_prompt": negative, "seed": seed}
+            png.with_suffix(".json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            done += 1
+            print(f"[{i}/{len(jobs)}] {name}: {time.time() - t:.1f} 秒")
+        if on_progress:
+            on_progress(i, len(jobs), name)
     print(f"完了: {done} 枚を生成（合計 {time.time() - t0:.0f} 秒）→ {out}")
     return 0
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("run_dir", type=Path)
+    ap.add_argument("--host", default="http://127.0.0.1:8188")
+    ap.add_argument("--force", action="store_true", help="既にある画像も作り直す")
+    ap.add_argument("--limit", type=int, default=0, help="条件ごとに先頭 N 件だけ生成する")
+    args = ap.parse_args()
+    return generate(args.run_dir, args.host, args.force, args.limit)
 
 
 if __name__ == "__main__":

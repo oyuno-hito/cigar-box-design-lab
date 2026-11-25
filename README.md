@@ -19,6 +19,8 @@
 | `generator/` | uv で管理する ComfyUI、ワークフロー、モデル備忘録 | モデル本体は除く |
 | `generated/` | 生成画像の正本。`0_like`（`reference` / `seed`）/ `1_dislike` / `2_maybe` / `99_inbox` に分類 | する |
 | `runs/` | 実験 run（題材ごとの生成・採点・レビューの記録）。テキストと一覧画像（`contact.webp`）だけ管理し、PNG は管理しない（見本 2 件のみ例外）。[runs/README.md](runs/README.md) | 一部 |
+| `sessions/` | 実使用の出力（AI と対話して選ぶ候補とカードのページ用データ）。基本は Git 管理外。[sessions/README.md](sessions/README.md) | README のみ |
+| `tests/` | session まわりの自動テストと、動作確認の結果（テキスト・スクリーンショット）。[tests/README.md](tests/README.md) | 全部 |
 | `scorers/` | 分類器（スコアラー）。係数・マニフェスト・評価結果の JSON。版は Git の履歴で管理 | する |
 | `artifacts/` | 最終採用した成果物のコレクション | する |
 | `site/` | GitHub Pages 用の HTML / JS。公開するのは `artifacts/` のみ | する |
@@ -31,7 +33,7 @@
 4. 分類器で足切り・並べ替えし、残りを VLM で再評価する。
 5. 採用したものを `artifacts/` に置き、GitHub Pages で公開する。
 
-詳細は [docs/workflow.md](docs/workflow.md) にあります。
+上は、初期の想定の流れです。現在の運用（発散 → 評価 → 手直し → 仕上げ → 公開）と、各段階の実装状況は、[.cursor/skills/design-workflow/SKILL.md](.cursor/skills/design-workflow/SKILL.md) にまとめています。設計判断の記録は [docs/workflow.md](docs/workflow.md) にあります。
 
 ## 開発環境（Python は uv に一本化）
 

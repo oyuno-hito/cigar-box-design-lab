@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>候補カード</title>
+<style>
+  :root { color-scheme: dark; --bg:#0f1115; --panel:#181b21; --line:#2a2f38; --text:#e8eaed; --sub:#9aa0a6; --pick:#3fb950; --accent:#5aa9e6; --gold:#d9a95b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui,-apple-system,"Hiragino Sans",sans-serif; padding-bottom:calc(160px + env(safe-area-inset-bottom)); }
+  header { padding:14px 14px 4px; }
+  h1 { font-size:16px; margin:0 0 2px; }
+  .sub { color:var(--sub); font-size:12px; }
+  .status { margin:10px 14px; padding:10px 12px; background:var(--panel); border:1px solid var(--line); border-radius:10px; font-size:14px; }
+  .status.error { border-color:#f85149; }
+  .status.warn { border-color:var(--gold); }
+  .bar { height:6px; background:var(--line); border-radius:3px; margin-top:8px; overflow:hidden; }
+  .bar > i { display:block; height:100%; background:var(--accent); width:0; transition:width .3s; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; padding:12px 14px; }
+  @media (max-width:640px) { .grid { grid-template-columns:1fr; } }
+  .card { position:relative; background:var(--panel); border:3px solid var(--line); border-radius:12px; overflow:hidden; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .card.pick { border-color:var(--pick); box-shadow:0 0 0 1px var(--pick); }
+  .card img { display:block; width:100%; aspect-ratio:3/2; object-fit:cover; background:#000; }
+  .check { position:absolute; top:8px; right:8px; width:28px; height:28px; border-radius:50%; background:rgba(0,0,0,.55); border:2px solid #fff6; color:transparent; display:grid; place-items:center; font-size:16px; font-weight:700; }
+  .card.pick .check { background:var(--pick); border-color:var(--pick); color:#04130a; }
+  .meta { padding:8px 10px 0; display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; }
+  .no { font-weight:700; }
+  .badge { font-size:11px; padding:1px 7px; border-radius:999px; border:1px solid var(--line); color:var(--sub); }
+  .badge.kept { color:var(--pick); border-color:var(--pick); }
+  .badge.new { color:var(--accent); border-color:var(--accent); }
+  .badge.mk { color:var(--gold); border-color:var(--gold); }
+  .actions { padding:8px 10px 0; display:flex; gap:8px; align-items:center; }
+  .pvbtn, .whybtn { padding:7px 14px; font-size:13px; border-radius:999px; border:1px solid var(--line); background:#20242b; color:var(--text); }
+  .cnote { margin:8px 10px 10px; width:calc(100% - 20px); font-size:14px; }
+  .cnote.has { border-color:var(--gold); }
+  #why { width:min(92vw,520px); height:fit-content; max-height:80vh; margin:auto; border-radius:12px; background:var(--panel); border:1px solid var(--line); padding:16px; }
+  #why h2 { font-size:15px; margin:0 0 8px; } #why p { margin:0 0 14px; white-space:pre-wrap; }
+  #why .none { color:var(--sub); }
+  .kidsbtn { padding:7px 14px; font-size:13px; border-radius:999px; border:1px solid var(--accent); background:transparent; color:var(--accent); }
+  #kids { background:var(--bg); }
+  .kids-head { display:flex; align-items:center; gap:8px; padding:calc(8px + env(safe-area-inset-top)) 12px 4px 14px; }
+  .kids-head h2 { font-size:15px; margin:0; flex:1; }
+  .kids-note { padding:0 14px 4px; font-size:12px; color:var(--sub); }
+  .kids-body { flex:1; min-height:0; overflow:auto; }
+  .await { margin:10px 14px; padding:12px; background:var(--panel); border:1px solid var(--accent); border-radius:10px; font-size:14px; }
+  .await textarea { font-size:12px; margin:6px 0; }
+  .await .row { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+  .await .err { color:#f85149; font-size:13px; min-height:1.2em; }
+  textarea { width:100%; background:#0f1115; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 10px; font:inherit; }
+  .dock { position:fixed; left:0; right:0; bottom:0; background:rgba(24,27,33,.97); border-top:1px solid var(--line); padding:10px 14px calc(10px + env(safe-area-inset-bottom)); backdrop-filter:blur(6px); }
+  .dock .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .dock .row + .row, .dock textarea + .row { margin-top:8px; }
+  .dock textarea { margin-bottom:6px; height:40px; resize:none; transition:height .15s; }
+  .dock textarea:focus { height:96px; }
+  .count { font-size:13px; flex:1; min-width:120px; }
+  .count b { color:var(--pick); }
+  .saved { font-size:12px; color:var(--sub); min-height:1.2em; }
+  button.ghost, button.main, button.sub2 { padding:11px 14px; border-radius:999px; font-size:14px; border:1px solid var(--line); background:#20242b; color:var(--text); }
+  button.ghost.on { border-color:var(--accent); color:var(--accent); }
+  button.sub2 { flex:1; border-color:var(--gold); color:var(--gold); }
+  button.main { flex:1; border:0; background:var(--accent); color:#06121f; font-weight:700; }
+  button[disabled] { opacity:.4; }
+  dialog { border:0; padding:0; background:#000; color:var(--text); max-width:100vw; max-height:100vh; width:100vw; height:100vh; }
+  dialog[open] { display:flex; flex-direction:column; }
+  dialog::backdrop { background:#000; }
+  #zoom img { width:100%; height:100%; object-fit:contain; }
+  #zoom form { position:absolute; top:12px; right:12px; } #zoom button { padding:8px 14px; border-radius:999px; border:0; }
+  .pv-zoom { padding:6px 14px; font-size:13px; border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--text); }
+  .pv-head { display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; padding:calc(8px + env(safe-area-inset-top)) 12px 8px 14px; }
+  .pv-head h2 { font-size:15px; margin:0; flex:1; min-width:140px; }
+  .chips { display:flex; gap:6px; }
+  .chips button { padding:4px 12px; font-size:12px; border:1px solid var(--line); border-radius:999px; background:var(--panel); color:var(--text); }
+  .chips button[aria-pressed="true"] { background:var(--gold); border-color:var(--gold); color:#1a1304; font-weight:600; }
+  .pv-close { font-size:26px; line-height:1; width:44px; height:44px; background:none; border:0; color:var(--text); }
+  .pv-set { display:flex; flex-wrap:wrap; gap:6px 12px; padding:0 14px 8px; font-size:12px; color:var(--sub); align-items:center; }
+  .pv-set select { background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:6px; padding:3px 6px; font-size:12px; }
+  .pv-body { flex:1; min-height:0; display:flex; flex-direction:column; padding:0 8px; gap:4px; max-width:1100px; width:100%; margin:0 auto; }
+  .pv-body.cols { flex-direction:row; gap:8px; }
+  .pv-body figure { margin:0; flex:1; min-height:0; display:grid; grid-template-rows:minmax(0,1fr) auto; }
+  .pv-body svg { width:100%; height:100%; min-height:0; }
+  .pv-body figcaption { text-align:center; font-size:12px; color:var(--sub); padding-bottom:6px; }
+  .pv-foot { display:flex; align-items:center; justify-content:center; gap:16px; padding:6px 0 calc(12px + env(safe-area-inset-bottom)); font-size:13px; color:var(--sub); }
+  .pv-foot button { padding:8px 18px; border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--text); font-size:16px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title">候補カード</h1>
+  <div class="sub" id="sub"></div>
+</header>
+<div class="status" id="status" hidden></div>
+<div class="await" id="await" hidden></div>
+<main class="grid" id="grid"></main>
+
+<div class="dock" id="dock" hidden>
+  <textarea id="note" rows="1" maxlength="1500" placeholder="全体の方針（任意）。再生成のとき、新しい候補すべてに反映します。例: もっと暗い地に、線を細く"></textarea>
+  <div class="row">
+    <div class="count">選んだ <b id="n-pick">0</b> / <span id="n-all">0</span><div class="saved" id="saved"></div></div>
+  </div>
+  <div class="row">
+    <button class="sub2" id="regen" type="button">選んだものを残して再生成</button>
+    <button class="main" id="final" type="button">選んだもので決定・微調整へ</button>
+  </div>
+</div>
+
+<dialog id="kids" aria-label="派生">
+  <div class="kids-head"><h2 id="kids-title">派生</h2><button class="pv-close" id="kids-close" type="button" aria-label="閉じる">×</button></div>
+  <div class="kids-note">選んだ派生だけ、次の再生成で残ります。元のカードを選ばずに派生だけ選ぶと、派生が元のカードの代わりになります。</div>
+  <div class="kids-body"><div class="grid" id="kids-grid"></div></div>
+</dialog>
+
+<dialog id="why" aria-label="説明">
+  <h2 id="why-title"></h2>
+  <p id="why-body"></p>
+  <form method="dialog"><button class="ghost">閉じる</button></form>
+</dialog>
+
+<dialog id="zoom"><img id="zoom-img" alt=""><form method="dialog"><button>閉じる</button></form></dialog>
+
+<dialog id="pv" aria-label="仕上がりチェック">
+  <div class="pv-head">
+    <h2 id="pv-title">仕上がりチェック</h2>
+    <div class="chips" id="pv-modes">
+      <button type="button" data-mode="one">一箱</button>
+      <button type="button" data-mode="stack">縦に並べる</button>
+      <button type="button" data-mode="row">横に並べる</button>
+    </div>
+    <button class="pv-zoom" id="pv-zoom" type="button">拡大表示</button>
+    <button class="pv-close" id="pv-close" type="button" aria-label="閉じる">×</button>
+  </div>
+  <div class="pv-set">
+    <label>左右の側面 <select id="pv-lr"></select></label>
+    <label>上下の側面 <select id="pv-tb"></select></label>
+    <label>枠線 <select id="pv-frame"></select></label>
+  </div>
+  <div class="pv-body" id="pv-stage"></div>
+  <div class="pv-foot"><button id="pv-prev" type="button" aria-label="前">‹</button><span id="pv-count"></span><button id="pv-next" type="button" aria-label="次">›</button></div>
+</dialog>
+
+<script src="/_assets/boxview.js"></script>
+<script>
+const base = location.pathname.replace(/\/$/, "");
+const $ = (s) => document.querySelector(s);
+let state = null;                     // サーバーの状態
+let keep = new Set();                 // 選んだカード（共通の選択）
+let notes = {};                       // カードごとの方向（書いたカードは、残す）
+let saveTimer = null;
+let gridSig = "";
+
+const noteOf = (id) => (notes[id] || "").trim();
+const isKept = (id) => keep.has(id);              // 選んだカードだけ残る。方向が入っていても、選んでいなければ捨てる
+
+/* ---- 状態の取得と描画 ---- */
+async function load() {
+  const r = await fetch(`${base}/api/state`, { cache: "no-store" });
+  return r.json();
+}
+
+function setStatus(st) {
+  const el = $("#status");
+  el.className = "status";
+  el.hidden = true;
+  if (st.phase === "error" || st.phase === "job_error") {
+    el.classList.add("error"); el.hidden = false;
+    el.textContent = `失敗しました: ${st.error}`;
+    if (st.phase === "job_error") {
+      const b = document.createElement("button"); b.className = "ghost"; b.textContent = "閉じる"; b.style.marginLeft = "10px";
+      b.addEventListener("click", async () => { await post("cancel", {}); refreshNow(); });
+      el.append(b);
+    }
+    return;
+  }
+  if (st.phase === "composing") { el.hidden = false; el.textContent = "AI でプロンプトを整えています。しばらくお待ちください。"; return; }
+  if (st.phase === "awaiting") { el.hidden = false; el.textContent = "AI の返答を待っています。下の依頼文を AI に渡して、返ってきた JSON を貼ってください。"; return; }
+  if (st.phase !== "ready") {
+    const p = st.progress || {};
+    const pct = p.total ? Math.round((p.done / p.total) * 100) : 0;
+    el.hidden = false;
+    el.innerHTML = `生成中です${p.total ? `（${p.done} / ${p.total}）` : ""}。できたカードから表示します。見ながら選べます。<div class="bar"><i style="width:${pct}%"></i></div>`;
+    return;
+  }
+  if (st.shortfall > 0) {
+    el.classList.add("warn"); el.hidden = false;
+    el.textContent = `あと ${st.shortfall} 件足りません。`;
+    const b = document.createElement("button"); b.className = "ghost"; b.textContent = "足りない分を補う"; b.style.marginLeft = "10px";
+    b.addEventListener("click", () => submit("add"));
+    el.append(b);
+  }
+}
+
+/* AI の返答待ち: 依頼文をコピーして、使っている AI に渡し、返ってきた JSON を貼る */
+function renderAwait(st) {
+  const el = $("#await");
+  if (st.phase !== "awaiting") { el.hidden = true; el.textContent = ""; return; }
+  if (!el.hidden) return;            // 貼りかけの文を消さない
+  el.hidden = false;
+  el.innerHTML = `
+    <div>1. 依頼文をコピーして、使っている AI（Muse、Claude、Cursor など）に貼る</div>
+    <textarea id="aw-req" rows="6" readonly></textarea>
+    <div class="row"><button class="ghost" id="aw-copy" type="button">依頼文をコピー</button></div>
+    <div style="margin-top:12px">2. 返ってきた JSON を、ここに貼る</div>
+    <textarea id="aw-res" rows="5" placeholder='[{"key": "...", "text": "..."}]'></textarea>
+    <div class="err" id="aw-err"></div>
+    <div class="row"><button class="main" id="aw-send" type="button">送って進める</button><button class="ghost" id="aw-cancel" type="button">取り消す</button></div>`;
+  $("#aw-req").value = (st.job && st.job.text) || "";
+  $("#aw-copy").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText($("#aw-req").value); $("#aw-copy").textContent = "コピーしました"; }
+    catch { $("#aw-req").select(); $("#aw-copy").textContent = "選択しました。コピーしてください"; }
+  });
+  $("#aw-send").addEventListener("click", async () => {
+    $("#aw-err").textContent = "";
+    const r = await post("compose", { result: $("#aw-res").value });
+    if (!r.ok) { $("#aw-err").textContent = r.error || "送れませんでした"; return; }
+    refreshNow();
+  });
+  $("#aw-cancel").addEventListener("click", async () => { await post("cancel", {}); refreshNow(); });
+}
+
+const parentOf = (c) => (c.parent && state.cards.some((x) => x.id === c.parent) ? c.parent : null);
+const topCards = () => state.cards.filter((c) => !parentOf(c));
+const kidsOf = (id) => state.cards.filter((c) => parentOf(c) === id);
+const orderedAll = () => topCards().flatMap((c) => [c, ...kidsOf(c.id)]);
+let kidsFor = null;                    // 派生を開いているカード
+
+function makeCard(c, child) {
+  const o = c.origin || {};
+  const badge = child ? '<span class="badge new">派生</span>'
+    : o.kind === "kept" ? '<span class="badge kept">残した案</span>'
+    : o.kind === "new" && state.round > 1 ? '<span class="badge new">新しい案</span>' : "";
+  const el = document.createElement("section");
+  el.className = "card";
+  el.dataset.id = c.id;
+  el.innerHTML = `
+    <img src="${base}/img/${c.id}.webp" alt="#${c.no}" loading="lazy"><span class="check">✓</span>
+    <div class="meta"><span class="no">#${c.no}</span><span class="dir"></span>${badge}<span class="badge mk" hidden>派生作成</span></div>
+    <div class="actions"><button type="button" class="pvbtn">プレビュー</button><button type="button" class="whybtn">説明</button><button type="button" class="kidsbtn" hidden></button></div>
+    ${child ? '<div style="height:10px"></div>' : '<textarea class="cnote" rows="2" maxlength="600" placeholder="この画像の方向（例: もう少し落ち着いた色に）"></textarea>'}`;
+  el.querySelector(".dir").textContent = c.direction || c.label || "";
+  el.querySelector(".pvbtn").addEventListener("click", (e) => { e.stopPropagation(); openPreview(c.id); });
+  el.querySelector(".whybtn").addEventListener("click", (e) => { e.stopPropagation(); openWhy(c); });
+  const ta = el.querySelector(".cnote");
+  if (ta) {
+    ta.value = notes[c.id] || "";
+    ta.addEventListener("input", () => {
+      notes[c.id] = ta.value;
+      if (ta.value.trim()) keep.add(c.id);          // 方向を書くと、そのカードを選ぶ。あとで選択を外せば、方向ごと捨てる
+      refreshSel(); queueSave();
+    });
+    el.querySelector(".kidsbtn").addEventListener("click", (e) => { e.stopPropagation(); openKids(c.id); });
+  }
+  el.addEventListener("click", (e) => {
+    if (e.target.closest("button, textarea")) return;
+    if (keep.has(c.id)) keep.delete(c.id); else keep.add(c.id);
+    refreshSel(); queueSave();
+  });
+  return el;
+}
+
+function buildGrid() {
+  const grid = $("#grid");
+  grid.innerHTML = "";
+  for (const c of topCards()) grid.append(makeCard(c, false));
+}
+
+function buildKids() {
+  const dlg = $("#kids");
+  const parent = state.cards.find((c) => c.id === kidsFor);
+  const kids = kidsFor ? kidsOf(kidsFor) : [];
+  if (!parent || !kids.length) { if (dlg.open) dlg.close(); return; }
+  $("#kids-title").textContent = `#${parent.no} ${parent.direction || ""} の派生`;
+  const g = $("#kids-grid");
+  g.innerHTML = "";
+  for (const c of kids) g.append(makeCard(c, true));
+}
+
+function openWhy(c) {
+  $("#why-title").textContent = `#${c.no} ${c.direction || ""}`;
+  const body = $("#why-body");
+  body.textContent = c.reason || "この案には、採用した理由が記録されていません。";
+  body.classList.toggle("none", !c.reason);
+  $("#why").showModal();
+}
+function openKids(id) { kidsFor = id; buildKids(); if (kidsFor && !$("#kids").open) $("#kids").showModal(); refreshSel(); }
+
+function refreshSel() {
+  const st = state, ready = st.phase === "ready";
+  for (const el of document.querySelectorAll(".card")) {
+    const id = el.dataset.id, on = isKept(id), n = noteOf(id);
+    el.classList.toggle("pick", on);
+    const ta = el.querySelector(".cnote");
+    if (ta) ta.classList.toggle("has", on && !!n);
+    el.querySelector(".mk").hidden = !(on && n);
+    const kb = el.querySelector(".kidsbtn");
+    if (kb) {
+      const kids = kidsOf(id), sel = kids.filter((k) => keep.has(k.id)).length;
+      kb.hidden = !kids.length;
+      kb.textContent = `派生 ${kids.length}${sel ? `（選択 ${sel}）` : ""}`;
+    }
+  }
+  const picked = st.cards.filter((c) => isKept(c.id)).length;
+  $("#n-pick").textContent = picked;
+  $("#n-all").textContent = `${topCards().length}（派生を除く）`;
+  $("#regen").disabled = !ready;
+  $("#final").disabled = !ready || !picked;
+}
+
+function render() {
+  const st = state;
+  $("#title").textContent = st.title || "候補カード";
+  $("#sub").textContent = `第 ${st.round} 案 / ${topCards().length} 件（目標 ${st.size} 件）`;
+  setStatus(st);
+  renderAwait(st);
+  $("#dock").hidden = !st.cards.length;
+  const sig = st.cards.map((c) => c.id + ":" + (c.parent || "") + ":" + c.direction + ":" + (c.reason || "")).join(",") + "|" + st.round;
+  if (sig !== gridSig) { gridSig = sig; buildGrid(); if (kidsFor) buildKids(); }
+  refreshSel();
+}
+
+/* ---- 選択の保存（ボタンを押すまでは submitted=false）---- */
+async function post(kind, body) {
+  try {
+    const r = await fetch(`${base}/api/${kind}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const j = await r.json().catch(() => ({}));
+    return { ok: r.ok, status: r.status, ...j };
+  } catch (e) {
+    return { ok: false, error: "接続できませんでした" };
+  }
+}
+function payload(action, submitted) {
+  const n = {};
+  for (const [id, t] of Object.entries(notes)) if (t.trim() && keep.has(id) && state.cards.some((c) => c.id === id)) n[id] = t;
+  const k = state.cards.filter((c) => keep.has(c.id)).map((c) => c.id);
+  return { round: state.round, keep: k, notes: n, note: $("#note").value, action, submitted };
+}
+function queueSave() {
+  $("#saved").textContent = "";
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => save(null, false), 600);
+}
+async function save(action, submitted) {
+  clearTimeout(saveTimer);
+  if (!state || state.phase !== "ready") return false;     // 処理中は、ページの中だけで選んでおく
+  const j = await post("selection", payload(action, submitted));
+  if (!j.ok) { $("#saved").textContent = j.error || "保存できませんでした"; if (j.code === "stale") setTimeout(() => location.reload(), 1500); return false; }
+  $("#saved").textContent = submitted ? (action === "finalize" ? "決定しました（微調整の画面は未実装です）" : "始めました") : "保存しました";
+  return true;
+}
+async function submit(action) {
+  const picked = state.cards.filter((c) => isKept(c.id)).length;
+  if (action === "regen" && !picked && !confirm("何も選ばれていません。全部を新しい候補に入れ替えますか？")) return;
+  $("#regen").disabled = $("#final").disabled = true;
+  const ok = await save(action, true);
+  if (ok && action !== "finalize") await refreshNow();
+  else refreshSel();
+}
+async function refreshNow() { try { adopt(await load()); } catch { /* 次の周期で再試行する */ } }
+$("#regen").addEventListener("click", () => submit("regen"));
+$("#final").addEventListener("click", () => submit("finalize"));
+$("#note").addEventListener("input", queueSave);
+$("#kids-close").addEventListener("click", () => { $("#kids").close(); kidsFor = null; });
+$("#zoom").addEventListener("click", () => $("#zoom").close());
+$("#why").addEventListener("click", (e) => { if (e.target === $("#why")) $("#why").close(); });
+
+/* ---- 仕上がりチェック（サイトの拡大表示と同じ箱の描画）---- */
+const COLORS_LR = [["ブラック", "#000000"], ["ダークレッド", "#6f1722"], ["ネイビー", "#1c2b52"], ["グリーン", "#1f5b3b"], ["グレー", "#7b7e84"]];
+const COLORS_TB = [["白", "#ffffff"], ["黒", "#000000"], ["シルバー", "#b9bec4"]];
+let pv = { mode: "one", lr: DEFAULT_BOX.sideColorLR, tb: DEFAULT_BOX.sideColorTB, frame: DEFAULT_BOX.frameColor, targets: [], i: 0 };
+try { Object.assign(pv, JSON.parse(localStorage.getItem("sessionBox") || "{}"), { targets: [], i: 0 }); } catch { /* 保存できなくても動く */ }
+
+function fillSelect(el, list, value, extra) {
+  el.innerHTML = (extra ? [extra] : []).concat(list).map(([n, v]) => `<option value="${v}">${n}</option>`).join("");
+  el.value = value;
+}
+function pvSpec() {
+  return { sideColorLR: pv.lr, sideColorTB: pv.tb, frame: pv.frame !== "none", frameColor: pv.frame === "none" ? "#ffffff" : pv.frame };
+}
+function pvRender() {
+  const id = pv.targets[pv.i], url = `${base}/img/${id}.webp`, spec = pvSpec();
+  const stage = $("#pv-stage");
+  stage.textContent = "";
+  stage.classList.toggle("cols", pv.mode === "stack");
+  const add = (svg, caption) => {
+    const fig = document.createElement("figure");
+    fig.append(svg);
+    if (caption) { const c = document.createElement("figcaption"); c.textContent = caption; fig.append(c); }
+    stage.append(fig);
+  };
+  if (pv.mode === "one") add(rotationSvg(url, spec));
+  else if (pv.mode === "stack") { add(stackSvg(url, spec, [0, 0, 0]), "全部同じ向き"); add(stackSvg(url, spec, [0, 180, 0]), "真ん中の一つを 180 度逆に"); }
+  else { add(rowSvg(url, spec, [0, 0, 0]), "全部同じ向き"); add(rowSvg(url, spec, [0, 180, 0]), "真ん中の一つを 180 度逆に"); }
+  document.querySelectorAll("#pv-modes button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === pv.mode)));
+  const c = state.cards.find((x) => x.id === id);
+  $("#pv-title").textContent = `#${c ? c.no : ""} ${c ? c.direction : ""}`;
+  $("#pv-count").textContent = `${pv.i + 1} / ${pv.targets.length}（${pv.scope}）`;
+  try { localStorage.setItem("sessionBox", JSON.stringify({ mode: pv.mode, lr: pv.lr, tb: pv.tb, frame: pv.frame })); } catch { /* 無視 */ }
+}
+function openPreview(startId) {
+  pv.targets = orderedAll().map((c) => c.id);
+  pv.i = Math.max(0, pv.targets.indexOf(startId));
+  pv.scope = "全カード（派生を含む）";
+  fillSelect($("#pv-lr"), COLORS_LR, pv.lr);
+  fillSelect($("#pv-tb"), COLORS_TB, pv.tb);
+  fillSelect($("#pv-frame"), COLORS_TB, pv.frame, ["なし", "none"]);
+  pvRender();
+  $("#pv").showModal();
+}
+$("#pv-zoom").addEventListener("click", () => { $("#zoom-img").src = `${base}/img/${pv.targets[pv.i]}.webp`; $("#zoom").showModal(); });
+$("#pv-close").addEventListener("click", () => $("#pv").close());
+$("#pv-prev").addEventListener("click", () => { pv.i = (pv.i - 1 + pv.targets.length) % pv.targets.length; pvRender(); });
+$("#pv-next").addEventListener("click", () => { pv.i = (pv.i + 1) % pv.targets.length; pvRender(); });
+$("#pv-lr").addEventListener("change", (e) => { pv.lr = e.target.value; pvRender(); });
+$("#pv-tb").addEventListener("change", (e) => { pv.tb = e.target.value; pvRender(); });
+$("#pv-frame").addEventListener("change", (e) => { pv.frame = e.target.value; pvRender(); });
+document.querySelectorAll("#pv-modes button").forEach((b) => b.addEventListener("click", () => { pv.mode = b.dataset.mode; pvRender(); }));
+
+/* ---- 更新の取り込み ---- */
+function adopt(st) {
+  const prev = state;
+  state = st;
+  if (!prev || prev.round !== st.round) {
+    const ids = new Set(st.cards.map((c) => c.id));
+    if (prev && prev.round === 0) {
+      keep = new Set([...keep].filter((id) => ids.has(id)));          // 最初の生成中に選んでおいたものを引き継ぐ
+      notes = Object.fromEntries(Object.entries(notes).filter(([id]) => ids.has(id)));
+    } else {
+      keep = new Set(st.selection ? st.selection.keep : []);
+      notes = { ...((st.selection && st.selection.notes) || {}) };
+      $("#note").value = st.selection ? st.selection.note : "";
+      $("#saved").textContent = "";
+    }
+  }
+  render();
+  if (st.phase === "ready" && !st.selection && (keep.size || Object.keys(notes).length)) queueSave();
+}
+
+async function poll() {
+  try {
+    const st = await load();
+    const sig = (s) => JSON.stringify([s.phase, s.round, s.cards.map((c) => c.id), s.progress, s.shortfall, s.error, s.job && s.job.status]);
+    if (!state || sig(st) !== sig(state)) adopt(st);
+  } catch (e) { /* 接続が切れたときは、次の周期で再試行する */ }
+  setTimeout(poll, state && state.phase === "ready" ? 8000 : 2500);
+}
+poll();
+</script>
+</body>
+</html>

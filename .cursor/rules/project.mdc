@@ -15,6 +15,8 @@ alwaysApply: true
 - 発散の `like` は「手直し・派生の方向が見えて残したい」の意味。回転する道具としての上下の向きや印刷適性は、発散のラベルでは評価しない。分類の詳細は `generated/README.md`。
 - `maybe` は分類器の学習に使わない。
 - `runs/` は、テキスト（`spec.json` / `scores.json` / `review.json` / `images/*.json` など）と一覧画像 `contact.webp`（`uv run tools/montage.py runs/<run-id> --contact`）だけコミットする。`images/*.png` と `report.html` はコミットしない（見本 2 件は例外）。詳細は `runs/README.md`。
+- `sessions/` は、実使用の出力先（`uv run tools/session.py`）。`README.md` 以外は Git 管理外で、採点・レポートは作らない。詳細は `sessions/README.md`。
+- `tests/` は、session まわりの自動テスト（`uv run python -m unittest discover -s tests -v`）と、動作確認の結果（`tests/results/`。テキストとスクリーンショット）。変更したら実行して、結果を `tests/results/` に残す。詳細は `tests/README.md`。
 - `scorers/` の JSON（`scorer.json` / `manifest.json` / `metrics.json`）は `tools/train_scorer.py` で再生成して上書きする。版管理は Git の履歴に任せ、バージョン用ディレクトリは作らない。
 - `generator/models/` のモデル本体はコミットしない。使ったモデルは `generator/models/MODELS.md` に記録する。
 - GitHub Pages に出すのは `artifacts/` のみ。それ以外を公開用ディレクトリにコピーしない。

@@ -7,6 +7,7 @@
        artifacts/   公開用の画像（WebP）
        site/        サイトの素材
        runs/<run>/contact.webp   run ごとの一覧画像
+       tests/results/   動作確認のスクリーンショット（合成画像の session だけ。実際の生成物は入れない）
        （例外）見本の 2 件の runs/<run>/images/
      run の画像本体（runs/*/images/*.png）は再生成できるので管理しない（runs/README.md）。
   2. 1 MB を超えるファイル（ロックファイルなど、テキストの例外は LARGE_OK に書く）。
@@ -33,6 +34,7 @@ IMAGE_OK = (
     re.compile(r"^artifacts/"),
     re.compile(r"^site/"),
     re.compile(r"^runs/[^/]+/contact\.webp$"),
+    re.compile(r"^tests/results/[^/]+\.png$"),
     # チュートリアル用の例外（画像も追跡している見本の 2 件。runs/README.md）
     re.compile(r"^runs/(20261124-204000-gap-09-scifi|20261124-234236-eval-prompts-idol-structured)/images/"),
 )
@@ -57,7 +59,7 @@ def main() -> int:
     for path in staged_files():
         p = Path(path)
         if p.suffix.lower() in IMAGE_EXTS and not any(r.match(path) for r in IMAGE_OK):
-            errors.append(f"    {path}: 画像の置き場所ではありません（画像を置けるのは generated/ artifacts/ site/ runs/*/contact.webp）")
+            errors.append(f"    {path}: 画像の置き場所ではありません（画像を置けるのは generated/ artifacts/ site/ runs/*/contact.webp tests/results/*.png）")
         size = (REPO_ROOT / path).stat().st_size if (REPO_ROOT / path).is_file() else 0
         if size > LARGE_BYTES and path not in LARGE_OK:
             errors.append(f"    {path}: {size / 1024 / 1024:.1f} MB あります（上限 1 MB）")

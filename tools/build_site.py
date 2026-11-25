@@ -7,7 +7,7 @@
 --serve のアクセスログは、ターミナルではなく /tmp/cigar-site.log に追記する。
 
 公開するのは次だけ。それ以外（provenance.json など）は、artifacts/ にあってもコピーしない。
-  - site/ の中身（index.html、style.css、app.js）
+  - site/ の中身（index.html、style.css、app.js、boxview.js）
   - artifacts/manifest.json
   - artifacts/<テーマ>/*.webp
 """
