@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """runs/ をまとめて配信し、未検査の run を一覧するページを出す。標準ライブラリのみ。
 
-    python3 tools/serve_runs.py                 # http://127.0.0.1:8765/ に一覧
-    python3 tools/serve_runs.py --no-open       # ブラウザを開かない
-    python3 tools/serve_runs.py --port 9000
+    uv run tools/serve_runs.py                 # http://127.0.0.1:8765/ に一覧
+    uv run tools/serve_runs.py --no-open       # ブラウザを開かない
+    uv run tools/serve_runs.py --port 9000
 
 一覧（/）は、開くたびに runs/ を読み直す。run の状態は次で決める。
   - 生成候補    scores.json がない（画像生成前、または生成が途中）

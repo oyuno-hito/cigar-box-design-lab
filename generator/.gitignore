@@ -1,0 +1,11 @@
+# ComfyUI 本体と uv の専用環境
+ComfyUI/
+.venv/
+
+# ComfyUI のユーザーデータと入出力
+user/
+input/
+output/
+
+# ローカルで生成するモデルパス設定
+extra_model_paths.local.yaml

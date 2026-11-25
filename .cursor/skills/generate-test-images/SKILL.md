@@ -95,11 +95,11 @@ cp "<生成された jpg のパス>" generated/999_sheet/cigar-box-sheet-NN.jpg
 ### 5. 切り出す
 
 ```bash
-.venv/bin/python tools/split_grid.py generated/999_sheet/cigar-box-sheet-NN.jpg \
+uv run tools/split_grid.py generated/999_sheet/cigar-box-sheet-NN.jpg \
   --meta generated/999_sheet/cigar-box-sheet-NN.meta.json
 ```
 
-- `.venv` がなければ作る: `uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -r tools/requirements.txt`
+- 環境は `uv sync` で作る（README の「開発環境」）。`uv run` は自動で同期する。
 - 先に `--dry-run` を付けると、溝の検出結果だけ確認できる。
 - 「溝の自動検出 = 失敗」と出たら等分で切られている。結果の画像にずれがないか確認し、ずれていれば `--white` や `--gutter-ratio` を調整するか、シートを作り直す。
 

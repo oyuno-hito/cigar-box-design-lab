@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """generated/ の仕分け結果から分類器（スコアラー）を作り、scorers/ に保存する（上書き。版は Git の履歴で管理）。
 
-    python3 tools/train_scorer.py            # 学習して scorers/ の JSON を上書き
-    python3 tools/train_scorer.py --dry-run  # 評価だけ（保存しない）
+    uv run tools/train_scorer.py            # 学習して scorers/ の JSON を上書き
+    uv run tools/train_scorer.py --dry-run  # 評価だけ（保存しない）
 
 方針（docs/workflow.md、generated/README.md、scorers/README.md を参照）:
   - like     = 0_like/0_reference + 0_like/1_seed（同じ重みで 1 クラスにまとめる）

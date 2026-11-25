@@ -28,7 +28,7 @@ disable-model-invocation: true
 
 ## 前提
 
-ComfyUI が起動している（`http://127.0.0.1:8188`）。`.venv` を有効化できる。`scorers/` に分類器がある。
+ComfyUI が起動している（`http://127.0.0.1:8188`）。`uv sync` 済み（README の「開発環境」）。`scorers/` に分類器がある。
 
 ## 手順
 
@@ -61,11 +61,11 @@ ComfyUI が起動している（`http://127.0.0.1:8188`）。`.venv` を有効�
 入力ブリーフの短い JSON（`generator/temp/briefs/<slug>.json`。形式は `tools/new_eval_run.py` の docstring）を書き、spec を作る。
 
 ```bash
-python3 tools/new_eval_run.py generator/temp/briefs/<slug>.json    # runs/<日時>-eval-prompts-<slug>/spec.json を作る
-python3 tools/run_generate.py runs/<run-id>                        # 生成（バックグラウンドで実行。1 枚約 17 秒）
-.venv/bin/python tools/score_run.py runs/<run-id>
-python3 tools/make_report.py runs/<run-id>
-.venv/bin/python tools/montage.py runs/<run-id> --sort id
+uv run tools/new_eval_run.py generator/temp/briefs/<slug>.json    # runs/<日時>-eval-prompts-<slug>/spec.json を作る
+uv run tools/run_generate.py runs/<run-id>                        # 生成（バックグラウンドで実行。1 枚約 17 秒）
+uv run tools/score_run.py runs/<run-id>
+uv run tools/make_report.py runs/<run-id>
+uv run tools/montage.py runs/<run-id> --sort id
 ```
 
 生成中に、次のブリーフを書く（ComfyUI は順番に処理する）。

@@ -23,7 +23,7 @@ GitHub Pages 用の HTML / JS の置き場です。依存するものはなく�
 ## 確認
 
 ```bash
-python3 tools/build_site.py --serve     # _site/ を作って http://127.0.0.1:8000/ で開く
+uv run tools/build_site.py --serve     # _site/ を作って http://127.0.0.1:8000/ で開く
 ```
 
 `_site/` は Git 管理外。`site/` を直したら、もう一度ビルドする。
@@ -37,8 +37,8 @@ lsof -nP -iTCP:8000 -sTCP:LISTEN -t | xargs -r kill
 ## 画像を増やす・選びなおす
 
 ```bash
-.venv/bin/python tools/export_artifacts.py runs/<run> --id <テーマID> --title '星野源『恋』' --kind song   # 新しいテーマ（全画像）
-.venv/bin/python tools/export_artifacts.py runs/<run> --id <テーマID> --pick 01,03,07                      # 選びなおす
+uv run tools/export_artifacts.py runs/<run> --id <テーマID> --title '星野源『恋』' --kind song   # 新しいテーマ（全画像）
+uv run tools/export_artifacts.py runs/<run> --id <テーマID> --pick 01,03,07                      # 選びなおす
 ```
 
 - `--kind` は `song`（曲を題材にしたもの）か `mood`（ムード）。曲名は題材の出典として載せ、ページ下部に「アーティストや作品とは関係ありません」と書いてある。

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """実験 run の spec.json を読み、起動中の ComfyUI（API）で画像を生成する。標準ライブラリのみ。
 
-    python3 tools/run_generate.py runs/<run-id>            # 未生成の画像だけ作る（途中から再開できる）
-    python3 tools/run_generate.py runs/<run-id> --force    # すべて作り直す
-    python3 tools/run_generate.py runs/<run-id> --limit 3  # 条件ごとに先頭 N 件だけ（動作確認用）
+    uv run tools/run_generate.py runs/<run-id>            # 未生成の画像だけ作る（途中から再開できる）
+    uv run tools/run_generate.py runs/<run-id> --force    # すべて作り直す
+    uv run tools/run_generate.py runs/<run-id> --limit 3  # 条件ごとに先頭 N 件だけ（動作確認用）
 
 前提:
   - ComfyUI が起動していること（既定は http://127.0.0.1:8188。--host で変更）

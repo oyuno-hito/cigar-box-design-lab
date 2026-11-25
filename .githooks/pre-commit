@@ -2,4 +2,6 @@
 # commit 前に、画像と .json の置き場所のずれをエラーにする。
 # inbox の未分類は pre-push で見る。
 # 有効化: git config core.hooksPath .githooks
-exec python3 "$(git rev-parse --show-toplevel)/tools/check_generated.py" --pairs-only
+# 実行は uv（README の「開発環境」を参照）。
+ROOT="$(git rev-parse --show-toplevel)"
+exec uv run --quiet --project "$ROOT" "$ROOT/tools/check_generated.py" --pairs-only

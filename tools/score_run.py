@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """実験 run の画像を、scorers/ の分類器で採点して runs/<run-id>/scores.json に書く。
 
-    python3 tools/score_run.py runs/<run-id>
+    uv run tools/score_run.py runs/<run-id>
 
 p = sigmoid(coef · 埋め込み + intercept)（like らしさ）。足切りは scorers/scorer.json の cutoff.threshold。
 画像の前処理・埋め込みは tools/train_scorer.py と同じものを使う（import して再利用）。

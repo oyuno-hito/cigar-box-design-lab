@@ -9,7 +9,7 @@ LLM の画像生成は、1 枚ずつ呼ぶより「複数マスのシートを 1
 
 使い方（リポジトリのルートで）:
 
-    python3 tools/split_grid.py SHEET.png --meta sheet-meta.json
+    uv run tools/split_grid.py SHEET.png --meta sheet-meta.json
 
 sheet-meta.json の例:
 

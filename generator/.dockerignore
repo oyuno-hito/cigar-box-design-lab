@@ -1,6 +1,0 @@
-# ビルドコンテキスト（generator/）にモデルや生成結果を送らない
-models
-output
-input
-temp
-workflows

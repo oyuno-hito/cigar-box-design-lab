@@ -1,0 +1,26 @@
+[project]
+name = "cigar-box-design-lab"
+version = "0.0.0"
+description = "シガーボックスジャグリングの装飾デザインを AI で探索する個人用リポジトリ（tools/ のスクリプト用の環境）"
+readme = "README.md"
+# PyTorch の wheel がある版に固定する。.python-version と揃える
+requires-python = "==3.12.*"
+# tools/ の画像処理用（run_generate.py / make_report.py / check_generated.py などは標準ライブラリだけで動く）
+dependencies = [
+    "pillow",
+    "numpy",
+]
+
+[dependency-groups]
+# 分類器（tools/train_scorer.py / score_run.py）用
+scorer = [
+    "torch",
+    "transformers",
+    "scikit-learn",
+]
+
+[tool.uv]
+# アプリケーションではなく、スクリプトの実行環境。パッケージとしてはビルドしない
+package = false
+# `uv sync` / `uv run` で scorer も入れる（全部入りを既定にして、環境を 1 種類にする）
+default-groups = ["scorer"]

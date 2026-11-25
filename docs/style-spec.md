@@ -125,7 +125,7 @@ LLM 側の画像の仕分け（`generated/`、312 枚）から。**題材の傾�
 
 ## 打率の基準（ベースライン）
 
-人間の打率は、レビュー済みの条件のみ。LLM 側の like 率は、同じセル指定で LLM 側が作った 24 枚中の like の割合。`python3 tools/summarize_runs.py` で最新を見る。
+人間の打率は、レビュー済みの条件のみ。LLM 側の like 率は、同じセル指定で LLM 側が作った 24 枚中の like の割合。`uv run tools/summarize_runs.py` で最新を見る。
 
 | 題材 | LLM 側 like 率 | ComfyUI（XL）の人間 OK 率 | 備考 |
 | --- | --- | --- | --- |

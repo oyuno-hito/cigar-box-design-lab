@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """run の画像を、公開用に WebP へ変換して artifacts/<テーマ>/ に置く。
 
-    .venv/bin/python tools/export_artifacts.py runs/<run> --id koi --title '星野源『恋』' --kind song
-    .venv/bin/python tools/export_artifacts.py runs/<run> --id koi --pick 01,03,07   # 選定しなおす
+    uv run tools/export_artifacts.py runs/<run> --id koi --title '星野源『恋』' --kind song
+    uv run tools/export_artifacts.py runs/<run> --id koi --pick 01,03,07   # 選定しなおす
 
 - 既定は run の全画像。`--pick` で画像の番号（`p-01` の `01`）を選ぶ。選びなおすと、外れた画像のファイルを消す。
 - 画像は `<番号>.webp`（長辺 768）と `<番号>.thumb.webp`（長辺 384、一覧用）。

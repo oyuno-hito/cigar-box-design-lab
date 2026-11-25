@@ -16,7 +16,7 @@
 | --- | --- | --- |
 | `.cursor/` | AI 向けの資料（rules、skills） | する |
 | `docs/` | ワークフロー、設計判断 | する |
-| `generator/` | 画像生成環境（Docker で動かす ComfyUI、ワークフロー、モデル備忘録） | モデル本体は除く |
+| `generator/` | uv で管理する ComfyUI、ワークフロー、モデル備忘録 | モデル本体は除く |
 | `generated/` | 生成画像の正本。`0_like`（`reference` / `seed`）/ `1_dislike` / `2_maybe` / `99_inbox` に分類 | する |
 | `scorers/` | 分類器（スコアラー）。係数・マニフェスト・評価結果の JSON。版は Git の履歴で管理 | する |
 | `artifacts/` | 最終採用した成果物のコレクション | する |
@@ -31,6 +31,51 @@
 5. 採用したものを `artifacts/` に置き、GitHub Pages で公開する。
 
 詳細は [docs/workflow.md](docs/workflow.md) にあります。
+
+## 開発環境（Python は uv に一本化）
+
+`tools/` のスクリプトは、[uv](https://docs.astral.sh/uv/) で管理する Python 3.12 の環境で動かします。システムの Python や `pip` は使いません。Python のバージョンと依存のバージョンは、`.python-version`、`pyproject.toml`、`uv.lock`（すべて Git 管理）で固定しています。
+
+```bash
+brew install uv      # 初回だけ（macOS。他の OS は uv の公式手順）
+uv sync              # .venv を作る（torch を含むので初回は数 GB）
+uv run tools/build_site.py --serve
+```
+
+- スクリプトは、`.venv` を有効化せずに `uv run tools/<スクリプト>.py` で動かす。`uv run` は、ロックと環境がずれていれば自動で同期する。標準ライブラリだけのスクリプトも、同じ Python で動くよう `uv run` で呼ぶ。
+- 依存を足すとき: `uv add <パッケージ>`（分類器用は `uv add --group scorer <パッケージ>`）。`pyproject.toml` と `uv.lock` が更新されるので、両方コミットする。
+- 分類器（torch など）が要らないときは `uv sync --no-group scorer` で軽くできる。
+- GitHub Pages の CI（`.github/workflows/pages.yml`）は、標準ライブラリだけの `build_site.py` を `setup-python`（3.12）で動かす。uv は使わない。
+- ComfyUI は、この環境とは別に動かす（[generator/README.md](generator/README.md)）。`tools/run_generate.py` は HTTP API だけを使う。
+
+### システム構成
+
+uv は共通の管理方式だが、依存関係の衝突を避けるため仮想環境は用途ごとに分けている。現在の Mac では Apple Silicon の MPS を計算デバイスに使う。
+
+```mermaid
+flowchart LR
+    user["ユーザー / AI"]
+
+    subgraph machine["計算マシン"]
+        tools["ルートの uv 環境: tools"]
+        comfy["generator の uv 環境: ComfyUI"]
+        workflows["ワークフロー JSON"]
+        runs["生成画像とメタデータ"]
+        artifacts["公開対象画像"]
+        site["GitHub Pages"]
+    end
+
+    user --> tools
+    user --> comfy
+    tools -->|"prompt を送信"| comfy
+    tools -->|"ワークフローを読む"| workflows
+    comfy -->|"生成結果を返す"| tools
+    tools -->|"画像と JSON を書く"| runs
+    tools -->|"採用画像を整理"| artifacts
+    tools -->|"サイトをビルド"| site
+```
+
+`tools/` はルートの `.venv`（Python 3.12）で `uv run tools/<スクリプト>.py` として実行する。標準ライブラリだけのスクリプトも、実行環境を揃えるため同じ方法で呼ぶ。ComfyUI 本体は `generator/.venv` で動き、`tools/run_generate.py` とは HTTP API 経由で接続する。
 
 ## Git フック（clone 後に 1 回）
 
@@ -53,7 +98,7 @@ GitHub Pages に出すのは `artifacts/` だけです。`generated/`、`scorers
 
 ## 状況
 
-- 画像生成環境: Docker の ComfyUI 設定を追加済み（[generator/README.md](generator/README.md)）。GPU のある PC での起動確認はまだです。
+- 画像生成環境: ComfyUI v0.46.3 と依存を uv で管理する構成（[generator/README.md](generator/README.md)）。macOS の MPS で起動確認する。
 - 画像の出力と仕分け: `tools/split_grid.py` とスキルで、24 枚ずつ `99_inbox` に出力し、手作業で仕分け中です。
 - 分類器: 入っています（`scorers/`）。
-- 公開サイト: 画像グリッドと拡大表示を `site/` に作りました（`python3 tools/build_site.py --serve` で確認）。`main` への push で GitHub Pages に出します（`.github/workflows/pages.yml`）。初回は Settings → Pages の Source を「GitHub Actions」にします。
+- 公開サイト: 画像グリッドと拡大表示を `site/` に作りました（`uv run tools/build_site.py --serve` で確認）。`main` への push で GitHub Pages に出します（`.github/workflows/pages.yml`）。初回は Settings → Pages の Source を「GitHub Actions」にします。

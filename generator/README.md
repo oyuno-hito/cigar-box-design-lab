@@ -1,14 +1,17 @@
 # generator
 
-画像生成環境です。Docker で ComfyUI を動かす構成を置いています。
+画像生成環境です。ComfyUI 本体と専用の Python 環境を、uv で管理します。
 
-Docker は NVIDIA GPU のある PC 向けです。macOS など Docker で GPU が使えない環境では、Comfy Desktop などで各自 ComfyUI を用意してください。`tools/run_generate.py` は起動中の ComfyUI の HTTP API（既定は `http://127.0.0.1:8188`）だけを使うので、どの方法で起動していても動きます。モデルの置き場所や名前は環境ごとに合わせてください。
+`tools/run_generate.py` は起動中の ComfyUI の HTTP API（既定は `http://127.0.0.1:8188`）だけを使うので、ComfyUI の起動方法はこのリポジトリ内のものに限定されません。ただし、再現性を優先するときは、ここで管理する v0.46.3 を使います。
 
 ```text
 generator/
-  Dockerfile               ComfyUI（リリースタグ固定）+ PyTorch
-  compose.yaml             ポート、ボリューム、GPU の指定
+  setup.sh                 ComfyUI の clone と uv 環境の準備
+  start_comfy.sh           ComfyUI の起動
+  requirements.lock.txt    ComfyUI v0.46.3 の依存ロック
   extra_model_paths.yaml   models/ 以下を ComfyUI のモデル置き場にする設定
+  ComfyUI/                 本体（Git 管理外。setup.sh が clone）
+  .venv/                   専用環境（Git 管理外）
   workflows/               ComfyUI のワークフロー JSON（Git 管理）
   models/                  モデル本体（Git 管理外）。使ったモデルは MODELS.md に記録
   output/                  生成結果の出力先（Git 管理外）
@@ -17,40 +20,34 @@ generator/
 
 ## 前提
 
-NVIDIA GPU のある PC で動かす想定です。
+- uv
+- Git
+- Python 3.12（`setup.sh` が uv 経由で用意する）
+- macOS は MPS 対応の Apple Silicon、Linux / Windows は利用する GPU と PyTorch wheel が対応していること
 
-- Docker Desktop（Windows は WSL2 バックエンド）または Docker Engine + Compose v2
-- NVIDIA ドライバー。CUDA Toolkit は不要
-  - 既定の PyTorch は CUDA 13.0 版で、**新しめのドライバー（目安: R580 以降）が必要**
-  - ドライバーが古い場合は、下の「古いドライバーの場合」を使う
-- Linux の場合は NVIDIA Container Toolkit
-
-コンテナから GPU が見えるかは、次で確認できます。
-
-```bash
-docker run --rm --gpus all ubuntu nvidia-smi
-```
-
-## 使い方
+## セットアップと起動
 
 ```bash
 cd generator
-docker compose up --build
+./setup.sh
+./start_comfy.sh
 ```
 
-初回はイメージのビルドに時間がかかります。PyTorch と CUDA ライブラリの取得で、数 GB のダウンロードとディスク容量が必要です。起動したら <http://127.0.0.1:8188> を開きます。
+初回は ComfyUI の clone と PyTorch などの依存取得に時間がかかります。起動したら <http://127.0.0.1:8188> を開きます。停止は `Ctrl+C` です。
 
-止めるときは `Ctrl+C`、またはバックグラウンドで起動した場合は `docker compose down` です。
-
-GPU が使われているかは、次で確認できます。
+ComfyUI のタグを更新するときは、次のようにします。
 
 ```bash
-docker compose run --rm comfyui python -c "import torch; print(torch.cuda.is_available())"
+COMFYUI_VERSION=v0.xx.x ./setup.sh
 ```
 
-`True` なら GPU を使えています。
+PyTorch の実行デバイス確認:
 
-## モデルを置く
+```bash
+./.venv/bin/python -c "import torch; print('MPS:', torch.backends.mps.is_available()); print('CUDA:', torch.cuda.is_available())"
+```
+
+## モデルとワークフロー
 
 `generator/models/` 以下に、種類ごとのサブディレクトリを作って置きます。
 
@@ -66,33 +63,13 @@ models/
 
 使い分けは [models/MODELS.md](models/MODELS.md) の表に、入手元・SHA-256・ライセンスなどを残します。モデル本体はコミットしません。
 
-## 更新・オプション
-
-ComfyUI のバージョンを変えるとき（現在の既定は `Dockerfile` の `COMFYUI_VERSION`）:
+`requirements.lock.txt` は ComfyUI v0.46.3 の requirements を uv で解決したものです。ComfyUI のタグを更新したら、`ComfyUI/requirements.txt` から次で作り直します。
 
 ```bash
-docker compose build --build-arg COMFYUI_VERSION=v0.xx.x
-```
-
-### 古いドライバーの場合
-
-CUDA 13.0 の PyTorch が動かないときは、CUDA 12.6 版でビルドします。
-
-```bash
-docker compose build --build-arg PYTORCH_INDEX_URL=https://download.pytorch.org/whl/cu126
-```
-
-### 再現性について
-
-ComfyUI はタグで固定していますが、PyTorch は固定していません。環境を完全に再現したいときは、ビルド後に次を保存して固定してください。
-
-```bash
-docker compose run --rm comfyui pip freeze > requirements.lock.txt
+uv pip compile ComfyUI/requirements.txt \
+  --python-version 3.12 \
+  --python-platform aarch64-apple-darwin \
+  -o requirements.lock.txt
 ```
 
 実行環境（OS、GPU）によって動かない設定や結果の違いがあります。再現に必要な情報（ワークフロー JSON、使ったノードとバージョン、seed）を残してください。
-
-## 未対応
-
-- カスタムノードの導入と永続化（必要になった時点で `custom_nodes/` のマウントを足す）
-- コンテナ内は root で動くため、Linux では `output/` が root 所有になる

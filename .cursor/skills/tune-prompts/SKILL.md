@@ -22,7 +22,7 @@ disable-model-invocation: true
 ## 前提
 
 - ComfyUI が起動している（`http://127.0.0.1:8188`。起動方法は問わない）。
-- `.venv` を有効化できる（採点に使う）。`tools/requirements.txt` を参照。
+- `uv sync` 済み（採点に使う。README の「開発環境」）。
 - `scorers/` に分類器がある。
 
 ## 手順
@@ -42,7 +42,7 @@ disable-model-invocation: true
 ### 1. 現状を見て、対象を選ぶ
 
 ```bash
-python3 tools/summarize_runs.py
+uv run tools/summarize_runs.py
 ```
 
 - 打率（人間 OK 率）が低く、**LLM 側の like 率は高かった**題材を優先する（ギャップが大きい = 調整の余地がある）。
@@ -52,7 +52,7 @@ python3 tools/summarize_runs.py
 ### 2. 診断する（OK と NG の違いを、軸で書く）
 
 ```bash
-.venv/bin/python tools/montage.py runs/<run-id> --condition <条件名>
+uv run tools/montage.py runs/<run-id> --condition <条件名>
 ```
 
 `generator/temp/montage/` にできたシートを開いて見る。枠の色は、緑 = 機械が通過、赤 = 不通過、黄 = 人間が機械に同意しなかった画像。
@@ -76,21 +76,21 @@ python3 tools/summarize_runs.py
 - knob の句は `prompt_suffix` に入れる（`prompt_prefix` の題材部分は変えない）。
 
 ```bash
-python3 tools/run_generate.py runs/<run-id>               # バックグラウンドで実行。条件順に出る
-.venv/bin/python tools/score_run.py runs/<run-id>
-python3 tools/make_report.py runs/<run-id>
+uv run tools/run_generate.py runs/<run-id>               # バックグラウンドで実行。条件順に出る
+uv run tools/score_run.py runs/<run-id>
+uv run tools/make_report.py runs/<run-id>
 ```
 
 ### 5. 評価する
 
-1. **人間のレビュー（一次）**: `python3 tools/make_report.py runs/<run-id> --serve` でレポートを開いてもらう（サーバーが動いていれば、一覧 `http://127.0.0.1:8765/` の未検査から開いてもらう）。条件ごとに「この条件を最後まで見た」をチェックし、「review.json に保存」を押してもらう（`report.html` と同じディレクトリに書かれる）。待つ間は、終わった題材から先に見てもらう。
+1. **人間のレビュー（一次）**: `uv run tools/make_report.py runs/<run-id> --serve` でレポートを開いてもらう（サーバーが動いていれば、一覧 `http://127.0.0.1:8765/` の未検査から開いてもらう）。条件ごとに「この条件を最後まで見た」をチェックし、「review.json に保存」を押してもらう（`report.html` と同じディレクトリに書かれる）。待つ間は、終わった題材から先に見てもらう。
 2. **自己評価（人間が見られないとき）**: `montage.py` のシートを見て、画像ごとに「明確に OK / 明確に NG / 保留」を付ける。付けた結果は `self_review.json`（`{"ok": [...], "ng": [...]}` の画像 id）として run に保存し、`review.json` とは混ぜない。
    - 使う前に、**人間のレビュー済みの run で較正する**: 同じ題材の `base` を自己評価して、人間の判定と照らす。明確なものの一致が 80% 未満なら、自己評価は参考止まりにする。
 3. **補助**: 機械の通過率（足切りは学習時の値が合わない題材がある。順位で見る）と、類似度。
 
 ```bash
-python3 tools/summarize_runs.py runs/<run-id>
-python3 tools/compare_review.py runs/<run-id>
+uv run tools/summarize_runs.py runs/<run-id>
+uv run tools/compare_review.py runs/<run-id>
 ```
 
 ### 6. 判定する

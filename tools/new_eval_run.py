@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """発散 run の spec.json を、短い入力 JSON から作る。標準ライブラリのみ。
 
-    python3 tools/new_eval_run.py generator/temp/briefs/<slug>.json
+    uv run tools/new_eval_run.py generator/temp/briefs/<slug>.json
 
 入力 JSON:
   {

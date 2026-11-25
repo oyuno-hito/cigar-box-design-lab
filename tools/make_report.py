@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """実験 run のレポート（静的 HTML 1 枚）を runs/<run-id>/report.html に作る。標準ライブラリのみ。
 
-    python3 tools/make_report.py runs/<run-id>
-    python3 tools/make_report.py runs/<run-id> --serve    # 作ってから、runs/ 一覧サーバー（serve_runs.py）で開く
+    uv run tools/make_report.py runs/<run-id>
+    uv run tools/make_report.py runs/<run-id> --serve    # 作ってから、runs/ 一覧サーバー（serve_runs.py）で開く
 
 入力: spec.json / scores.json / images/*.json / scorers/metrics.json
 レポートの内容:
@@ -251,7 +251,7 @@ function reviewBody() {
            flags: [...flags].sort(), ratings };
 }
 if (location.protocol === "file:") {
-  $("#savestatus").textContent = "同じディレクトリへ保存するには、python3 tools/serve_runs.py で開いてください。";
+  $("#savestatus").textContent = "同じディレクトリへ保存するには、uv run tools/serve_runs.py で開いてください。";
 } else {
   $("#backlink").hidden = false;
 }
@@ -265,7 +265,7 @@ $("#download").addEventListener("click", async () => {
     status.textContent = "保存しました: review.json（このページと同じ場所）";
   } catch (err) {
     status.style.color = "var(--flag)";
-    status.textContent = "保存できません。python3 tools/serve_runs.py で開いてください。";
+    status.textContent = "保存できません。uv run tools/serve_runs.py で開いてください。";
   }
 });
 $("#load").addEventListener("change", async (e) => {

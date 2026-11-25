@@ -3,12 +3,12 @@
 #
 #   sh tools/eval_pipeline.sh runs/<run-id>
 #
-# ComfyUI が起動していること。.venv があること。途中で失敗したら、そこで止まる。
+# ComfyUI が起動していること。uv が使えること（README の「開発環境」）。途中で失敗したら、そこで止まる。
 set -e
 cd "$(dirname "$0")/.."
 RUN="$1"
-python3 tools/run_generate.py "$RUN"
-.venv/bin/python tools/score_run.py "$RUN"
-python3 tools/make_report.py "$RUN"
-.venv/bin/python tools/montage.py "$RUN" --sort id
+uv run tools/run_generate.py "$RUN"
+uv run tools/score_run.py "$RUN"
+uv run tools/make_report.py "$RUN"
+uv run tools/montage.py "$RUN" --sort id
 echo "PIPELINE_DONE $RUN"

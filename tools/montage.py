@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """run の画像をコンタクトシート（1 枚の画像）にまとめる。エージェントや人間が、数十枚をまとめて眺める用。
 
-    python3 tools/montage.py runs/<run-id> [--condition NAME] [--cols 4] [--width 1600] [--sort score|id] [--out PATH]
+    uv run tools/montage.py runs/<run-id> [--condition NAME] [--cols 4] [--width 1600] [--sort score|id] [--out PATH]
 
   - 条件ごとに 1 枚ずつ作る（--condition で絞る）。各マスに id の末尾番号とスコアを入れる
   - 出力先の既定は generator/temp/montage/（Git 管理外）

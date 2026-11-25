@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """人間のレビュー（review.json）と分類器のスコア（scores.json）を比べる。標準ライブラリのみ。
 
-    python3 tools/compare_review.py runs/<run-id>
+    uv run tools/compare_review.py runs/<run-id>
 
 人間の判定は、印のない画像を「機械に同意」として導く（レポートの「明確なものだけ印を付ける」運用）。
   機械が通過 → 印なし = OK / 印あり = NG

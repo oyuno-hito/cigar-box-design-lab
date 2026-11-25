@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """site/ と artifacts/ から、公開用ディレクトリ _site/ を作る。標準ライブラリのみ。
 
-    python3 tools/build_site.py             # _site/ を作り直す
-    python3 tools/build_site.py --serve     # 作ったあと http://127.0.0.1:8000/ で確認する（--port で変更）
+    uv run tools/build_site.py             # _site/ を作り直す
+    uv run tools/build_site.py --serve     # 作ったあと http://127.0.0.1:8000/ で確認する（--port で変更）
 
 --serve のアクセスログは、ターミナルではなく /tmp/cigar-site.log に追記する。
 

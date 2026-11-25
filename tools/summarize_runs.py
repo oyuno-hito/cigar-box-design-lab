@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """runs/ 以下のすべての run を横断して、条件ごとの打率を一覧にする。標準ライブラリのみ。
 
-    python3 tools/summarize_runs.py                  # runs/ 全体
-    python3 tools/summarize_runs.py runs/<run-id>…   # 指定した run だけ
+    uv run tools/summarize_runs.py                  # runs/ 全体
+    uv run tools/summarize_runs.py runs/<run-id>…   # 指定した run だけ
 
 打率 = 人間 OK 率（確認済みの条件だけ）。印のない画像は、確認済みの条件の中でだけ「機械に同意」として数える。
   機械が通過 → 印なし = OK / 印あり = NG
