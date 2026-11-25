@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面が重なり、黒の細い縞が横切る。色数は少なく明暗差が強い。この色を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や衣装そのものは再現しない。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: messages passed back and forth, rhythmic electronic movement, bold flat color shapes",
+ "note": "3:2横長の平面デザイン。人物や衣装の再現ではなく、抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-r1a",
+ "seed_base": 9800,
+ "items": [
+  {
+   "label": "重なる二つの吹き出し",
+   "direction": "黒と赤紫の大きな吹き出しが重なる",
+   "idea_id": "idea-01",
+   "reason": "言葉は描かず、吹き出しの形だけで会話を記号化する。白地に黒と赤紫の2色で、すっきり見せる。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, two huge overlapping rounded speech-bubble silhouettes, one solid black and one solid magenta, white background, no letters inside the shapes, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "向きの違うシェブロン",
+   "direction": "右向きの矢じり形が並び、中央に左向きが一つ",
+   "idea_id": "idea-02",
+   "reason": "往復を、向きの違う矢じり形で見せる。黒地に青緑と白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, three bold chevron arrows of different sizes pointing right in solid teal with white edges, one big white chevron pointing left in the middle, deep black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "うねるS字の帯",
+   "direction": "太いS字の帯が地を横切る",
+   "idea_id": "idea-03",
+   "reason": "ゆるやかに続く会話の流れを、一本の太い帯で見せる。深緑地にクリームとえんじ。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, one huge flowing S-shaped ribbon in cream crossing the whole frame, a maroon ribbon running beside it, deep green background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "向き合う二つの半円",
+   "direction": "左右の端から大きな半円が向き合う",
+   "idea_id": "idea-04",
+   "reason": "二人が向き合う構図を、半円の対で見せる。えんじ地に白と黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, two giant half discs facing each other from the left and right edges, one white and one black, a thick diagonal white stripe between them, deep maroon background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "弧を描く太い棒",
+   "direction": "幅の違う太い弧が重なる",
+   "idea_id": "idea-05",
+   "reason": "音の広がりを、太い弧の重なりで見せる。青緑地に黒と白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, five bold curved bars of different widths arcing across the frame, black and white, solid teal background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "横切る大きな葉",
+   "direction": "大きな葉形が斜めに横切り、橙の丸が一つ",
+   "idea_id": "idea-06",
+   "reason": "衣装の葉のような色面を拡大して、白地に深緑と橙のアクセントで見せる。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, one huge deep green leaf shape crossing the frame diagonally, one solid orange circle near the upper right, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  }
+ ]
+}

@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面が重なり、黒の細い縞が横切る。色数は少なく明暗差が強い。この色を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や衣装そのものは再現しない。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: messages passed back and forth, rhythmic electronic movement, bold flat color shapes",
+ "note": "3:2横長の平面デザイン。人物や衣装の再現ではなく、抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-r1b",
+ "seed_base": 9900,
+ "items": [
+  {
+   "label": "不揃いな縦の棒",
+   "direction": "黒の縦棒の中に赤紫が一本",
+   "idea_id": "idea-01",
+   "reason": "ビートの高さを、不揃いな太い棒で見せる。白地に黒と赤紫一本。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, tall vertical bars of uneven widths and heights rising from the bottom edge, all solid black except one very tall magenta bar, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "大きな彗星",
+   "direction": "青緑の彗星が黒地を横切る",
+   "idea_id": "idea-02",
+   "reason": "届く信号を、一つの大きな彗星で見せる。黒地に青緑と白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, one huge comet shape with a long flowing tail in solid teal and white streaking diagonally across the frame, deep black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "重なる二つの円",
+   "direction": "大きな円が斜めに切られて重なる",
+   "idea_id": "idea-03",
+   "reason": "二つの声が重なる瞬間を、円の重なりで見せる。深緑地にクリームとえんじ。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, two large overlapping circles, one cream and one maroon, cut by a bold diagonal band, deep green background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "太いジグザグ",
+   "direction": "白い太い折れ線が横切る",
+   "idea_id": "idea-04",
+   "reason": "電子的な信号を、太い折れ線で見せる。えんじ地に白と黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, one thick sharp white zigzag line crossing the whole frame, big black bars behind it, deep maroon background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "斜めの太い帯",
+   "direction": "黒と白の帯が斜めに走る",
+   "idea_id": "idea-05",
+   "reason": "曲の速さを、斜めの帯で見せる。青緑地に黒と白。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, bold diagonal bands of black and white of different widths sweeping from lower left to upper right, solid teal background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "放射する黒い花弁",
+   "direction": "三枚の黒い花弁と一枚の青緑",
+   "idea_id": "idea-06",
+   "reason": "発信が広がる様子を、太い花弁で見せる。クリーム地に黒と青緑。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, a burst of four fat petal shapes spreading from the center, three solid black petals and one solid teal petal, cream background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  }
+ ]
+}

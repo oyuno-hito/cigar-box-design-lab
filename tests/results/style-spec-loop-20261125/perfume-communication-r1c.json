@@ -1,0 +1,59 @@
+{
+ "brief_type": "music",
+ "brief": "Perfumeの「コミュニケーション」という曲にあうシガーのデコレーションを考えたい。衣装はこんな感じ（参考画像）。",
+ "context_sources": [
+  {
+   "kind": "reference_image",
+   "source": "/Users/yuta.yuki/repository/my_project/cigar-box-design-lab/tmp/image.png",
+   "visual_elements": "白地に、青緑・深緑・赤紫（えんじ）・黒の大きな不定形の色面が重なり、黒の細い縞が横切る。色数は少なく明暗差が強い。この色を「色の枠」として使い、アイデアごとに地と主色・差し色の組を変える。人物や衣装そのものは再現しない。"
+  }
+ ],
+ "concept": "abstract visual communication for a Perfume song: messages passed back and forth, rhythmic electronic movement, bold flat color shapes",
+ "note": "3:2横長の平面デザイン。人物や衣装の再現ではなく、抽象的なグラフィックとして展開する。",
+ "slug": "perfume-communication-r1c",
+ "seed_base": 10000,
+ "items": [
+  {
+   "label": "三つのしずく",
+   "direction": "背の高い三つのしずくが並ぶ",
+   "idea_id": "idea-01",
+   "reason": "三人の揃いを、縦長のしずくで見せる。白地に深緑と橙一つ。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, three tall teardrop shapes standing side by side, two deep green and one orange, white background, a black base stripe, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "波打つ太い帯",
+   "direction": "黒と青緑の太い波がクリーム地を横切る",
+   "idea_id": "idea-02",
+   "reason": "息の合った動きを、太い波で見せる。クリーム地に黒と青緑。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, two thick bold wave bands, one black and one teal, flowing across the full width, cream background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "大きな一輪の花",
+   "direction": "赤紫の大きな花が画面を占める",
+   "idea_id": "idea-03",
+   "reason": "一つの色で、大きな花を見せる。白地に赤紫と黒の中心。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, a single huge flower with six fat petals in solid magenta filling most of the frame, a black center, white background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "三つの円",
+   "direction": "白・青緑・黒の円が斜めに並ぶ",
+   "idea_id": "idea-04",
+   "reason": "三人それぞれを、色違いの円で見せる。黒地に白と青緑。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, three huge solid discs in white, teal and a slightly lighter black aligned diagonally, one large teal half disc behind them, deep black background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "積まれた横筆",
+   "direction": "長さの違う太い横筆が積まれる",
+   "idea_id": "idea-05",
+   "reason": "メッセージが重なっていく様子を、横筆で見せる。深緑地にクリームとえんじ。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, five broad horizontal brush strokes of different lengths stacked from top to bottom, alternating cream and maroon, deep green background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  },
+  {
+   "label": "重なる大きな三角",
+   "direction": "白と黒の大きな三角が重なる",
+   "idea_id": "idea-06",
+   "reason": "揃ったステップを、大きな三角で見せる。えんじ地に白と黒。",
+   "text": "Flat graphic decoration, 3:2 landscape, full frame composition, large flat triangles in white and black overlapping and pointing to the right, deep maroon background, flat solid color fills, bold clear edges, no text, no logo, no people"
+  }
+ ]
+}
