@@ -4,6 +4,8 @@
     python3 tools/build_site.py             # _site/ を作り直す
     python3 tools/build_site.py --serve     # 作ったあと http://127.0.0.1:8000/ で確認する（--port で変更）
 
+--serve のアクセスログは、ターミナルではなく /tmp/cigar-site.log に追記する。
+
 公開するのは次だけ。それ以外（provenance.json など）は、artifacts/ にあってもコピーしない。
   - site/ の中身（index.html、style.css、app.js）
   - artifacts/manifest.json
@@ -24,6 +26,17 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 SITE = REPO_ROOT / "site"
 ARTIFACTS = REPO_ROOT / "artifacts"
 OUT = REPO_ROOT / "_site"
+# ターミナルが閉じると stderr への書き込みが失敗し、応答を返す前に接続が切れる。ログはファイルに出す
+SERVE_LOG = Path("/tmp/cigar-site.log")
+
+
+class Handler(SimpleHTTPRequestHandler):
+    def log_message(self, format: str, *args) -> None:
+        try:
+            with SERVE_LOG.open("a", encoding="utf-8") as f:
+                f.write(f"{self.address_string()} - [{self.log_date_time_string()}] {format % args}\n")
+        except OSError:
+            pass
 
 
 def build() -> int:
@@ -68,9 +81,9 @@ def main() -> int:
     code = build()
     if code or not args.serve:
         return code
-    handler = functools.partial(SimpleHTTPRequestHandler, directory=str(OUT))
+    handler = functools.partial(Handler, directory=str(OUT))
     with ThreadingHTTPServer(("127.0.0.1", args.port), handler) as httpd:
-        print(f"http://127.0.0.1:{args.port}/ （Ctrl-C で終了）")
+        print(f"http://127.0.0.1:{args.port}/ （Ctrl-C で終了）", flush=True)
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:

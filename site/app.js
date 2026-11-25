@@ -236,6 +236,7 @@ function openViewer(i, push) {
     if (push) history.pushState(null, "", `#${theme.id}/${theme.images[i].id}`);
     pushed = push;
     viewer.showModal();
+    viewer.focus(); // 既定では先頭のボタン（一箱）にフォーカスが当たり、選択中でなくても枠が出る
   }
   showViewer();
 }
@@ -281,6 +282,59 @@ document.querySelectorAll(".viewer-modes button").forEach((b) => {
     if (viewer.open) renderStage();
   });
 });
+/* ファイルを保存する。スマホ（タッチ端末）では共有メニューを開く。
+   iOS の「ダウンロード」は「ファイル」アプリにしか保存できないが、共有メニューなら「画像を保存」で写真に追加できる。
+   共有メニューが使えない・失敗したときは、ダウンロードに切り替える（シミュレータの saveFile と同じ方式） */
+const isTouch = () => window.matchMedia("(pointer: coarse)").matches;
+async function saveFile(blob, filename) {
+  if (isTouch() && navigator.canShare && navigator.share) {
+    const file = new File([blob], filename, { type: blob.type });
+    if (navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file] });
+        return;
+      } catch (e) {
+        if (e && e.name === "AbortError") return; // 共有メニューを閉じただけ
+        // ボタンを押した直後と見なされなくなった場合などは、ダウンロードに切り替える
+      }
+    }
+  }
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+}
+/* 表示中の画像（WebP）を、canvas に描いて PNG で保存する。同じオリジンの画像なので canvas が汚れない */
+async function savePng() {
+  const btn = $("#viewer-save");
+  const image = theme.images[index];
+  btn.disabled = true;
+  try {
+    const img = new Image();
+    img.src = imageUrl(theme, image, false);
+    await img.decode();
+    const canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    canvas.getContext("2d").drawImage(img, 0, 0);
+    const blob = await new Promise((resolve, reject) => {
+      canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("PNG にできませんでした"))), "image/png");
+    });
+    // ファイル名は「題名-テーマ名」。ファイル名に使えない文字は除く
+    const safe = (s) => String(s || "").replace(/[\\/:*?"<>|\u0000-\u001f]/g, "").trim();
+    const filename = `${safe(theme.title) || theme.id}-${safe(image.title) || image.id}.png`;
+    await saveFile(blob, filename);
+  } catch (e) {
+    alert("保存できませんでした。");
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+$("#viewer-save").addEventListener("click", savePng);
 $("#viewer-close").addEventListener("click", closeViewer);
 $("#viewer-prev").addEventListener("click", () => step(-1));
 $("#viewer-next").addEventListener("click", () => step(1));

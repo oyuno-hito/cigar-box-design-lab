@@ -28,6 +28,12 @@ python3 tools/build_site.py --serve     # _site/ を作って http://127.0.0.1:8
 
 `_site/` は Git 管理外。`site/` を直したら、もう一度ビルドする。
 
+アクセスログはターミナルではなく `/tmp/cigar-site.log` に追記する（ターミナルが閉じてもサーバーが応答を返し続けるように）。ポートが使用中で起動できないときは、古いサーバーを止めてから起動しなおす。
+
+```bash
+lsof -nP -iTCP:8000 -sTCP:LISTEN -t | xargs -r kill
+```
+
 ## 画像を増やす・選びなおす
 
 ```bash

@@ -78,6 +78,7 @@ dialog {
   flex-direction: column;
 }
 dialog[open] { display: flex; }
+dialog:focus { outline: none; } /* 開いた直後のフォーカスは、ダイアログ自身に置く（先頭のボタンが枠付きにならないように） */
 dialog::backdrop { background: #000; }
 .viewer-head {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px;
@@ -105,6 +106,13 @@ dialog::backdrop { background: #000; }
 }
 .viewer-modes button[aria-pressed="true"] { color: #1a1304; background: var(--accent); border-color: var(--accent); font-weight: 600; }
 .viewer-modes button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.save {
+  /* 見せ方の切り替え（パネル色 / 選択中は金色）と別の動作なので、青で区別する */
+  all: unset; cursor: pointer; flex: none; font-size: 12px; font-weight: 600; padding: 3px 12px; border: 1px solid #5aa9e6;
+  border-radius: 999px; background: #5aa9e6; color: #06121f; -webkit-tap-highlight-color: transparent;
+}
+.save:focus-visible { outline: 2px solid #5aa9e6; outline-offset: 2px; }
+.save[disabled] { opacity: .5; cursor: default; }
 .step {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 1;
   width: 44px; height: 64px; font-size: 40px; line-height: 64px; background: rgba(0, 0, 0, .35); border-radius: 8px;
