@@ -35,6 +35,7 @@
 | 面の処理 | ベタ塗り / グラデーション / 紙やインクの質感 / ぼかした発光 |
 | 色 | 色数、彩度、地と図の明度差 |
 | 色の階層 | 主色・補助色・アクセントの役割がある / 複数の高彩度色が同じ強さで並ぶ |
+| 色の多様性（1 session の中） | アイデアごとに、地と主色・差し色の組を変える / 全アイデアで同じ色の組 |
 | 具象度 | 題材をそのまま描く / 記号化 / 抽象化 |
 | 奥行き | 平面 / パースや立体感 |
 | 文字状の模様 | 文字・ロゴのような形の混入 |
@@ -64,6 +65,7 @@
 
 | 軸 | 好む方向 | 避ける方向 | 状態 | 根拠 |
 | --- | --- | --- | --- | --- |
+| 色の多様性（1 session の中） | 参考画像や題材の色は、全アイデアが従う「色の枠」として使う。そのうえで、アイデアごとに地（白・黒・有彩色）と、主色・差し色の組を変える（6 件なら 3 組以上）。この文書にある色名は例で、既定の配色ではない | 全アイデアで同じ 2 色を同じ強さで使う。参考画像の色を全部のアイデアに全部入れる | 観察（題材 1 つ。機械の集計） | `perfume-communication-t1`〜`t6`（48 枚）は、`uv run tools/palette_stats.py` で、赤紫と青緑が主な色になっている画像が 94〜96%、この 2 色の組み合わせが 79%。参考画像（衣装）の青緑・赤紫・黒を、私が全アイデアに入れたため。`tests/results/style-spec-trial-20261125.md` |
 | 具象度（物体の混入） | 用途の語を書かず、「flat graphic decoration, full frame composition」のように、平面の柄としてだけ書く | プロンプトに `cigar box` / `panel` を入れる（用途を書く） | 観察（題材 1 つ、同じアイデアと seed で語の有無だけを変えた 16 枚。自己評価） | `perfume-communication-t1`〜`t4`（`for a cigar box panel` あり）32 枚は、木枠・葉巻・額縁に入った立体物や写真になったものが約 5 / 8。同じ 16 件から語だけ取った `t5`・`t6` は 2〜3 / 8 に減り、木枠と葉巻は 0 枚。`tests/results/style-spec-trial-20261125.md` |
 
 #### 追加観察（2026-11-25、人間レビュー: 14 題材・210 枚）
@@ -95,7 +97,7 @@
 
 | ID | 軸 | 句の案 |
 | --- | --- | --- |
-| `color` | 色の階層 | `restrained three-color palette, one dominant dark ground color, one main turquoise shape, magenta used only as a small accent, large quiet color fields, clear foreground and background hierarchy` |
+| `color` | 色の階層 | `restrained three-color palette, one dominant dark ground color, one main <color A> shape, <color B> used only as a small accent, large quiet color fields, clear foreground and background hierarchy`（`<color A>` `<color B>` は題材と参考画像から決め、アイデアごとに変える） |
 | `fine` | 線・点の細かさ | `thick bold shapes, broad empty areas, only a few fine lines or light points, calm visual rhythm` |
 | `flat` | 面の処理 | `flat solid color fills only, no highlights, no cast shadows, no metallic shine` |
 | `depth` | 奥行き | `everything sits on one flat plane, no perspective, no interior space` |
@@ -108,7 +110,7 @@
 | `no-grid` | 反復（避ける） | `no grid, no checker, no tile, no woven or knitted texture, no evenly repeated small units` |
 | `strong-contrast` | 色 | `two or three saturated colors with strong light and dark contrast, no gray or muted tones` |
 
-色の階層は、色を指定するだけでなく、どの色を主役にするかまで書く（題材の色味に合わせて入れ替える）。
+色の階層は、色を指定するだけでなく、どの色を主役にするかまで書く（題材の色味に合わせて入れ替える）。この文書に出る色名（turquoise、magenta など）は書き方の例で、既定の配色ではない。
 
 2026-11-25 の人間レビューで、`fine`（calm visual rhythm、broad empty areas）と `color`（large quiet color fields）は、静かさや空白を強める方向で、外す側に寄るおそれが出た。試す前に書き換える。`matte-sparse` と `signal`（広い地に少数の点・暖色 1 つ）は、同じ理由で候補から外した。
 
@@ -160,4 +162,5 @@ LLM 側の画像の仕分け（`generated/`、312 枚）から。**題材の傾�
 | 2026-11-24 | `gap-*`（10 題材）、`future-bass-baseline` | 品質ギャップの検証。ベースラインを記録 |
 | 2026-11-24 | `gap-09-scifi`, `gap-10-city` | 所感を観察として記録。写実的な質感・パース・人物がマイナス。XL を既定モデルにする |
 | 2026-11-24 | `gap-09-scifi` | 色の階層と、線・点の細かさを観察として追加。色がごちゃつくとチカチカして NG。軸の語彙に 2 軸を足し、試す句の案を載せた |
+| 2026-11-25 | `perfume-communication-t1`〜`t6`（自己評価） | 実使用の session の比較。物体の混入の観察と、色の偏り（赤紫 + 青緑が 79%）の観察を追加。軸の語彙に「色の多様性（1 session の中）」を足した |
 | 2026-11-25 | `*-structured`（14 題材・人間レビュー） | 自己レビューの仮説（広い余白＋少数の点、大きな色面、切り紙）は人間レビューで逆または不明に。規則反復・織り・格子、一つだけの小さな形、分割を避ける方向に、花・葉・流れる線・縦縞を好む方向に追加。好みと一致の連動、分類器との関係を記録。句の案を入れ替えた。比較実験ではないので、すべて観察扱い |
